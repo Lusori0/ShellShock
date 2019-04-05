@@ -13,7 +13,7 @@ public class SinglePlayerView extends JPanel implements ActionListener {
 
     MyButton gegenKi,sandbox;
 
-    public SinglePlayerModel(SinglePlayerModel singlePlayerModel)
+    public SinglePlayerView(SinglePlayerModel singlePlayerModel)
     {
         this.singlePlayerModel = singlePlayerModel;
 

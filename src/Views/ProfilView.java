@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ProfilView extends JFrame implements ActionListener {
+public class ProfilView extends JPanel implements ActionListener {
 
     ProfilModel profilModell;
 

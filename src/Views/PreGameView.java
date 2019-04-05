@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PreGameView extends JFrame implements ActionListener{
+public class PreGameView extends JPanel implements ActionListener{
     PreGameModel preGameModel;
 
     MyButton gameSettings,start,back;
