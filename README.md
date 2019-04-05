@@ -52,8 +52,6 @@ Pregame Menu:
     - Game Settings(Unterschied zu den Einstellungen) (weitere Unterteilung)
     - START
     - Back
-
-- Anzeigefenster:
     - Level
     - Insgesamte Panzer
     - Panzer Image
