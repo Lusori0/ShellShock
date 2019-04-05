@@ -20,6 +20,8 @@ public class MyWindow{
 
         window.setSize(WIDTH,HEIGHT);
 
+        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         window.setVisible(true);
 
         new MainMenuModel();

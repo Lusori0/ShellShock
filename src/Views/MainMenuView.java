@@ -18,6 +18,11 @@ public class MainMenuView extends JPanel {
 
         singelplayer = new MyButton(singelPlayerAction(),"Einzelspieler");
 
+
+
+        singelplayer.setFont(singelplayer.getFont().deriveFont((float)(singelplayer.getWidth()/2)));
+        singelplayer.setText("Baum");
+
         multiplayer = new MyButton(multiplayerAction(),"Mehrspieler");
 
         this.add(singelplayer);
@@ -29,7 +34,12 @@ public class MainMenuView extends JPanel {
     }
 
     public ButtonAction singelPlayerAction(){
-        return SinglePlayerModel::new;
+        return new ButtonAction() {
+            @Override
+            public void execute() {
+                new SinglePlayerModel();
+            }
+        };
     }
 
 
