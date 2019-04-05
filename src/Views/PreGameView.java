@@ -8,18 +8,22 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PreGameView extends JFrame implements ActionListener{
+public class PreGameView extends JPanel implements ActionListener{
     PreGameModel preGameModel;
 
     MyButton gameSettings,start,back;
 
-    public PreGameView (SinglePlayerModel singlePlayerModel)
+    public PreGameView (PreGameModel PreGameModel)
     {
-        this.preGameModel = singlePlayerModel;
+        this.preGameModel = preGameModel;
 
         gameSettings = new MyButton("Spieleinstelluungen");
         start = new MyButton("START");
         back = new MyButton ("BACK");
+
+        gameSettings.addActionListener(this);
+        start.addActionListener(this);
+        back.addActionListener(this);
 
         this.add(gameSettings);
         this.add(start);

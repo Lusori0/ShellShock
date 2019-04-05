@@ -12,15 +12,23 @@ public class MainMenuView extends JPanel implements ActionListener {
 
     MainMenuModel mainMenuModel;
 
-    MyButton singelplayer,multiplayer;
+    MyButton singelplayer,multiplayer,einstellungen,profil,exit;
 
     public MainMenuView(MainMenuModel mainMenuModel) {
         this.mainMenuModel = mainMenuModel;
 
         singelplayer = new MyButton("Einzelspieler");
 
-        singelplayer.addActionListener(this);
+        einstellungen = new MyButton("Einstellungen");
 
+        profil = new MyButton("Profil");
+
+        exit = new MyButton("Exit");
+
+        singelplayer.addActionListener(this);
+        einstellungen.addActionListener(this);
+        profil.addActionListener(this);
+        exit.addActionListener(this);
 
 
 
@@ -28,6 +36,9 @@ public class MainMenuView extends JPanel implements ActionListener {
 
         this.add(singelplayer);
         this.add(multiplayer);
+        this.add(einstellungen);
+        this.add(profil);
+        this.add(exit);
     }
 
 
@@ -39,6 +50,15 @@ public class MainMenuView extends JPanel implements ActionListener {
         }
         if(e.getSource() == multiplayer){
             mainMenuModel.multiplayerAction();
+        }
+        if(e.getSource() == einstellungen){
+            mainMenuModel.einstellungenAction();
+        }
+        if(e.getSource() == profil){
+            mainMenuModel.profilAchtion();
+        }
+        if(e.getSource() == exit){
+            mainMenuModel.exitAchtion();
         }
     }
 }
