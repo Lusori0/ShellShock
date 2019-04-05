@@ -20,4 +20,8 @@ public class SinglePlayerModel {
     public void sandboxAction(){
 
     }
+
+    public void backAction(){
+
+    }
 }
