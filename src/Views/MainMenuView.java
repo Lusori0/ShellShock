@@ -30,22 +30,18 @@ public class MainMenuView extends JPanel implements ActionListener {
         this.add(multiplayer);
     }
 
-    public void multiplayerAction(){
 
-    }
 
-    public void singelPlayerAction(){
-        new SinglePlayerModel();
-    }
+
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == singelplayer){
-            singelPlayerAction();
+            mainMenuModel.singlePlayerAction();
         }
         if(e.getSource() == multiplayer){
-            multiplayerAction();
+            mainMenuModel.multiplayerAction();
         }
     }
 }
