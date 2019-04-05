@@ -24,3 +24,4 @@ hs_err_pid*
 .directory
 *.iml
 out
+profil.bin
