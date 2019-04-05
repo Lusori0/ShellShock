@@ -32,12 +32,12 @@ public class SinglePlayerView extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e)
     {
       if (e.getSource() == gameSettings)
-      {}
+      {singlePlayerModel.gameSettingsAction();}
 
       if (e.getSource() == start)
-      {}
+      {singlePlayerModel.startAction();}
 
       if (e.getSource() == back)
-      {}
+      {singlePlayerModel.backAchtion();}
     }
 }

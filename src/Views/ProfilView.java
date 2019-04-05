@@ -1,4 +1,40 @@
 package Views;
 
-public class ProfilView {
+import Model.Profil;
+import Window.MyButton;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class ProfilView extends JFrame implements ActionListener {
+
+    ProfilModel profilModell;
+
+    String name;
+
+    MyButton back;
+
+    JLabel nameDisplay;
+
+    public ProfilView (Profil profilModel, String name)
+    {
+        this.profilModell = profilModel;
+
+        this.name = name;
+
+        back = new MyButton("BACK");
+
+        nameDisplay = new JLabel(name);
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+      if (e.getSource() == back)
+      {
+          profilModell.backAchtion();
+      }
+    }
 }
