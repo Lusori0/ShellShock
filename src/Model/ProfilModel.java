@@ -13,4 +13,8 @@ public class ProfilModel {
 
         profilView = new ProfilView(this, name);
     }
+
+    public void backAction(){
+
+    }
 }
