@@ -12,4 +12,12 @@ public class SinglePlayerModel {
 
         MyWindow.setContent(singlePlayerView);
     }
+
+    public void gegenKiAction(){
+
+    }
+
+    public void sandboxAction(){
+
+    }
 }

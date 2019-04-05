@@ -43,6 +43,6 @@ public class PreGameView extends JPanel implements ActionListener{
         {preGameModel.startAction();}
 
         if (e.getSource() == back)
-        {preGameModel.backAchtion();}
+        {preGameModel.backAction();}
     }
 }

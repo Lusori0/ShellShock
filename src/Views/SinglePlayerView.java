@@ -38,7 +38,7 @@ public class SinglePlayerView extends JPanel implements ActionListener {
 
         if (e.getSource() == sandbox)
         {
-            singlePlayerModel.sandboxAchtion();
+            singlePlayerModel.sandboxAction();
         }
     }
 

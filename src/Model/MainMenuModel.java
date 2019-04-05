@@ -20,4 +20,15 @@ public class MainMenuModel {
 
     }
 
+    public void einstellungenAction(){
+
+    }
+
+    public void profilAction(){
+
+    }
+
+    public void exitAction(){
+
+    }
 }

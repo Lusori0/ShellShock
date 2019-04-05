@@ -55,10 +55,10 @@ public class MainMenuView extends JPanel implements ActionListener {
             mainMenuModel.einstellungenAction();
         }
         if(e.getSource() == profil){
-            mainMenuModel.profilAchtion();
+            mainMenuModel.profilAction();
         }
         if(e.getSource() == exit){
-            mainMenuModel.exitAchtion();
+            mainMenuModel.exitAction();
         }
     }
 }
