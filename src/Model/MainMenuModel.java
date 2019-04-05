@@ -20,4 +20,15 @@ public class gitMainMenuModel {
 
     }
 
+    public void einstellungenAction(){
+
+    }
+
+    public void profilAction(){
+
+    }
+
+    public void exitAction(){
+
+    }
 }

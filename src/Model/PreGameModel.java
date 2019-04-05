@@ -11,4 +11,16 @@ public class PreGameModel {
 
         MyWindow.setContent(preGameView);
     }
+
+    public void gameSettingsAction(){
+
+    }
+
+    public void startAction(){
+
+    }
+
+    public void backAction(){
+
+    }
 }
