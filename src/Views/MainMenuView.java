@@ -25,14 +25,16 @@ public class MainMenuView extends JPanel implements ActionListener {
 
         exit = new MyButton("Exit");
 
+        multiplayer = new MyButton("Mehrspieler");
+
         singelplayer.addActionListener(this);
         einstellungen.addActionListener(this);
         profil.addActionListener(this);
         exit.addActionListener(this);
+        multiplayer.addActionListener(this);
 
 
 
-        multiplayer = new MyButton("Mehrspieler");
 
         this.add(singelplayer);
         this.add(multiplayer);

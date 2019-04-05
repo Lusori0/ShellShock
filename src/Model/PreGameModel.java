@@ -4,11 +4,9 @@ import Views.PreGameView;
 import Window.MyWindow;
 
 public class PreGameModel {
-    PreGameView preGameView;
 
     public PreGameModel() {
-        preGameView = new PreGameView(this);
-
+        PreGameView preGameView = new PreGameView(this);
         MyWindow.setContent(preGameView);
     }
 

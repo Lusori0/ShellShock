@@ -13,28 +13,38 @@ public class ProfilModel {
 
     public ProfilModel(){
         String name = "Default Tom";
+        int level = 10;
 
         File f = new File("data/profil.bin");
+
         if(f.exists() && !f.isDirectory()) {
             try {
-                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("data/profil.bin"));
 
+                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("data/profil.bin"));
                 Profil profilRead = (Profil) objectInputStream.readObject();
                 objectInputStream.close();
+
                 name = profilRead.getName();
             }
+
             catch(IOException | ClassNotFoundException e){
                 System.out.println("Read Fehler: " + e);
             }
         }
+
         else{
             try{
+
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("data/profil.bin"));
+
                 name = JOptionPane.showInputDialog("Gib deinen Namen ein");
-                Profil profil = new Profil(name);
+
+                Profil profil = new Profil(name, level);
                 objectOutputStream.writeObject(profil);
                 objectOutputStream.close();
+
             }
+
             catch(IOException e){
                 System.out.println("Write Fehler: " + e);
             }

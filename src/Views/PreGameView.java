@@ -13,7 +13,7 @@ public class PreGameView extends JPanel implements ActionListener{
 
     MyButton gameSettings,start,back;
 
-    public PreGameView (PreGameModel PreGameModel)
+    public PreGameView (PreGameModel preGameModel)
     {
         this.preGameModel = preGameModel;
 
@@ -36,13 +36,16 @@ public class PreGameView extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getSource() == gameSettings)
-        {preGameModel.gameSettingsAction();}
+        if (e.getSource() == gameSettings) {
+            preGameModel.gameSettingsAction();
+        }
 
-        if (e.getSource() == start)
-        {preGameModel.startAction();}
+        if (e.getSource() == start) {
+            preGameModel.startAction();
+        }
 
-        if (e.getSource() == back)
-        {preGameModel.backAction();}
+        if (e.getSource() == back) {
+            preGameModel.backAction();
+        }
     }
 }
