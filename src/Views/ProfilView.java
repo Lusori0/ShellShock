@@ -1,6 +1,6 @@
 package Views;
 
-import Model.Profil;
+import Model.ProfilModel;
 import Window.MyButton;
 
 import javax.swing.*;
@@ -17,7 +17,7 @@ public class ProfilView extends JFrame implements ActionListener {
 
     JLabel nameDisplay;
 
-    public ProfilView (Profil profilModel, String name)
+    public ProfilView (ProfilModel profilModel, String name)
     {
         this.profilModell = profilModel;
 
@@ -34,7 +34,7 @@ public class ProfilView extends JFrame implements ActionListener {
     {
       if (e.getSource() == back)
       {
-          profilModell.backAchtion();
+          profilModell.backAction();
       }
     }
 }
