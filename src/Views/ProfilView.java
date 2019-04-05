@@ -24,6 +24,8 @@ public class ProfilView extends JFrame implements ActionListener {
         this.name = name;
 
         back = new MyButton("BACK");
+        back.addActionListener(this);
+        this.add(back);
 
         nameDisplay = new JLabel(name);
 

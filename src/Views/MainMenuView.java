@@ -12,7 +12,7 @@ public class MainMenuView extends JPanel implements ActionListener {
 
     MainMenuModel mainMenuModel;
 
-    MyButton singelplayer,multiplayer;
+    MyButton singelplayer,multiplayer,einstellungen,profil,exit;
 
     public MainMenuView(MainMenuModel mainMenuModel) {
         this.mainMenuModel = mainMenuModel;
