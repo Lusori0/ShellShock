@@ -3,7 +3,7 @@ package Model;
 import Views.MainMenuView;
 import Window.MyWindow;
 
-public class gitMainMenuModel {
+public class MainMenuModel {
 
     private MainMenuView mainMenuView;
 
