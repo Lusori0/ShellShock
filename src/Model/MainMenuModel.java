@@ -12,4 +12,12 @@ public class MainMenuModel {
         MyWindow.setContent(mainMenuView);
     }
 
+    public void singlePlayerAction(){
+        SinglePlayerModel singlePlayerModel= new SinglePlayerModel();
+    }
+
+    public void multiplayerAction(){
+
+    }
+
 }
