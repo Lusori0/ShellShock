@@ -1,4 +1,6 @@
 package Views;
 
-public class SinglePlayerView {
+import javax.swing.*;
+
+public class SinglePlayerView extends JPanel {
 }

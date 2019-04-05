@@ -2,12 +2,13 @@ package Views;
 
 import Model.MainMenuModel;
 import Model.SinglePlayerModel;
-import Window.ButtonAction;
 import Window.MyButton;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class MainMenuView extends JPanel {
+public class MainMenuView extends JPanel implements ActionListener {
 
     MainMenuModel mainMenuModel;
 
@@ -16,31 +17,35 @@ public class MainMenuView extends JPanel {
     public MainMenuView(MainMenuModel mainMenuModel) {
         this.mainMenuModel = mainMenuModel;
 
-        singelplayer = new MyButton(singelPlayerAction(),"Einzelspieler");
+        singelplayer = new MyButton("Einzelspieler");
+
+        singelplayer.addActionListener(this);
 
 
 
-        singelplayer.setFont(singelplayer.getFont().deriveFont((float)(singelplayer.getWidth()/2)));
-        singelplayer.setText("Baum");
 
-        multiplayer = new MyButton(multiplayerAction(),"Mehrspieler");
+        multiplayer = new MyButton("Mehrspieler");
 
         this.add(singelplayer);
         this.add(multiplayer);
     }
 
-    public ButtonAction multiplayerAction(){
-        return () -> singelplayer.doClick();
+    public void multiplayerAction(){
+
     }
 
-    public ButtonAction singelPlayerAction(){
-        return new ButtonAction() {
-            @Override
-            public void execute() {
-                new SinglePlayerModel();
-            }
-        };
+    public void singelPlayerAction(){
+        new SinglePlayerModel();
     }
 
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == singelplayer){
+            singelPlayerAction();
+        }
+        if(e.getSource() == multiplayer){
+            multiplayerAction();
+        }
+    }
 }
