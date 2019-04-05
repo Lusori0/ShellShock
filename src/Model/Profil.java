@@ -1,6 +1,8 @@
 package Model;
 
-public class Profil {
+import java.io.Serializable;
+
+public class Profil implements Serializable {
     private String name;
 
     public Profil(String name){

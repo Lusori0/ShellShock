@@ -1,6 +1,8 @@
 package Model;
 
 import Views.ProfilView;
+import Window.MyWindow;
+
 import java.io.*;
 
 
@@ -21,7 +23,7 @@ public class ProfilModel {
                 name = profilRead.getName();
             }
             catch(IOException | ClassNotFoundException e){
-                System.out.println("Fehler: " + e);
+                System.out.println("Read Fehler: " + e);
             }
         }
         else{
@@ -32,7 +34,7 @@ public class ProfilModel {
                 objectOutputStream.close();
             }
             catch(IOException e){
-                System.out.println("Fehler: " + e);
+                System.out.println("Write Fehler: " + e);
             }
         }
 
@@ -40,6 +42,8 @@ public class ProfilModel {
 
 
         profilView = new ProfilView(this, name);
+
+        MyWindow.setContent(profilView);
     }
 
     public void backAction(){

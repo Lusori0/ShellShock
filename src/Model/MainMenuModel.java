@@ -25,7 +25,7 @@ public class MainMenuModel {
     }
 
     public void profilAction(){
-
+        ProfilModel profilModel = new ProfilModel();
     }
 
     public void exitAction(){
