@@ -47,6 +47,6 @@ public class ProfilModel {
     }
 
     public void backAction(){
-
+        MainMenuModel mainMenuModel = new MainMenuModel();
     }
 }
