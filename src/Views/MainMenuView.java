@@ -32,9 +32,6 @@ public class MainMenuView extends JPanel implements ActionListener {
 
 
 
-
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == singelplayer){
