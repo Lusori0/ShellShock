@@ -11,7 +11,7 @@ public class SinglePlayerView extends JPanel implements ActionListener {
 
     SinglePlayerModel singlePlayerModel;
 
-    MyButton gegenKi,sandbox;
+    MyButton gegenKi,sandbox,back;
 
     public SinglePlayerView(SinglePlayerModel singlePlayerModel)
     {
@@ -21,12 +21,16 @@ public class SinglePlayerView extends JPanel implements ActionListener {
 
         sandbox = new MyButton("Sandbox");
 
+        back = new MyButton("Back");
+
 
         gegenKi.addActionListener(this);
         sandbox.addActionListener(this);
+        back.addActionListener(this);
 
         this.add(gegenKi);
         this.add(sandbox);
+        this.add(back);
     }
 
     public void actionPerformed(ActionEvent e)
@@ -39,6 +43,11 @@ public class SinglePlayerView extends JPanel implements ActionListener {
         if (e.getSource() == sandbox)
         {
             singlePlayerModel.sandboxAction();
+        }
+
+        if (e.getSource() == back)
+        {
+            singlePlayerModel.backAction();
         }
     }
 
