@@ -29,6 +29,8 @@ public class ProfilView extends JPanel implements ActionListener {
 
         nameDisplay = new JLabel(name);
 
+        this.add(nameDisplay);
+
     }
 
     @Override

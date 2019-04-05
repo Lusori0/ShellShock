@@ -7,7 +7,7 @@ public class PreGameModel {
     PreGameView preGameView;
 
     public PreGameModel() {
-        this.preGameView = new PreGameView(this);
+        preGameView = new PreGameView(this);
 
         MyWindow.setContent(preGameView);
     }
@@ -21,6 +21,6 @@ public class PreGameModel {
     }
 
     public void backAction(){
-
+        MainMenuModel mainMenuModel = new MainMenuModel();
     }
 }

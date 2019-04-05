@@ -5,10 +5,9 @@ import Window.MyWindow;
 
 public class MainMenuModel {
 
-    private MainMenuView mainMenuView;
 
     public MainMenuModel(){
-        mainMenuView = new MainMenuView(this);
+        MainMenuView mainMenuView = new MainMenuView(this);
         MyWindow.setContent(mainMenuView);
     }
 
@@ -21,7 +20,7 @@ public class MainMenuModel {
     }
 
     public void einstellungenAction(){
-
+        SettingsModel settingsModel = new SettingsModel();
     }
 
     public void profilAction(){
@@ -29,6 +28,6 @@ public class MainMenuModel {
     }
 
     public void exitAction(){
-
+        System.exit(0);
     }
 }

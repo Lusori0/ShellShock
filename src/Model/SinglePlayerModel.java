@@ -22,6 +22,6 @@ public class SinglePlayerModel {
     }
 
     public void backAction(){
-
+        MainMenuModel mainMenuModel = new MainMenuModel();
     }
 }
