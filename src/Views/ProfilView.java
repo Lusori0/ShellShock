@@ -55,7 +55,7 @@ public class ProfilView extends JPanel implements ActionListener {
 
       if(e.getSource() == deleteProfil)
       {
-          deleteProfil.profilLoeschenAction();
+          profilModell.profilLoeschenAction();
       }
     }
 }

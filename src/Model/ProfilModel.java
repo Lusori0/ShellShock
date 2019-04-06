@@ -64,7 +64,13 @@ public class ProfilModel {
         MainMenuModel mainMenuModel = new MainMenuModel();
     }
     public void profilLoeschenAction(){
-        File file = new File("data/profil.bin");
-        file.delete();
+        int response = JOptionPane.showConfirmDialog(null,"Willst du wirklich dein Profil löschen. Dein ganzer Fortschritt geht verloren",
+                "Confirm",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        if(response == JOptionPane.YES_OPTION) {
+            File file = new File("data/profil.bin");
+            file.delete();
+            MainMenuModel mainMenuModel = new MainMenuModel();
+        }
+
     }
 }
