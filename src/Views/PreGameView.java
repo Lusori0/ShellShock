@@ -3,6 +3,7 @@ package Views;
 import Model.PreGameModel;
 import Model.SinglePlayerModel;
 import Window.MyButton;
+import Window.MyWindow;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -18,6 +19,8 @@ public class PreGameView extends JPanel implements ActionListener{
     public PreGameView (PreGameModel preGameModel)
     {
         this.preGameModel = preGameModel;
+
+        this.setBackground(MyWindow.backgroundColor);
 
         start = new MyButton("","START",startImg);
         start.addActionListener(this);

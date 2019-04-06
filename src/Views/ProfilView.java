@@ -31,6 +31,7 @@ public class ProfilView extends JPanel implements ActionListener {
         this.name = name;
         this.level = level;
 
+        this.setBackground(MyWindow.backgroundColor);
 
         deleteProfil = new MyButton("","Profil löschen",deleProfilImg);
         deleteProfil.addActionListener(this);
