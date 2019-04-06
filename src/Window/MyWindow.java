@@ -15,11 +15,11 @@ public class MyWindow{
 
 
     private Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-    public static int WIDTH ;
-    public static int HEIGHT  ;
+    public static int WIDTH;
+    public static int HEIGHT;
+    public final static Color backgroundColor = new Color(30,30,30);
 
-
-   static   JFrame window;
+    static JFrame window;
 
     ImageIcon img;
 
@@ -34,8 +34,10 @@ public class MyWindow{
         window = new JFrame("SchoolShock");
 
         window.setUndecorated(true);
+
         WIDTH = (int)getWidth(screensize);
         HEIGHT = (int) getHeight(screensize);
+        //backgroundColor = new Color(30,30,30);
 
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
 

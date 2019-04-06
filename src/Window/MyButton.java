@@ -28,7 +28,7 @@ public class MyButton extends JButton {
         else{
             imageIcon = new ImageIcon("res/buttons/" + dateiname);
         }
-        imageIcon.setImage(imageIcon.getImage().getScaledInstance(buttonWidth,buttonHeigth,Image.SCALE_DEFAULT));
+        imageIcon.setImage(imageIcon.getImage().getScaledInstance(buttonWidth + 2,buttonHeigth + 2,Image.SCALE_SMOOTH));
         this.setIcon(imageIcon);
         this.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
     }

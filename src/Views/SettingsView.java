@@ -2,6 +2,7 @@ package Views;
 
 import Model.SettingsModel;
 import Window.MyButton;
+import Window.MyWindow;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -18,6 +19,8 @@ public class SettingsView extends JPanel implements ActionListener {
     public SettingsView ( SettingsModel settingsModel)
     {
         this.settingsModel = settingsModel;
+
+        this.setBackground(MyWindow.backgroundColor);
 
         muteMusik = new MyButton("","muteMusik",muteMusikImg);
         muteMusik.addActionListener(this);

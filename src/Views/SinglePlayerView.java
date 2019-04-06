@@ -2,6 +2,7 @@ package Views;
 
 import Model.SinglePlayerModel;
 import Window.MyButton;
+import Window.MyWindow;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ public class SinglePlayerView extends JPanel implements ActionListener {
     {
         this.singlePlayerModel = singlePlayerModel;
 
+        this.setBackground(MyWindow.backgroundColor);
 
         gegenKi = new MyButton("","GegenKI", gegenKiImg);
         gegenKi.addActionListener(this);
