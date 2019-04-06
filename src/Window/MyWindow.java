@@ -14,10 +14,10 @@ import java.util.concurrent.Flow;
 public class MyWindow{
 
 
-    //private Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
+    private Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
     public static int WIDTH = 1200;
     public static int HEIGHT = 800;
-    //rivate Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
+
 
     static JFrame window;
 
@@ -42,6 +42,17 @@ public class MyWindow{
 
     }
 
+/*
+    public double getWidth(Dimension d)
+    {
+        return screensize.getWidth();
+    }
+
+    public double getHeigth(Dimension d)
+    {
+        return screensize.getHeight();
+    }
+*/
 
 
     public static void setContent(JPanel panel){
@@ -70,7 +81,6 @@ public class MyWindow{
                 System.out.println("Write Fehler: " + e);
             }
         }
-
 
     }
 }
