@@ -88,7 +88,11 @@ public class MyWindow{
 
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("data/profil.bin"));
 
-                String name = JOptionPane.showInputDialog("Gib deinen Namen ein");
+                JOptionPane optionPane = new JOptionPane(1);
+
+                
+
+                String name = optionPane.showInputDialog("Gib denen Namen ein");
 
                 Profil profil = new Profil(name, 0);
                 objectOutputStream.writeObject(profil);
