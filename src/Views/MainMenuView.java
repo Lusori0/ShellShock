@@ -5,6 +5,8 @@ import Model.SinglePlayerModel;
 import Window.MyButton;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.plaf.basic.DefaultMenuLayout;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,17 +22,25 @@ public class MainMenuView extends JPanel implements ActionListener {
     public MainMenuView(MainMenuModel mainMenuModel) {
         this.mainMenuModel = mainMenuModel;
 
+
+
+
+
+
         singelplayer = new MyButton("KnopfSingleplayerMetallic1.png","Singleplayer", singleplayerImg);
         singelplayer.addActionListener(this);
         //singleplayerImg = new ImageIcon("res\\buttons\\KnopfSingleplayerMetallic1.png");
         //singelplayer.setIcon(singleplayerImg);
+
         this.add(singelplayer);
+        //this.add(Box.createRigidArea(new Dimension(250,100)));
 
 
         multiplayer = new MyButton("KnopfMultiplayerMetallic1.png","Mehrspieler",multiplayerImg);
         multiplayer.addActionListener(this);
         //multiplayerImg = new ImageIcon("");
         // multiplayer.setIcon(multiplayerImg);
+
         this.add(multiplayer);
 
 
@@ -38,6 +48,7 @@ public class MainMenuView extends JPanel implements ActionListener {
         einstellungen.addActionListener(this);
         //einstellungenImg = new ImageIcon("");
          // einstellungen.setIcon(einstellungenImg);
+
         this.add(einstellungen);
 
 
@@ -45,6 +56,7 @@ public class MainMenuView extends JPanel implements ActionListener {
         profil.addActionListener(this);
         //profilImg = new ImageIcon("");
         // profil.setIcon(profilImg);
+
         this.add(profil);
 
 
@@ -52,6 +64,7 @@ public class MainMenuView extends JPanel implements ActionListener {
         exit.addActionListener(this);
         //exitImg = new ImageIcon("");
         // exit.setIcon(exitImg);
+
         this.add(exit);
 
 
