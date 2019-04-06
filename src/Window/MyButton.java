@@ -20,7 +20,8 @@ public class MyButton extends JButton {
         this.dateiname = dateiname;
         this.imageIcon = imageIcon;
         imageIcon = new ImageIcon("res\\buttons\\"+ dateiname);
+        imageIcon.setImage(imageIcon.getImage().getScaledInstance(MyWindow.WIDTH/4,MyWindow.HEIGHT/10,Image.SCALE_DEFAULT));
         this.setIcon(imageIcon);
-        this.setPreferredSize(new Dimension(253,103));
+        this.setPreferredSize(new Dimension(MyWindow.WIDTH/4,MyWindow.HEIGHT/10));
     }
 }
