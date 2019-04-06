@@ -1,7 +1,9 @@
 package Views;
 
+import Model.Profil;
 import Model.ProfilModel;
 import Window.MyButton;
+import Window.MyWindow;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -13,24 +15,28 @@ public class ProfilView extends JPanel implements ActionListener {
 
     String name;
 
+    int level;
+
     MyButton back;
 
-    JLabel nameDisplay;
+    JLabel nameDisplay,levelDisplay;
 
-    public ProfilView (ProfilModel profilModel, String name)
+    public ProfilView (ProfilModel profilModell, String name,int level)
     {
-        this.profilModell = profilModel;
+        this.profilModell = profilModell;
 
         this.name = name;
+        this.level = level;
 
         back = new MyButton("BACK");
         back.addActionListener(this);
         this.add(back);
 
-        nameDisplay = new JLabel(name);
+        nameDisplay = new JLabel("Profilname: "+name);
+        levelDisplay = new JLabel("Level :"+level + "");
 
         this.add(nameDisplay);
-
+        this.add(levelDisplay);
     }
 
     @Override
