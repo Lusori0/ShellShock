@@ -6,12 +6,11 @@ import Window.MyWindow;
 public class SettingsModel {
 
     public SettingsModel(){
-        SettingsView settingsView = new SettingsView(this);
-        MyWindow.setContent(settingsView);
+        MyWindow.setContent(new SettingsView(this));
     }
 
     public void backAction(){
-        MainMenuModel mainMenuModel = new MainMenuModel();
+        new MainMenuModel();
     }
 
     public void muteMusikAction(){

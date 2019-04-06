@@ -9,8 +9,6 @@ import java.io.*;
 
 public class ProfilModel {
 
-    private ProfilView profilView;
-
     public ProfilModel(){
 
         String name = "Default Tom";
@@ -34,15 +32,14 @@ public class ProfilModel {
 
 
 
-        profilView = new ProfilView(this, name, level);
 
-        MyWindow.setContent(profilView);
+        MyWindow.setContent(new ProfilView(this, name, level));
     }
 
 
 
     public void backAction(){
-        MainMenuModel mainMenuModel = new MainMenuModel();
+        new MainMenuModel();
     }
     public void profilLoeschenAction(){
         int response = JOptionPane.showConfirmDialog(null,"Willst du wirklich dein Profil löschen. Dein ganzer Fortschritt geht verloren",
@@ -50,7 +47,7 @@ public class ProfilModel {
         if(response == JOptionPane.YES_OPTION) {
             File file = new File("data/profil.bin");
             file.delete();
-            MainMenuModel mainMenuModel = new MainMenuModel();
+            new MainMenuModel();
             MyWindow.makeNewProfile();
         }
 
