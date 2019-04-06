@@ -27,7 +27,7 @@ public class MainMenuView extends JPanel implements ActionListener {
         this.add(singelplayer);
 
 
-        multiplayer = new MyButton("","Mehrspieler",multiplayerImg);
+        multiplayer = new MyButton("KnopfMultiplayerMetallic1.png","Mehrspieler",multiplayerImg);
         multiplayer.addActionListener(this);
         //multiplayerImg = new ImageIcon("");
         // multiplayer.setIcon(multiplayerImg);
