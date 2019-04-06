@@ -53,7 +53,7 @@ public class ProfilModel {
 
 
 
-        profilView = new ProfilView(this, name);
+        profilView = new ProfilView(this, name, level);
 
         MyWindow.setContent(profilView);
     }
