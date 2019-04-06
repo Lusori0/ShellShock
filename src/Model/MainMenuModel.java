@@ -7,24 +7,24 @@ public class MainMenuModel {
 
 
     public MainMenuModel(){
-        MainMenuView mainMenuView = new MainMenuView(this);
-        MyWindow.setContent(mainMenuView);
+
+        MyWindow.setContent(new MainMenuView(this));
     }
 
     public void singlePlayerAction(){
-        SinglePlayerModel singlePlayerModel= new SinglePlayerModel();
+        new SinglePlayerModel();
     }
 
     public void multiplayerAction(){
-        PreGameModel preGameModel = new PreGameModel();
+        new PreGameModel();
     }
 
     public void einstellungenAction(){
-        SettingsModel settingsModel = new SettingsModel();
+        new SettingsModel();
     }
 
     public void profilAction(){
-        ProfilModel profilModel = new ProfilModel();
+        new ProfilModel();
     }
 
     public void exitAction(){

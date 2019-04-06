@@ -5,12 +5,11 @@ import Window.MyWindow;
 
 public class SinglePlayerModel {
 
-    SinglePlayerView singlePlayerView;
+
 
     public SinglePlayerModel() {
-        this.singlePlayerView = new SinglePlayerView(this);
 
-        MyWindow.setContent(singlePlayerView);
+        MyWindow.setContent(new SinglePlayerView(this));
     }
 
     public void gegenKiAction(){
@@ -22,6 +21,6 @@ public class SinglePlayerModel {
     }
 
     public void backAction(){
-        MainMenuModel mainMenuModel = new MainMenuModel();
+        new MainMenuModel();
     }
 }

@@ -1,9 +1,14 @@
 package Window;
 
 import Model.MainMenuModel;
+import Model.Profil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.concurrent.Flow;
 
 public class MyWindow{
@@ -32,7 +37,12 @@ public class MyWindow{
 
         window.setVisible(true);
         new MainMenuModel();
+
+        makeNewProfile();
+
     }
+
+
 
     public static void setContent(JPanel panel){
         window.setContentPane(panel);
@@ -40,14 +50,27 @@ public class MyWindow{
         window.setVisible(true);
     }
 
-    /*
-    public double getHeighz(Dimension d)
-    {
-        return screensize.getHeight();
+
+    public static void makeNewProfile(){
+        File file = new File("data/profil.bin");
+        if(!file.exists()){
+            try{
+
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("data/profil.bin"));
+
+                String name = JOptionPane.showInputDialog("Gib deinen Namen ein");
+
+                Profil profil = new Profil(name, 0);
+                objectOutputStream.writeObject(profil);
+                objectOutputStream.close();
+
+            }
+
+            catch(IOException e){
+                System.out.println("Write Fehler: " + e);
+            }
+        }
+
+
     }
-
-    public double getWidth(Dimension d) {
-        return screensize.getWidth();
-    }*/
-
 }

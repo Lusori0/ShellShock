@@ -6,8 +6,7 @@ import Window.MyWindow;
 public class PreGameModel {
 
     public PreGameModel() {
-        PreGameView preGameView = new PreGameView(this);
-        MyWindow.setContent(preGameView);
+        MyWindow.setContent(new PreGameView(this));
     }
 
     public void gameSettingsAction(){
@@ -19,6 +18,6 @@ public class PreGameModel {
     }
 
     public void backAction(){
-        MainMenuModel mainMenuModel = new MainMenuModel();
+        new MainMenuModel();
     }
 }
