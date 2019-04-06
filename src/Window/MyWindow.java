@@ -15,49 +15,66 @@ public class MyWindow{
 
 
     private Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-    public static int WIDTH = 1200;
-    public static int HEIGHT = 800;
+    public static int WIDTH ;
+    public static int HEIGHT  ;
 
 
-    static JFrame window;
+   static   JFrame window;
+
+    ImageIcon img;
+
+    JLabel bImg;
 
     public static void main(String args[]){
         new MyWindow();
     }
 
+
     public MyWindow() {
         window = new JFrame("SchoolShock");
 
-        window.setSize(WIDTH,HEIGHT);
-        //WIDTH = (int)getWidth(screensize);
-        //HEIGHT = (int) getHeighz(screensize);
+        window.setUndecorated(true);
+        WIDTH = (int)getWidth(screensize);
+        HEIGHT = (int) getHeight(screensize);
 
+        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
         window.setVisible(true);
-        new MainMenuModel();
 
+        new MainMenuModel();
         makeNewProfile();
 
-    }
 
+    }
 /*
+    private void background() {
+        //
+        img = new ImageIcon("res/buttons/KnopfMultiplayerMetallic1.png");
+        bImg.setIcon(img);
+        bImg.setSize(WIDTH,HEIGHT);
+        window.add(bImg);
+        //
+    }*/
+
+
+
     public double getWidth(Dimension d)
     {
         return screensize.getWidth();
     }
 
-    public double getHeigth(Dimension d)
+    public double getHeight(Dimension d)
     {
         return screensize.getHeight();
     }
-*/
+
 
 
     public static void setContent(JPanel panel){
         window.setContentPane(panel);
-        //panel.setLayout(new FlowLayout());
+
+
         window.setVisible(true);
     }
 

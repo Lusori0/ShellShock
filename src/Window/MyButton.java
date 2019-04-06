@@ -14,7 +14,7 @@ public class MyButton extends JButton {
     ImageIcon imageIcon;
 
     public MyButton(String dateiname,String text,ImageIcon imageIcon) {
-
+        this.setBackground(Color.PINK);
         this.text = text;
         this.setToolTipText(text);
         this.dateiname = dateiname;
@@ -25,7 +25,7 @@ public class MyButton extends JButton {
         else{
             imageIcon = new ImageIcon("res/buttons/" + dateiname);
         }
-        imageIcon.setImage(imageIcon.getImage().getScaledInstance(MyWindow.WIDTH/4,MyWindow.HEIGHT/10,Image.SCALE_DEFAULT));
+        imageIcon.setImage(imageIcon.getImage().getScaledInstance(MyWindow.WIDTH/4+10,MyWindow.HEIGHT/10+10,Image.SCALE_DEFAULT));
         this.setIcon(imageIcon);
         this.setPreferredSize(new Dimension(MyWindow.WIDTH/4,MyWindow.HEIGHT/10));
     }

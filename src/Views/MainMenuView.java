@@ -19,12 +19,15 @@ public class MainMenuView extends JPanel implements ActionListener {
 
     ImageIcon singleplayerImg,multiplayerImg,einstellungenImg,profilImg,exitImg;
 
+    ImageIcon img;
+
+    JLabel bImg;
+
     public MainMenuView(MainMenuModel mainMenuModel) {
         this.mainMenuModel = mainMenuModel;
 
-
-
-
+        Color backgroundcolor = new Color(30,30,30);
+        this.setBackground(backgroundcolor);
 
 
         singelplayer = new MyButton("KnopfSingleplayerMetallic1.png","Singleplayer", singleplayerImg);
@@ -33,7 +36,7 @@ public class MainMenuView extends JPanel implements ActionListener {
         //singelplayer.setIcon(singleplayerImg);
 
         this.add(singelplayer);
-        //this.add(Box.createRigidArea(new Dimension(250,100)));
+
 
 
         multiplayer = new MyButton("KnopfMultiplayerMetallic1.png","Mehrspieler",multiplayerImg);
@@ -69,6 +72,7 @@ public class MainMenuView extends JPanel implements ActionListener {
 
 
     }
+
 
 
 
