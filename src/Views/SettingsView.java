@@ -26,7 +26,7 @@ public class SettingsView extends JPanel implements ActionListener {
         this.add(muteMusik);
 
 
-        back = new MyButton("","Back",backImg);
+        back = new MyButton("KnopfZurückMetallic1.png","Back",backImg);
         back.addActionListener(this);
         //   backImg = new ImageIcon("");
         //   back.setIcon(backImg);

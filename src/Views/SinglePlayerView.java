@@ -34,7 +34,7 @@ public class SinglePlayerView extends JPanel implements ActionListener {
         this.add(sandbox);
 
 
-        back = new MyButton("","Back",backImg);
+        back = new MyButton("KnopfZurückMetallic1.png","Back",backImg);
         back.addActionListener(this);
         // backImg = new ImageIcon("");
         //back.setIcon(backImg);

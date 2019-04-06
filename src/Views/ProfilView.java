@@ -38,7 +38,7 @@ public class ProfilView extends JPanel implements ActionListener {
         //deleteProfil.setIcon(deleProfilImg);
         this.add(deleteProfil);
 
-        back = new MyButton("","back",backImg);
+        back = new MyButton("KnopfZurückMetallic1.png","back",backImg);
         back.addActionListener(this);
         // backImg = new ImageIcon("");
         //back.setIcon(backImg);

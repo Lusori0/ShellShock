@@ -33,7 +33,7 @@ public class PreGameView extends JPanel implements ActionListener{
         this.add(gameSettings);
 
 
-        back = new MyButton ("","BACK", backImg);
+        back = new MyButton ("KnopfZurückMetallic1.png","BACK", backImg);
         back.addActionListener(this);
         // backImg = new ImageIcon("");
          // back.setIcon(backImg);
