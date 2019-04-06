@@ -17,18 +17,19 @@ public class PreGameView extends JPanel implements ActionListener{
     {
         this.preGameModel = preGameModel;
 
+
         gameSettings = new MyButton("Spieleinstelluungen");
-        start = new MyButton("START");
-        back = new MyButton ("BACK");
-
         gameSettings.addActionListener(this);
-        start.addActionListener(this);
-        back.addActionListener(this);
-
         this.add(gameSettings);
-        this.add(start);
-        this.add(back);
 
+
+        start = new MyButton("START");
+        start.addActionListener(this);
+        this.add(start);
+
+        back = new MyButton ("BACK");
+        back.addActionListener(this);
+        this.add(back);
 
 
     }

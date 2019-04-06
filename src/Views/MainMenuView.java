@@ -5,6 +5,7 @@ import Model.SinglePlayerModel;
 import Window.MyButton;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,29 +19,29 @@ public class MainMenuView extends JPanel implements ActionListener {
         this.mainMenuModel = mainMenuModel;
 
         singelplayer = new MyButton("Einzelspieler");
+        singelplayer.addActionListener(this);
+        this.add(singelplayer);
+
 
         einstellungen = new MyButton("Einstellungen");
+        einstellungen.addActionListener(this);
+        this.add(einstellungen);
+
 
         profil = new MyButton("Profil");
+        profil.addActionListener(this);
+        this.add(profil);
+
 
         exit = new MyButton("Exit");
+        exit.addActionListener(this);
+        this.add(exit);
+
 
         multiplayer = new MyButton("Mehrspieler");
-
-        singelplayer.addActionListener(this);
-        einstellungen.addActionListener(this);
-        profil.addActionListener(this);
-        exit.addActionListener(this);
         multiplayer.addActionListener(this);
-
-
-
-
-        this.add(singelplayer);
         this.add(multiplayer);
-        this.add(einstellungen);
-        this.add(profil);
-        this.add(exit);
+
     }
 
 

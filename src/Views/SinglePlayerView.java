@@ -17,20 +17,22 @@ public class SinglePlayerView extends JPanel implements ActionListener {
     {
         this.singlePlayerModel = singlePlayerModel;
 
+
         gegenKi = new MyButton("GegenKI");
+        gegenKi.addActionListener(this);
+        this.add(gegenKi);
+
 
         sandbox = new MyButton("Sandbox");
+        sandbox.addActionListener(this);
+        this.add(sandbox);
+
 
         back = new MyButton("Back");
-
-
-        gegenKi.addActionListener(this);
-        sandbox.addActionListener(this);
         back.addActionListener(this);
-
-        this.add(gegenKi);
-        this.add(sandbox);
         this.add(back);
+
+
     }
 
     public void actionPerformed(ActionEvent e)

@@ -1,4 +1,25 @@
 package Views;
 
-public class GameUiView {
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class GameUiView extends JPanel implements ActionListener {
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
 }

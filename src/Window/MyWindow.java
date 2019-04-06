@@ -3,11 +3,13 @@ package Window;
 import Model.MainMenuModel;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.concurrent.Flow;
 
 public class MyWindow{
 
-    public static int WIDTH = 1000;
-    public static int HEIGHT = 1000;
+    public static int WIDTH = 1200;
+    public static int HEIGHT = 800;
 
     static JFrame window;
 
@@ -26,9 +28,15 @@ public class MyWindow{
 
         new MainMenuModel();
     }
+    /*//Test von Layouts --> SCHWIERIGE Nummer ;)
+    public static  void layoutTry(JPanel jpanel)
+    {
+        jpanel.setLayout(new GridLayout(0,1));
+    }*/
 
     public static void setContent(JPanel panel){
         window.setContentPane(panel);
+        //layoutTry(panel);
         window.setVisible(true);
     }
 
