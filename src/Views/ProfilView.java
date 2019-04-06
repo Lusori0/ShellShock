@@ -20,6 +20,8 @@ public class ProfilView extends JPanel implements ActionListener {
 
     MyButton back,deleteProfil;
 
+    ImageIcon backImg,deleProfilImg;
+
     JLabel nameDisplay,levelDisplay;
 
     public ProfilView (ProfilModel profilModell, String name,int level)
@@ -29,17 +31,21 @@ public class ProfilView extends JPanel implements ActionListener {
         this.name = name;
         this.level = level;
 
-        back = new MyButton("BACK");
+
+        deleteProfil = new MyButton("","Profil löschen",deleProfilImg);
+        deleteProfil.addActionListener(this);
+       // deleProfilImg = new ImageIcon("");
+        //deleteProfil.setIcon(deleProfilImg);
+        this.add(deleteProfil);
+
+        back = new MyButton("","back",backImg);
         back.addActionListener(this);
+        // backImg = new ImageIcon("");
+        //back.setIcon(backImg);
         this.add(back);
 
-        deleteProfil = new MyButton("Profil löschen");
-        deleteProfil.addActionListener(this);
-        this.add(deleteProfil);
-        
-
-        nameDisplay = new JLabel("Profilname: "+name);
-        levelDisplay = new JLabel("Level :"+level + "");
+        nameDisplay = new JLabel("Profilname: "+"\t"+name);
+        levelDisplay = new JLabel("Level :"+"\t"+level );
 
         this.add(nameDisplay);
         this.add(levelDisplay);

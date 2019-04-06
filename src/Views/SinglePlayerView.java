@@ -13,23 +13,31 @@ public class SinglePlayerView extends JPanel implements ActionListener {
 
     MyButton gegenKi,sandbox,back;
 
+    ImageIcon gegenKiImg,sandboxImg,backImg;
+
     public SinglePlayerView(SinglePlayerModel singlePlayerModel)
     {
         this.singlePlayerModel = singlePlayerModel;
 
 
-        gegenKi = new MyButton("GegenKI");
+        gegenKi = new MyButton("","GegenKI", gegenKiImg);
         gegenKi.addActionListener(this);
+        //gegenKiImg = new ImageIcon("");
+        //gegenKi.setIcon(gegenKiImg);
         this.add(gegenKi);
 
 
-        sandbox = new MyButton("Sandbox");
+        sandbox = new MyButton("","Sandbox",sandboxImg);
         sandbox.addActionListener(this);
+        //sandboxImg = new ImageIcon("");
+        //sandbox.setIcon(sandboxImg);
         this.add(sandbox);
 
 
-        back = new MyButton("Back");
+        back = new MyButton("","Back",backImg);
         back.addActionListener(this);
+        // backImg = new ImageIcon("");
+        //back.setIcon(backImg);
         this.add(back);
 
 

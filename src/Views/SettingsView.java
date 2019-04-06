@@ -11,20 +11,28 @@ public class SettingsView extends JPanel implements ActionListener {
 
     MyButton back,muteMusik;
 
+    ImageIcon backImg,muteMusikImg;
+
     SettingsModel settingsModel;
 
     public SettingsView ( SettingsModel settingsModel)
     {
         this.settingsModel = settingsModel;
 
-        back = new MyButton("Back");
+        muteMusik = new MyButton("","muteMusik",muteMusikImg);
+        muteMusik.addActionListener(this);
+        //  muteMusikImg = new ImageIcon("");
+        // muteMusik.setIcon(muteMusikImg);
+        this.add(muteMusik);
+
+
+        back = new MyButton("","Back",backImg);
         back.addActionListener(this);
+        //   backImg = new ImageIcon("");
+        //   back.setIcon(backImg);
         this.add(back);
 
 
-        muteMusik = new MyButton("muteMusik");
-        muteMusik.addActionListener(this);
-        this.add(muteMusik);
 
 
     }

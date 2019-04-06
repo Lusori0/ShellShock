@@ -10,13 +10,17 @@ public class MyButton extends JButton {
 
 
     String text;
+    String dateiname;
+    ImageIcon imageIcon;
 
-    public MyButton(String text) {
+    public MyButton(String dateiname,String text,ImageIcon imageIcon) {
 
         this.text = text;
-
-        this.setText(text);
-
-        this.setPreferredSize(new Dimension(MyWindow.WIDTH/4,MyWindow.HEIGHT/10));
+        this.setToolTipText(text);
+        this.dateiname = dateiname;
+        this.imageIcon = imageIcon;
+        imageIcon = new ImageIcon("res\\buttons\\"+ dateiname);
+        this.setIcon(imageIcon);
+        this.setPreferredSize(new Dimension(253,103));
     }
 }

@@ -13,22 +13,30 @@ public class PreGameView extends JPanel implements ActionListener{
 
     MyButton gameSettings,start,back;
 
+    ImageIcon gameSettingsImg,startImg,backImg;
+
     public PreGameView (PreGameModel preGameModel)
     {
         this.preGameModel = preGameModel;
 
+        start = new MyButton("","START",startImg);
+        start.addActionListener(this);
+        //startImg = new ImageIcon("");
+        // start.setIcon(startImg);
+        this.add(start);
 
-        gameSettings = new MyButton("Spieleinstelluungen");
+
+        gameSettings = new MyButton("","Spieleinstellungen",gameSettingsImg);
         gameSettings.addActionListener(this);
+        // gameSettingsImg = new ImageIcon("");
+        //gameSettings.setIcon(gameSettingsImg);
         this.add(gameSettings);
 
 
-        start = new MyButton("START");
-        start.addActionListener(this);
-        this.add(start);
-
-        back = new MyButton ("BACK");
+        back = new MyButton ("","BACK", backImg);
         back.addActionListener(this);
+        // backImg = new ImageIcon("");
+         // back.setIcon(backImg);
         this.add(back);
 
 

@@ -15,32 +15,45 @@ public class MainMenuView extends JPanel implements ActionListener {
 
     MyButton singelplayer,multiplayer,einstellungen,profil,exit;
 
+    ImageIcon singleplayerImg,multiplayerImg,einstellungenImg,profilImg,exitImg;
+
     public MainMenuView(MainMenuModel mainMenuModel) {
         this.mainMenuModel = mainMenuModel;
 
-        singelplayer = new MyButton("Einzelspieler");
+        singelplayer = new MyButton("KnopfSingleplayerMetallic1.png","Singleplayer", singleplayerImg);
         singelplayer.addActionListener(this);
+        //singleplayerImg = new ImageIcon("res\\buttons\\KnopfSingleplayerMetallic1.png");
+        //singelplayer.setIcon(singleplayerImg);
         this.add(singelplayer);
 
 
-        einstellungen = new MyButton("Einstellungen");
+        multiplayer = new MyButton("","Mehrspieler",multiplayerImg);
+        multiplayer.addActionListener(this);
+        //multiplayerImg = new ImageIcon("");
+        // multiplayer.setIcon(multiplayerImg);
+        this.add(multiplayer);
+
+
+        einstellungen = new MyButton("","Einstellungen",einstellungenImg);
         einstellungen.addActionListener(this);
+        //einstellungenImg = new ImageIcon("");
+         // einstellungen.setIcon(einstellungenImg);
         this.add(einstellungen);
 
 
-        profil = new MyButton("Profil");
+        profil = new MyButton("","Profil",profilImg);
         profil.addActionListener(this);
+        //profilImg = new ImageIcon("");
+        // profil.setIcon(profilImg);
         this.add(profil);
 
 
-        exit = new MyButton("Exit");
+        exit = new MyButton("","Exit",exitImg);
         exit.addActionListener(this);
+        //exitImg = new ImageIcon("");
+        // exit.setIcon(exitImg);
         this.add(exit);
 
-
-        multiplayer = new MyButton("Mehrspieler");
-        multiplayer.addActionListener(this);
-        this.add(multiplayer);
 
     }
 
