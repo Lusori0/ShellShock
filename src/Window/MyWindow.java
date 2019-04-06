@@ -23,10 +23,6 @@ public class MyWindow{
 
     static JFrame window;
 
-    ImageIcon img;
-
-    JLabel bImg;
-
     public static void main(String args[]){
         new MyWindow();
     }
