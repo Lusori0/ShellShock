@@ -1,16 +1,14 @@
 package Views;
 
 import Model.MainMenuModel;
-import Model.SinglePlayerModel;
+import Window.MyWindow;
 import Window.MyButton;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.plaf.basic.DefaultMenuLayout;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import Window.MyWindow;
+
 
 public class MainMenuView extends JPanel implements ActionListener {
 
@@ -24,17 +22,24 @@ public class MainMenuView extends JPanel implements ActionListener {
 
     public MainMenuView(MainMenuModel mainMenuModel) {
         this.mainMenuModel = mainMenuModel;
+
         //Erstellen der Standard Backgrpundcolor
         this.setBackground(MyWindow.backgroundColor);
+
         // Ersellen des Loadouts
 
         this.setLayout(new GridBagLayout());
         GridBagConstraints g = new GridBagConstraints();
 
 
+        //Initialisierung/Erzeugen der Buttons
+
+
+
 
         singelplayer = new MyButton("KnopfSingleplayerMetallic1.png","Singleplayer", singleplayerImg);
         singelplayer.addActionListener(this);
+
         //Einstellen von der Anordnung
         g.weightx = 0.5;
         g.fill = GridBagConstraints.VERTICAL;
@@ -45,9 +50,10 @@ public class MainMenuView extends JPanel implements ActionListener {
         this.add(singelplayer,g);
 
 
-
+        //Initialisierung/Erzeugen der Buttons
         multiplayer = new MyButton("KnopfMultiplayerMetallic1.png","Mehrspieler",multiplayerImg);
         multiplayer.addActionListener(this);
+
         //Einstellen von der Anordnung
         g.fill = GridBagConstraints.VERTICAL;
         g.weightx = 0.5f;
@@ -57,9 +63,10 @@ public class MainMenuView extends JPanel implements ActionListener {
         //Einfügen der Buttons in Abhängigkeit der GridBag
         this.add(multiplayer,g);
 
-
+        //Initialisierung/Erzeugen der Buttons
         einstellungen = new MyButton("","Einstellungen",einstellungenImg);
         einstellungen.addActionListener(this);
+
         //Einstellen von der Anordnung
         g.fill = GridBagConstraints.VERTICAL;
         g.weightx = 0.5f;
@@ -70,9 +77,10 @@ public class MainMenuView extends JPanel implements ActionListener {
         this.add(einstellungen,g);
 
 
-
+        //Initialisierung/Erzeugen der Buttons
         profil = new MyButton("","Profil",profilImg);
         profil.addActionListener(this);
+
         //Einstellen von der Anordnung
         g.fill = GridBagConstraints.VERTICAL;
         g.weightx = 0.5f;
@@ -82,9 +90,10 @@ public class MainMenuView extends JPanel implements ActionListener {
         //Einfügen der Buttons in Abhängigkeit der GridBag
         this.add(profil, g);
 
-
+        //Initialisierung/Erzeugen der Buttons
         exit = new MyButton("","Exit",exitImg);
         exit.addActionListener(this);
+
         //Einstellen von der Anordnung
         g.fill = GridBagConstraints.VERTICAL;
         g.weightx = 0.5f;   //request any extra vertical space
@@ -102,7 +111,7 @@ public class MainMenuView extends JPanel implements ActionListener {
 
 
 
-
+    //Aufruf/Schnittstelle mit Manuel-Methoden
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == singelplayer){

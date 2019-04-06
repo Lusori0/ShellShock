@@ -5,6 +5,7 @@ import Window.MyButton;
 import Window.MyWindow;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,20 +21,40 @@ public class SettingsView extends JPanel implements ActionListener {
     {
         this.settingsModel = settingsModel;
 
+        // Ersellen des Loadouts
+
+        this.setLayout(new GridBagLayout());
+        GridBagConstraints g = new GridBagConstraints();
+
+
+
         this.setBackground(MyWindow.backgroundColor);
 
         muteMusik = new MyButton("","muteMusik",muteMusikImg);
         muteMusik.addActionListener(this);
-        //  muteMusikImg = new ImageIcon("");
-        // muteMusik.setIcon(muteMusikImg);
-        this.add(muteMusik);
+        //Einstellen von der Anordnung
+        g.weightx = 0.5;
+        g.fill = GridBagConstraints.VERTICAL;
+        g.gridx = 0;
+        g.insets= new Insets(100,0,0,0);
+        g.gridy = 0;
+        //Einfügen der Buttons in Abhängigkeit der GridBag
+        this.add(muteMusik,g);
+
 
 
         back = new MyButton("KnopfZurückMetallic1.png","Back",backImg);
         back.addActionListener(this);
-        //   backImg = new ImageIcon("");
-        //   back.setIcon(backImg);
-        this.add(back);
+
+        //Einstellen von der Anordnung
+        g.weightx = 0.5;
+        g.fill = GridBagConstraints.VERTICAL;
+        g.gridx = 0;
+        g.insets= new Insets(100,0,0,0);
+        g.gridy = 1;
+        //Einfügen der Buttons in Abhängigkeit der GridBag
+        this.add(back,g);
+
 
 
 
