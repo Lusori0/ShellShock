@@ -4,7 +4,9 @@ import Model.MainMenuModel;
 import Model.Profil;
 
 import javax.swing.*;
+import javax.swing.plaf.OptionPaneUI;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -37,7 +39,6 @@ public class MyWindow{
 
         WIDTH = (int)getWidth(screensize);
         HEIGHT = (int) getHeight(screensize);
-        //backgroundColor = new Color(30,30,30);
 
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
@@ -49,15 +50,7 @@ public class MyWindow{
 
 
     }
-/*
-    private void background() {
-        //
-        img = new ImageIcon("res/buttons/KnopfMultiplayerMetallic1.png");
-        bImg.setIcon(img);
-        bImg.setSize(WIDTH,HEIGHT);
-        window.add(bImg);
-        //
-    }*/
+
 
 
     //Ermittlund der Screensize
@@ -90,7 +83,7 @@ public class MyWindow{
 
                 JOptionPane optionPane = new JOptionPane(1);
 
-                
+
 
                 String name = optionPane.showInputDialog("Gib denen Namen ein");
 
