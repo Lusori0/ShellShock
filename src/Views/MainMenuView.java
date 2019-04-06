@@ -28,7 +28,6 @@ public class MainMenuView extends JPanel implements ActionListener {
         Color c = new Color(30,30,30);
         this.setBackground(c);
 
-
         singelplayer = new MyButton("KnopfSingleplayerMetallic1.png","Singleplayer", singleplayerImg);
         singelplayer.addActionListener(this);
         //singleplayerImg = new ImageIcon("res\\buttons\\KnopfSingleplayerMetallic1.png");
