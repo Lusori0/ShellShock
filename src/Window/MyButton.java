@@ -19,7 +19,12 @@ public class MyButton extends JButton {
         this.setToolTipText(text);
         this.dateiname = dateiname;
         this.imageIcon = imageIcon;
-        imageIcon = new ImageIcon("res\\buttons\\"+ dateiname);
+        if(System.getProperty("os.name").contains("Win")) {
+            imageIcon = new ImageIcon("res\\buttons\\" + dateiname);
+        }
+        else{
+            imageIcon = new ImageIcon("res/buttons/" + dateiname);
+        }
         imageIcon.setImage(imageIcon.getImage().getScaledInstance(MyWindow.WIDTH/4,MyWindow.HEIGHT/10,Image.SCALE_DEFAULT));
         this.setIcon(imageIcon);
         this.setPreferredSize(new Dimension(MyWindow.WIDTH/4,MyWindow.HEIGHT/10));
