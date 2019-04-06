@@ -27,10 +27,16 @@ public class MainMenuView extends JPanel implements ActionListener {
         this.setBackground(MyWindow.backgroundColor);
 
         // Ersellen des Loadouts
+
         this.setLayout(new GridBagLayout());
         GridBagConstraints g = new GridBagConstraints();
 
+
         //Initialisierung/Erzeugen der Buttons
+
+
+
+
         singelplayer = new MyButton("KnopfSingleplayerMetallic1.png","Singleplayer", singleplayerImg);
         singelplayer.addActionListener(this);
 

@@ -18,7 +18,11 @@ public class MyButton extends JButton {
         buttonWidth = MyWindow.WIDTH/10;
         buttonHeigth = buttonWidth*2/5;
 
-        this.setBackground(Color.PINK);
+
+
+        this.setBackground(MyWindow.backgroundColor);
+        this.setBorder(BorderFactory.createRaisedBevelBorder());
+
         this.text = text;
         //Hinweist-Text wir eingefügt
         this.setToolTipText(text);
