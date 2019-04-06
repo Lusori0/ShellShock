@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.concurrent.Flow;
+
 
 public class MyWindow{
 
@@ -60,7 +60,7 @@ public class MyWindow{
     }*/
 
 
-
+    //Ermittlund der Screensize
     public double getWidth(Dimension d)
     {
         return screensize.getWidth();

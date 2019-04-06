@@ -20,7 +20,9 @@ public class ProfilView extends JPanel implements ActionListener {
 
     MyButton back,deleteProfil;
 
-    ImageIcon backImg,deleProfilImg;
+    JLabel panzer;
+
+    ImageIcon backImg,deleProfilImg,panzerImg;
 
     JLabel nameDisplay,levelDisplay;
 
