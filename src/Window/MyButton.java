@@ -19,6 +19,4 @@ public class MyButton extends JButton {
 
         this.setPreferredSize(new Dimension(MyWindow.WIDTH/4,MyWindow.HEIGHT/10));
     }
-
-
 }

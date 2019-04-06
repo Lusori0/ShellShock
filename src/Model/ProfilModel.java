@@ -63,4 +63,8 @@ public class ProfilModel {
     public void backAction(){
         MainMenuModel mainMenuModel = new MainMenuModel();
     }
+    public void profilLoeschenAction(){
+        File file = new File("data/profil.bin");
+        file.delete();
+    }
 }
