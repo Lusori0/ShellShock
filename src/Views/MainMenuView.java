@@ -25,9 +25,8 @@ public class MainMenuView extends JPanel implements ActionListener {
 
     public MainMenuView(MainMenuModel mainMenuModel) {
         this.mainMenuModel = mainMenuModel;
-
-        Color backgroundcolor = new Color(30,30,30);
-        this.setBackground(backgroundcolor);
+        Color c = new Color(30,30,30);
+        this.setBackground(c);
 
 
         singelplayer = new MyButton("KnopfSingleplayerMetallic1.png","Singleplayer", singleplayerImg);
@@ -35,7 +34,7 @@ public class MainMenuView extends JPanel implements ActionListener {
         //singleplayerImg = new ImageIcon("res\\buttons\\KnopfSingleplayerMetallic1.png");
         //singelplayer.setIcon(singleplayerImg);
 
-        this.add(singelplayer);
+        //this.add(singelplayer);
 
 
 
@@ -44,7 +43,7 @@ public class MainMenuView extends JPanel implements ActionListener {
         //multiplayerImg = new ImageIcon("");
         // multiplayer.setIcon(multiplayerImg);
 
-        this.add(multiplayer);
+      //  this.add(multiplayer);
 
 
         einstellungen = new MyButton("","Einstellungen",einstellungenImg);
@@ -52,7 +51,7 @@ public class MainMenuView extends JPanel implements ActionListener {
         //einstellungenImg = new ImageIcon("");
          // einstellungen.setIcon(einstellungenImg);
 
-        this.add(einstellungen);
+       // this.add(einstellungen);
 
 
         profil = new MyButton("","Profil",profilImg);
@@ -60,7 +59,7 @@ public class MainMenuView extends JPanel implements ActionListener {
         //profilImg = new ImageIcon("");
         // profil.setIcon(profilImg);
 
-        this.add(profil);
+        //this.add(profil);
 
 
         exit = new MyButton("","Exit",exitImg);
@@ -68,9 +67,26 @@ public class MainMenuView extends JPanel implements ActionListener {
         //exitImg = new ImageIcon("");
         // exit.setIcon(exitImg);
 
-        this.add(exit);
+       // this.add(exit);
+
+        this.setLayout(new GridBagLayout());
+        JPanel objekt_Panel = new JPanel();
+        objekt_Panel.setBackground(c);
+        objekt_Panel.add(singelplayer);
+        objekt_Panel.add(multiplayer);
+        objekt_Panel.add(einstellungen);
+        objekt_Panel.add(profil);
+        objekt_Panel.add(exit);
+        GridBagConstraints objekt_GridbagConstraints = new GridBagConstraints();
+        objekt_GridbagConstraints.fill = GridBagConstraints.BOTH;
+        objekt_GridbagConstraints.gridx = 0;
+        objekt_GridbagConstraints.gridy = 0;
+        objekt_GridbagConstraints.weightx = 0;
+        objekt_GridbagConstraints.weighty = 1;
 
 
+
+        this.add(objekt_Panel,objekt_GridbagConstraints);
     }
 
 
