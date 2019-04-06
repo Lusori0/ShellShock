@@ -17,7 +17,8 @@ public class MyButton extends JButton {
     public MyButton(String dateiname,String text,ImageIcon imageIcon) {
         buttonWidth = MyWindow.WIDTH/10;
         buttonHeigth = buttonWidth*2/5;
-        this.setBackground(Color.PINK);
+        this.setBackground(MyWindow.backgroundColor);
+        this.setBorder(BorderFactory.createRaisedBevelBorder());
         this.text = text;
         this.setToolTipText(text);
         this.dateiname = dateiname;
