@@ -29,29 +29,80 @@ public class ProfilView extends JPanel implements ActionListener {
     public ProfilView (ProfilModel profilModell, String name,int level)
     {
         this.profilModell = profilModell;
+        this.setBackground(MyWindow.backgroundColor);
+
+        this.setLayout(new GridBagLayout());
+        GridBagConstraints g = new GridBagConstraints();
 
         this.name = name;
-        this.level = level;
+        nameDisplay = new JLabel("Profilname: "+"\t"+name);
+        //Erstellen der Anordnung
+        g.weightx = 0.5;
+        g.fill = GridBagConstraints.VERTICAL;
+        g.gridx = 0;
+        g.insets= new Insets(100,0,0,0);
+        g.gridy = 0;
+        //Einfügen der Buttons in Abhängigkeit der GridBag
+        this.add(nameDisplay,g);
 
-        this.setBackground(MyWindow.backgroundColor);
+
+        this.level = level;
+        levelDisplay = new JLabel("Level :"+"\t"+level );
+        //Erstellen der Anordnung
+        g.weightx = 0.5;
+        g.fill = GridBagConstraints.VERTICAL;
+        g.gridx = 0;
+        g.insets= new Insets(100,0,0,0);
+        g.gridy = 1;
+        //Einfügen der Buttons in Abhängigkeit der GridBag
+        this.add(levelDisplay,g);
+
+
+
+
+
+        panzer = new JLabel();
+        if(System.getProperty("os.name").contains("Win")) {
+            panzerImg = new ImageIcon("res\\buttons\\KnopfSingleplayerMetallic1.png" );
+        }
+        else{
+            panzerImg = new ImageIcon("res/buttons/KnopfSingleplayerMetallic1.png" );
+        }
+        panzer.setIcon(panzerImg);
+        //Erstellen der Anordnung
+        g.weightx = 0.5;
+        g.fill = GridBagConstraints.VERTICAL;
+        g.gridx = 0;
+        g.insets= new Insets(100,0,0,0);
+        g.gridy = 2;
+        //Einfügen der Buttons in Abhängigkeit der GridBag
+        this.add(panzer,g);
+
 
         deleteProfil = new MyButton("","Profil löschen",deleProfilImg);
         deleteProfil.addActionListener(this);
-       // deleProfilImg = new ImageIcon("");
-        //deleteProfil.setIcon(deleProfilImg);
-        this.add(deleteProfil);
+        //Erstellen der Anordnung
+        g.weightx = 0.5;
+        g.fill = GridBagConstraints.VERTICAL;
+        g.gridx = 0;
+        g.insets= new Insets(100,0,0,0);
+        g.gridy = 3;
+        //Einfügen der Buttons in Abhängigkeit der GridBag
+        this.add(deleteProfil,g);
+
+
 
         back = new MyButton("KnopfZurückMetallic1.png","back",backImg);
         back.addActionListener(this);
-        // backImg = new ImageIcon("");
-        //back.setIcon(backImg);
-        this.add(back);
+        //Erstellen der Anordnung
+        g.weightx = 0.5;
+        g.fill = GridBagConstraints.VERTICAL;
+        g.gridx = 0;
+        g.insets= new Insets(100,0,0,0);
+        g.gridy = 4;
+        //Einfügen der Buttons in Abhängigkeit der GridBag
+        this.add(back,g);
 
-        nameDisplay = new JLabel("Profilname: "+"\t"+name);
-        levelDisplay = new JLabel("Level :"+"\t"+level );
-
-        this.add(nameDisplay);
-        this.add(levelDisplay);
     }
 
     @Override
