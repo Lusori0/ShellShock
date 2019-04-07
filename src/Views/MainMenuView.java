@@ -97,7 +97,7 @@ public class MainMenuView extends JPanel implements ActionListener {
 
 
         //Initialisierung/Erzeugen der Buttons
-        profil = new MyButton("", "Profil", profilImg);
+        profil = new MyButton("KnopfProfilMetallic1.png", "Profil", profilImg);
         profil.addActionListener(this);
 
         //Einstellen von der Anordnung
