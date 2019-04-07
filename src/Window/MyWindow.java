@@ -27,6 +27,8 @@ public class MyWindow{
     public static int HEIGHT;
     public final static Color backgroundColor = new Color(30,30,30);
 
+    private static Sound music;
+
 
     static JFrame window;
 
@@ -52,7 +54,7 @@ public class MyWindow{
 
 
         new MainMenuModel();
-        new Sound();
+        music = new Sound();
         makeNewProfile();
 
 
@@ -71,6 +73,10 @@ public class MyWindow{
     public double getHeight(Dimension d)
     {
         return screensize.getHeight();
+    }
+
+    public static void stopMusic(){
+        music.muteMusic();
     }
 
 

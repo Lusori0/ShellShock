@@ -22,7 +22,7 @@ public class SettingsModel {
 
     public void muteMusikAction(){
 
-        Sound.clip.close();
+        MyWindow.stopMusic();
     }
 
     public void startMusicAction()
