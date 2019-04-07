@@ -2,7 +2,10 @@ package Window;
 
 import Model.MainMenuModel;
 import Model.Profil;
+
 import Views.Sound;
+
+import Views.CreateProfil;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.LineUnavailableException;
@@ -82,28 +85,15 @@ public class MyWindow{
 
 
     public static void makeNewProfile(){
+
         File file = new File("data/profil.bin");
         if(!file.exists()){
-            try{
 
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("data/profil.bin"));
+            setContent(new CreateProfil());
 
-                JOptionPane optionPane = new JOptionPane(1);
-
-
-
-                String name = optionPane.showInputDialog("Gib denen Namen ein");
-
-                Profil profil = new Profil(name, 0);
-                objectOutputStream.writeObject(profil);
-                objectOutputStream.close();
-
-            }
-
-            catch(IOException e){
-                System.out.println("Write Fehler: " + e);
-            }
         }
+
+
 
     }
 }
