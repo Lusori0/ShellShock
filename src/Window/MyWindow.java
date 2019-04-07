@@ -3,6 +3,7 @@ package Window;
 import Model.MainMenuModel;
 import Model.Profil;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.plaf.OptionPaneUI;
 import java.awt.*;
@@ -11,6 +12,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.net.URL;
 
 
 public class MyWindow{
@@ -23,9 +25,8 @@ public class MyWindow{
 
     static JFrame window;
 
-    public static void main(String args[]){
-        new MyWindow();
-    }
+    public static void main(String args[]){new MyWindow();}
+
 
 
     public MyWindow() {
@@ -38,14 +39,17 @@ public class MyWindow{
 
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setVisible(true);
+
 
         new MainMenuModel();
         makeNewProfile();
 
 
     }
+
 
 
 
@@ -59,6 +63,7 @@ public class MyWindow{
     {
         return screensize.getHeight();
     }
+
 
 
 
