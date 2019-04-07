@@ -35,7 +35,7 @@ public class ProfilView extends JPanel implements ActionListener {
         GridBagConstraints g = new GridBagConstraints();
 
         this.name = name;
-        nameDisplay = new JLabel("Profilname: "+"\t"+name);
+        nameDisplay = new JLabel("<html><font size = +5><font color = 'white'>Profilname : <font color='green'><font size = +5>"+name+"</font></html>");
         //Erstellen der Anordnung
         g.weightx = 0.5;
         g.fill = GridBagConstraints.VERTICAL;
@@ -47,7 +47,7 @@ public class ProfilView extends JPanel implements ActionListener {
 
 
         this.level = level;
-        levelDisplay = new JLabel("Level :"+"\t"+level );
+        levelDisplay = new JLabel("<html><font size = +5><font color = 'white'>Level : <font color='red'><font size = +5>"+level+"</font></html>");
         //Erstellen der Anordnung
         g.weightx = 0.5;
         g.fill = GridBagConstraints.VERTICAL;
