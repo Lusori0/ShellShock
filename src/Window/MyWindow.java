@@ -2,17 +2,20 @@ package Window;
 
 import Model.MainMenuModel;
 import Model.Profil;
+
+import Views.Sound;
+
 import Views.CreateProfil;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.plaf.OptionPaneUI;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.net.URL;
 
 
@@ -24,13 +27,16 @@ public class MyWindow{
     public static int HEIGHT;
     public final static Color backgroundColor = new Color(30,30,30);
 
+
     static JFrame window;
 
-    public static void main(String args[]){new MyWindow();}
+    // Image als Hintergrund  C:\Users\Santo\Desktop\Schule\Informatik\ShellShock\res\buttons\KnopfSingleplayerMetallic1.png
+
+    public static void main(String args[]) throws UnsupportedAudioFileException, IOException, LineUnavailableException {new MyWindow();}
 
 
 
-    public MyWindow() {
+    public MyWindow() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         window = new JFrame("SchoolShock");
 
         window.setUndecorated(true);
@@ -46,7 +52,9 @@ public class MyWindow{
 
 
         new MainMenuModel();
+        new Sound();
         makeNewProfile();
+
 
 
     }
@@ -69,10 +77,10 @@ public class MyWindow{
 
 
     public static void setContent(JPanel panel){
+
         window.setContentPane(panel);
-
-
         window.setVisible(true);
+
     }
 
 
