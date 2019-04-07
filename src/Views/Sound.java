@@ -36,11 +36,14 @@ public class Sound {
     }
 
     public void muteMusic(){
-        clip.stop();
+        if(clip.isRunning()) {
+            clip.stop();
+        }
+        else{
+            clip.start();
+        }
     }
 
-    public void startMusic(){
-        clip.start();
-    }
+
 
 }

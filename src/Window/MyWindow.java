@@ -75,11 +75,11 @@ public class MyWindow{
         return screensize.getHeight();
     }
 
-    public static void stopMusic(){
+    public static void muteMusic(){
         music.muteMusic();
     }
 
-    public static void startMusic() {music.startMusic();}
+
 
 
 

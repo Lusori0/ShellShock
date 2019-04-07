@@ -22,22 +22,8 @@ public class SettingsModel {
 
     public void muteMusikAction(){
 
-        MyWindow.stopMusic();
+        MyWindow.muteMusic();
     }
 
-    public void startMusicAction()
-    {
-        /*
-        try {
-            new Sound();
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        }
-        */
-        MyWindow.startMusic();
-    }
+
 }
