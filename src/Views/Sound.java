@@ -30,6 +30,7 @@ public class Sound {
             in = AudioSystem.getAudioInputStream(soundFile);
             clip.open(in);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
+
             clip.start();
 
 

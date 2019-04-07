@@ -11,9 +11,9 @@ import java.awt.event.ActionListener;
 
 public class SettingsView extends JPanel implements ActionListener {
 
-    MyButton back,muteMusik,startMusik;
+    MyButton back,muteMusik;
 
-    ImageIcon backImg,muteMusikImg,startMusikImg;
+    ImageIcon backImg,muteMusikImg;
 
     SettingsModel settingsModel;
 
@@ -75,6 +75,5 @@ public class SettingsView extends JPanel implements ActionListener {
             settingsModel.muteMusikAction();
         }
 
-        
     }
 }
