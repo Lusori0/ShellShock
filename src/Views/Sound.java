@@ -39,4 +39,8 @@ public class Sound {
         clip.stop();
     }
 
+    public void startMusic(){
+        clip.start();
+    }
+
 }

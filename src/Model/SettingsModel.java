@@ -27,6 +27,7 @@ public class SettingsModel {
 
     public void startMusicAction()
     {
+        /*
         try {
             new Sound();
         } catch (LineUnavailableException e) {
@@ -36,5 +37,7 @@ public class SettingsModel {
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         }
+        */
+        MyWindow.startMusic();
     }
 }

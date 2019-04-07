@@ -79,6 +79,8 @@ public class MyWindow{
         music.muteMusic();
     }
 
+    public static void startMusic() {music.startMusic();}
+
 
 
 
