@@ -15,7 +15,7 @@ public class MyButton extends JButton {
 
     public MyButton(String dateiname,String text,ImageIcon imageIcon) {
         // Ausrechnung der Dimersionen
-        buttonWidth = MyWindow.WIDTH/10;
+        buttonWidth = MyWindow.WIDTH/8;
         buttonHeigth = buttonWidth*2/5;
 
 

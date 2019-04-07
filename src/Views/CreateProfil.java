@@ -65,7 +65,7 @@ public class CreateProfil extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource() == submit) {
+        if (actionEvent.getSource() == submit && !textField.getText().isEmpty()) {
             String name = textField.getText();
             try {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("data/profil.bin"));
@@ -77,9 +77,8 @@ public class CreateProfil extends JPanel implements ActionListener {
             } catch (IOException e) {
                 System.out.println("Write Fehler: " + e);
             }
-
+            System.out.println(name);
             new MainMenuModel();
-
         }
     }
 }
