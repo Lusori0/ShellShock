@@ -11,9 +11,9 @@ import java.awt.event.ActionListener;
 
 public class SettingsView extends JPanel implements ActionListener {
 
-    MyButton back,muteMusik,startMusik;
+    MyButton back,muteMusik;
 
-    ImageIcon backImg,muteMusikImg,startMusikImg;
+    ImageIcon backImg,muteMusikImg;
 
     SettingsModel settingsModel;
 
@@ -41,16 +41,6 @@ public class SettingsView extends JPanel implements ActionListener {
         //Einfügen der Buttons in Abhängigkeit der GridBag
         this.add(muteMusik,g);
 
-        startMusik = new MyButton("","startMusik",startMusikImg);
-        startMusik.addActionListener(this);
-        //Einstellen von der Anordnung
-        g.weightx = 0.5;
-        g.fill = GridBagConstraints.VERTICAL;
-        g.gridx = 0;
-        g.insets= new Insets(100,0,0,0);
-        g.gridy = 1;
-        //Einfügen der Buttons in Abhängigkeit der GridBag
-        this.add(startMusik,g);
 
 
 
@@ -85,9 +75,5 @@ public class SettingsView extends JPanel implements ActionListener {
             settingsModel.muteMusikAction();
         }
 
-        if(e.getSource() == startMusik)
-        {
-            settingsModel.startMusicAction();
-        }
     }
 }

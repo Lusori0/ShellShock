@@ -8,7 +8,7 @@ import java.io.IOException;
 public class Sound {
 
 
-    static  File soundFile = new File("res\\sounds\\HauptmenüMusic.wav");
+    static  File soundFile;
 
     public static   Clip clip = null;
      AudioInputStream in = null;
@@ -16,13 +16,33 @@ public class Sound {
     public Sound() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 
 
+            if(System.getProperty("os.name").contains("Win")) {
+                soundFile = new File("res\\sounds\\HauptmenüMusic.wav");
+            }
+            else{
+                soundFile = new File("res/sounds/HauptmenüMusic.wav");
+            }
+
+
+
+
             clip = AudioSystem.getClip();
             in = AudioSystem.getAudioInputStream(soundFile);
             clip.open(in);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
+
             clip.start();
 
 
+    }
+
+    public void muteMusic(){
+        if(clip.isRunning()) {
+            clip.stop();
+        }
+        else{
+            clip.start();
+        }
     }
 
 

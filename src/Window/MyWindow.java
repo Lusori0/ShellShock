@@ -27,6 +27,8 @@ public class MyWindow{
     public static int HEIGHT;
     public final static Color backgroundColor = new Color(30,30,30);
 
+    private static Sound music;
+
 
     static JFrame window;
 
@@ -41,8 +43,8 @@ public class MyWindow{
 
         window.setUndecorated(true);
 
-        WIDTH = (int)getWidth(screensize);
-        HEIGHT = (int) getHeight(screensize);
+        WIDTH = (int)getWidth();
+        HEIGHT = (int) getHeight();
 
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
@@ -52,7 +54,7 @@ public class MyWindow{
 
 
         new MainMenuModel();
-        new Sound();
+        music = new Sound();
         makeNewProfile();
 
 
@@ -63,15 +65,21 @@ public class MyWindow{
 
 
     //Ermittlund der Screensize
-    public double getWidth(Dimension d)
+    public double getWidth()
     {
         return screensize.getWidth();
     }
 
-    public double getHeight(Dimension d)
+    public double getHeight()
     {
         return screensize.getHeight();
     }
+
+    public static void muteMusic(){
+        music.muteMusic();
+    }
+
+
 
 
 
