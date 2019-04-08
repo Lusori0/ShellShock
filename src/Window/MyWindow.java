@@ -1,22 +1,19 @@
 package Window;
 
 import Model.MainMenuModel;
-import Model.Profil;
+
 
 import Views.Sound;
 
 import Views.CreateProfil;
 
-import javax.imageio.ImageIO;
+
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
-import javax.swing.plaf.OptionPaneUI;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.URL;
+
 
 
 public class MyWindow{
@@ -52,11 +49,9 @@ public class MyWindow{
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setVisible(true);
 
-
         new MainMenuModel();
         music = new Sound();
         makeNewProfile();
-
 
 
     }
