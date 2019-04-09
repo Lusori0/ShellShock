@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -17,14 +18,14 @@ import java.net.URL;
 
 public class MainMenuView extends JPanel implements ActionListener {
 
-    MainMenuModel mainMenuModel;
+    private MainMenuModel mainMenuModel;
 
 
-    MyButton singelplayer, multiplayer, einstellungen, profil, exit, backgroundButton;
+    private MyButton singelplayer, multiplayer, einstellungen, profil, exit, backgroundButton;
 
-    Image background;
+    private BufferedImage background;
 
-    ImageIcon singleplayerImg, multiplayerImg, einstellungenImg, profilImg, exitImg;
+    private ImageIcon singleplayerImg, multiplayerImg, einstellungenImg, profilImg, exitImg;
 
 
 
@@ -37,11 +38,35 @@ public class MainMenuView extends JPanel implements ActionListener {
             // Erzeugen des Overlays
             erzeugenOverlay();
 
+            //Laden und Skalieren des Hintergrundbildes
+            File backgroundFile;
+            if(System.getProperty("os.name").contains("Win")) {
+                backgroundFile = new File("res/Wallpapertest.jpg");
+            }
+            else{
+                backgroundFile = new File("res/Wallpapertest.jpg");
+            }
 
+            try {
+                background = ImageIO.read(backgroundFile);
+            }
+            catch(Exception e){
+                System.out.println("Error loading background Image: " + e);
+            }
 
+            int imageWidth = background.getWidth();
+            int imageHeight = background.getHeight();
+            int cropX = (imageWidth - MyWindow.WIDTH) / 2;
+            int cropY = (imageHeight - MyWindow.HEIGHT) / 2;
+
+            background = background.getSubimage(cropX, cropY, MyWindow.WIDTH, MyWindow.HEIGHT);
     }
 
 
+    @Override
+    public void paintComponent(Graphics g){
+        g.drawImage(background,0,0,this);
+    }
 
 
 
@@ -123,21 +148,11 @@ public class MainMenuView extends JPanel implements ActionListener {
         //Einfügen der Buttons in Abhängigkeit der GridBag
         this.add(exit, g);
 
-        
 
-        if(System.getProperty("os.name").contains("Win")) {
-            background = Toolkit.getDefaultToolkit().createImage("res\\Wallpapertest.jpg");
-        }
-        else{
-            background = Toolkit.getDefaultToolkit().createImage("res/Wallpapertest.jpg");
-        }
 
     }
 
-    @Override
-    public void paintComponent(Graphics g){
-        g.drawImage(background,0,0,this);
-    }
+
 
 
 
