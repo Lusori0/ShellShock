@@ -31,7 +31,7 @@ public class MainMenuView extends JPanel implements ActionListener {
             this.mainMenuModel = mainMenuModel;
 
             //Erstellen der Standard Backgrpundcolor
-            this.setBackground(MyWindow.backgroundColor);
+            //this.setBackground(MyWindow.backgroundColor);
 
             // Erzeugen des Overlays
             erzeugenOverlay();
