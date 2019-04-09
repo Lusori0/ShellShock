@@ -22,9 +22,10 @@ public class MainMenuView extends JPanel implements ActionListener {
 
     MyButton singelplayer, multiplayer, einstellungen, profil, exit, backgroundButton;
 
-    JLabel background;
+    Image background;
 
     ImageIcon singleplayerImg, multiplayerImg, einstellungenImg, profilImg, exitImg;
+
 
 
     public MainMenuView(MainMenuModel mainMenuModel) {
@@ -122,10 +123,21 @@ public class MainMenuView extends JPanel implements ActionListener {
         //Einfügen der Buttons in Abhängigkeit der GridBag
         this.add(exit, g);
 
+        
 
+        if(System.getProperty("os.name").contains("Win")) {
+            background = Toolkit.getDefaultToolkit().createImage("res\\Wallpapertest.jpg");
+        }
+        else{
+            background = Toolkit.getDefaultToolkit().createImage("res/Wallpapertest.jpg");
+        }
 
     }
 
+    @Override
+    public void paintComponent(Graphics g){
+        g.drawImage(background,0,0,this);
+    }
 
 
 
