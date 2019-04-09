@@ -41,7 +41,7 @@ public class MainMenuView extends JPanel implements ActionListener {
             //Laden und Skalieren des Hintergrundbildes
             File backgroundFile;
             if(System.getProperty("os.name").contains("Win")) {
-                backgroundFile = new File("res/Wallpapertest.jpg");
+                backgroundFile = new File("res\\Wallpapertest.jpg");
             }
             else{
                 backgroundFile = new File("res/Wallpapertest.jpg");
