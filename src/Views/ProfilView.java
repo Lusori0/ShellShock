@@ -57,10 +57,6 @@ public class ProfilView extends JPanel implements ActionListener {
         //Einfügen der Buttons in Abhängigkeit der GridBag
         this.add(levelDisplay,g);
 
-
-
-
-
         panzer = new JLabel();
         if(System.getProperty("os.name").contains("Win")) {
             panzerImg = new ImageIcon("res\\buttons\\KnopfSingleplayerMetallic1.png" );
@@ -68,6 +64,7 @@ public class ProfilView extends JPanel implements ActionListener {
         else{
             panzerImg = new ImageIcon("res/buttons/KnopfSingleplayerMetallic1.png" );
         }
+
         panzer.setIcon(panzerImg);
         //Erstellen der Anordnung
         g.weightx = 0.5;

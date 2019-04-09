@@ -26,12 +26,8 @@ public class MyWindow{
 
     private static Sound music;
 
-    static JLayeredPane layeredPane ;
-    static  JLabel label = new JLabel();
-
-
     static JFrame window;
-    static JRootPane rootPane ;
+
 
     // Image als Hintergrund  C:\Users\Santo\Desktop\Schule\Informatik\ShellShock\res\buttons\KnopfSingleplayerMetallic1.png
 
@@ -41,7 +37,7 @@ public class MyWindow{
 
     public MyWindow() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         window = new JFrame("SchoolShock");
-        rootPane = new JRootPane();
+
 
         window.setUndecorated(true);
 

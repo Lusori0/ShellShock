@@ -3,6 +3,7 @@ package Views;
 import Model.MainMenuModel;
 import Window.MyWindow;
 import Window.MyButton;
+import Views.Background;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,7 +22,7 @@ public class MainMenuView extends JPanel implements ActionListener {
     private MainMenuModel mainMenuModel;
 
 
-    private MyButton singelplayer, multiplayer, einstellungen, profil, exit, backgroundButton;
+    private MyButton singelplayer, multiplayer, einstellungen, profil, exit;
 
     private BufferedImage background;
 
@@ -41,12 +42,14 @@ public class MainMenuView extends JPanel implements ActionListener {
             //Laden und Skalieren des Hintergrundbildes
             File backgroundFile;
             if(System.getProperty("os.name").contains("Win")) {
-                backgroundFile = new File("res\\Wallpapertest.jpg");
+                backgroundFile = new File("res\\gameimages\\Menübildschirm.png");
             }
             else{
-                backgroundFile = new File("res/Wallpapertest.jpg");
+                backgroundFile = new File("res/gameimages/Menübildschirm.png");
             }
+            background =new Background(backgroundFile).backgroundScaling(backgroundFile);
 
+            /*
             try {
                 background = ImageIO.read(backgroundFile);
             }
@@ -56,10 +59,12 @@ public class MainMenuView extends JPanel implements ActionListener {
 
             int imageWidth = background.getWidth();
             int imageHeight = background.getHeight();
-            int cropX = (imageWidth - MyWindow.WIDTH) / 2;
+            int cropX = (imageWidth -MyWindow.WIDTH) / 2;
             int cropY = (imageHeight - MyWindow.HEIGHT) / 2;
 
-            background = background.getSubimage(cropX, cropY, MyWindow.WIDTH, MyWindow.HEIGHT);
+            background = background.getSubimage(cropX, cropY,MyWindow.WIDTH, MyWindow.HEIGHT);
+            */
+
     }
 
 
@@ -177,8 +182,5 @@ public class MainMenuView extends JPanel implements ActionListener {
                 mainMenuModel.exitAction();
             }
 
-            if (e.getSource() == backgroundButton) {
-                mainMenuModel.exitAction();
-            }
     }
 }
