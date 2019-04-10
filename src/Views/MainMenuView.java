@@ -47,23 +47,24 @@ public class MainMenuView extends JPanel implements ActionListener {
             else{
                 backgroundFile = new File("res/gameimages/Menübildschirm.png");
             }
-            background =new Background(backgroundFile).backgroundScaling(backgroundFile);
 
-            /*
+
+
             try {
                 background = ImageIO.read(backgroundFile);
             }
             catch(Exception e){
                 System.out.println("Error loading background Image: " + e);
             }
+            if(background.getHeight() > MyWindow.HEIGHT){
+                int imageWidth = background.getWidth();
+                int imageHeight = background.getHeight();
+                int cropX = (imageWidth -MyWindow.WIDTH) / 2;
+                int cropY = (imageHeight - MyWindow.HEIGHT) / 2;
 
-            int imageWidth = background.getWidth();
-            int imageHeight = background.getHeight();
-            int cropX = (imageWidth -MyWindow.WIDTH) / 2;
-            int cropY = (imageHeight - MyWindow.HEIGHT) / 2;
+                background = background.getSubimage(cropX, cropY,MyWindow.WIDTH, MyWindow.HEIGHT);
+            }
 
-            background = background.getSubimage(cropX, cropY,MyWindow.WIDTH, MyWindow.HEIGHT);
-            */
 
     }
 
