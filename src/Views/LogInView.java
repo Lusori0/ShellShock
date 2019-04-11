@@ -74,7 +74,7 @@ public class LogInView extends JPanel implements ActionListener {
 
         ImageIcon singleplayerImg = new ImageIcon();
 
-        submit = new MyButton("KnopfSingleplayerMetallic1.png", "submit", singleplayerImg);
+        submit = new MyButton("KnopfSingleplayerMetallic1.png", "LogIn", singleplayerImg);
         submit.addActionListener(this);
         g.weightx = 0.5;
         g.fill = GridBagConstraints.VERTICAL;
@@ -84,7 +84,7 @@ public class LogInView extends JPanel implements ActionListener {
         //Einfügen der Buttons in Abhängigkeit der GridBag
         this.add(submit, g);
 
-        createProfil = new MyButton("KnopfSingleplayerMetallic1.png", "submit", singleplayerImg);
+        createProfil = new MyButton("KnopfSingleplayerMetallic1.png", "CreateNewAccount", singleplayerImg);
         createProfil.addActionListener(this);
         g.weightx = 0.5;
         g.fill = GridBagConstraints.VERTICAL;
