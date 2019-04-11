@@ -1,12 +1,8 @@
 package Window;
 
-import Model.MainMenuModel;
-
-
+import Model.LogInModel;
+import Model.ProfilModel;
 import Views.Sound;
-
-import Views.CreateProfil;
-
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -24,9 +20,12 @@ public class MyWindow{
     public static int HEIGHT;
     public final static Color backgroundColor = new Color(30,30,30);
 
+
     private static Sound music;
 
     static JFrame window;
+
+    private static String activeUser;
 
 
     // Image als Hintergrund  C:\Users\Santo\Desktop\Schule\Informatik\ShellShock\res\buttons\KnopfSingleplayerMetallic1.png
@@ -50,9 +49,10 @@ public class MyWindow{
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setVisible(true);
 
-        new MainMenuModel();
+
         music = new Sound();
-        makeNewProfile();
+        new LogInModel();
+
 
 
     }
@@ -76,6 +76,15 @@ public class MyWindow{
     }
 
 
+    //getter und setter
+
+    public static String getActiveUser(){
+        return activeUser;
+    }
+
+    public static void setActiveUser(String u){
+        activeUser = u;
+    }
 
 
 
@@ -90,14 +99,4 @@ public class MyWindow{
     }
 
 
-    public static void makeNewProfile(){
-
-        File file = new File("data/profil.bin");
-        if(!file.exists()){
-
-            setContent(new CreateProfil());
-
-        }
-
-    }
 }

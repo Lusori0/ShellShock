@@ -1,5 +1,6 @@
 package Model;
 
+
 import Views.ProfilView;
 import Window.MyWindow;
 import javax.swing.JOptionPane;
@@ -16,8 +17,8 @@ public class ProfilModel {
 
 
             try {
-
-                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("data/profil.bin"));
+                //Laden der Profildatei und setzen der Atribute
+                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("data/" + MyWindow.getActiveUser() + ".bin"));
                 Profil profilRead = (Profil) objectInputStream.readObject();
                 objectInputStream.close();
 
@@ -31,7 +32,7 @@ public class ProfilModel {
 
 
 
-
+        //Neue View mit Attributen erstellen
 
         MyWindow.setContent(new ProfilView(this, name, level));
     }
@@ -41,15 +42,17 @@ public class ProfilModel {
     public void backAction(){
         new MainMenuModel();
     }
+
     public void profilLoeschenAction(){
         int response = JOptionPane.showConfirmDialog(null,"Willst du wirklich dein Profil löschen. Dein ganzer Fortschritt geht verloren",
                 "Confirm",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+
         if(response == JOptionPane.YES_OPTION) {
-            File file = new File("data/profil.bin");
+            File file = new File("data/" + MyWindow.getActiveUser() + ".bin");
             file.delete();
             new MainMenuModel();
-            MyWindow.makeNewProfile();
         }
 
     }
+
 }
