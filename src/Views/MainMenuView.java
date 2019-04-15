@@ -66,13 +66,14 @@ public class MainMenuView extends JPanel implements ActionListener {
                 background = background.getSubimage(cropX, cropY,MyWindow.WIDTH, MyWindow.HEIGHT);
             }
             */
-
     }
 
     // Background zeichnen
     @Override
     public void paintComponent(Graphics g){
-        g.drawImage(background,0,0,this);
+
+            g.drawImage(background, 0, 0, this);
+
     }
 
 
