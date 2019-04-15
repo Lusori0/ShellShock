@@ -20,50 +20,71 @@ public class PreGameView extends JPanel implements ActionListener{
     public PreGameView (PreGameModel preGameModel)
     {
         this.preGameModel = preGameModel;
+        this.setBackground(MyWindow.backgroundColor);
+
+        erzeugenOverlay();
+    }
+
+    private void erzeugenOverlay()
+    {
+        // Ersellen des Loadouts in Abhängigkeit des Gridbaglayouts
 
         this.setLayout(new GridBagLayout());
         GridBagConstraints g = new GridBagConstraints();
 
-        this.setBackground(MyWindow.backgroundColor);
+        //Initialisierung/Erzeugen des Inhalts
+            start = new MyButton("","START",startImg);
+            start.addActionListener(this);
+            //Einstellen von der Anordnung
+                g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
-        start = new MyButton("","START",startImg);
-        start.addActionListener(this);
-        //Einstellen von der Anordnung
-        g.weightx = 0.5;
-        g.fill = GridBagConstraints.VERTICAL;
-        g.gridx = 0;
-        g.insets= new Insets(100,0,0,0);
-        g.gridy = 0;
-        //Einfügen der Buttons in Abhängigkeit der GridBag
-        this.add(start,g);
+                g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 
+                g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
 
-        gameSettings = new MyButton("","Spieleinstellungen",gameSettingsImg);
-        gameSettings.addActionListener(this);
-        //Einstellen von der Anordnung
-        g.weightx = 0.5;
-        g.fill = GridBagConstraints.VERTICAL;
-        g.gridx = 0;
-        g.insets= new Insets(100,0,0,0);
-        g.gridy = 1;
-        //Einfügen der Buttons in Abhängigkeit der GridBag
-        this.add(gameSettings,g);
+                g.insets= new Insets(100,0,0,0);// Erzeugen eines Abstandes mit dem nächsten Button
 
+                g.gridy = 0;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
 
-        back = new MyButton ("KnopfZurückMetallic1.png","BACK", backImg);
-        back.addActionListener(this);
-        //Einstellen von der Anordnung
-        g.weightx = 0.5;
-        g.fill = GridBagConstraints.VERTICAL;
-        g.gridx = 0;
-        g.insets= new Insets(100,0,0,0);
-        g.gridy = 2;
-        //Einfügen der Buttons in Abhängigkeit der GridBag
-        this.add(back,g);
+            //Einfügen der Inhalte in Abhängigkeit der GridBag
+            this.add(start,g);
 
+        //Initialisierung/Erzeugen des Inhalts
+            gameSettings = new MyButton("","Spieleinstellungen",gameSettingsImg);
+            gameSettings.addActionListener(this);
+            //Einstellen von der Anordnung
+                g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
+                g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
+
+                g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
+
+                g.insets= new Insets(100,0,0,0);// Erzeugen eines Abstandes mit dem nächsten Button
+
+                g.gridy = 1;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
+
+            //Einfügen der Inhalte in Abhängigkeit der GridBag
+            this.add(gameSettings,g);
+
+        //Initialisierung/Erzeugen des Inhalts
+            back = new MyButton ("KnopfZurückMetallic1.png","BACK", backImg);
+            back.addActionListener(this);
+            //Einstellen von der Anordnung
+                g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
+
+                g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
+
+                g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
+
+                g.insets= new Insets(100,0,0,0);// Erzeugen eines Abstandes mit dem nächsten Button
+
+                g.gridy = 2;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
+
+            //Einfügen der Inhalte in Abhängigkeit der GridBag
+            this.add(back,g);
     }
 
+    //Aufruf/Schnittstelle mit Manuel-Methoden/Was bei knopfdruck ausgeführt werden soll
     @Override
     public void actionPerformed(ActionEvent e)
     {

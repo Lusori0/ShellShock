@@ -39,7 +39,7 @@ public class MyWindow{
 
 
         window.setUndecorated(true);
-
+        //Festlegung der Variablen für spätere Verwendung
         WIDTH = (int)getWidth();
         HEIGHT = (int) getHeight();
 

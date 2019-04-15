@@ -31,77 +31,111 @@ public class ProfilView extends JPanel implements ActionListener {
         this.profilModell = profilModell;
         this.setBackground(MyWindow.backgroundColor);
 
-        this.setLayout(new GridBagLayout());
-        GridBagConstraints g = new GridBagConstraints();
-
-        this.name = name;
-        nameDisplay = new JLabel("<html><font size = +5><font color = 'white'>Profilname : <font color='green'><font size = +5>"+name+"</font></html>");
-        //Erstellen der Anordnung
-        g.weightx = 0.5;
-        g.fill = GridBagConstraints.VERTICAL;
-        g.gridx = 0;
-        g.insets= new Insets(100,0,0,0);
-        g.gridy = 0;
-        //Einfügen der Buttons in Abhängigkeit der GridBag
-        this.add(nameDisplay,g);
-
-
-        this.level = level;
-        levelDisplay = new JLabel("<html><font size = +5><font color = 'white'>Level : <font color='red'><font size = +5>"+level+"</font></html>");
-        //Erstellen der Anordnung
-        g.weightx = 0.5;
-        g.fill = GridBagConstraints.VERTICAL;
-        g.gridx = 0;
-        g.insets= new Insets(100,0,0,0);
-        g.gridy = 1;
-        //Einfügen der Buttons in Abhängigkeit der GridBag
-        this.add(levelDisplay,g);
-
-        panzer = new JLabel();
-        if(System.getProperty("os.name").contains("Win")) {
-            panzerImg = new ImageIcon("res\\buttons\\KnopfSingleplayerMetallic1.png" );
-        }
-        else{
-            panzerImg = new ImageIcon("res/buttons/KnopfSingleplayerMetallic1.png" );
-        }
-
-        panzer.setIcon(panzerImg);
-        //Erstellen der Anordnung
-        g.weightx = 0.5;
-        g.fill = GridBagConstraints.VERTICAL;
-        g.gridx = 0;
-        g.insets= new Insets(100,0,0,0);
-        g.gridy = 2;
-        //Einfügen der Buttons in Abhängigkeit der GridBag
-        this.add(panzer,g);
-
-
-        deleteProfil = new MyButton("","Profil löschen",deleProfilImg);
-        deleteProfil.addActionListener(this);
-        //Erstellen der Anordnung
-        g.weightx = 0.5;
-        g.fill = GridBagConstraints.VERTICAL;
-        g.gridx = 0;
-        g.insets= new Insets(100,0,0,0);
-        g.gridy = 3;
-        //Einfügen der Buttons in Abhängigkeit der GridBag
-        this.add(deleteProfil,g);
-
-
-
-        back = new MyButton("KnopfZurückMetallic1.png","back",backImg);
-        back.addActionListener(this);
-        //Erstellen der Anordnung
-        g.weightx = 0.5;
-        g.fill = GridBagConstraints.VERTICAL;
-        g.gridx = 0;
-        g.insets= new Insets(100,0,0,0);
-        g.gridy = 4;
-        //Einfügen der Buttons in Abhängigkeit der GridBag
-        this.add(back,g);
+        erzeugenOverlay();
 
     }
 
+    private void erzeugenOverlay()
+    {
+        // Ersellen des Loadouts in Abhängigkeit des Gridbaglayouts
+
+        this.setLayout(new GridBagLayout());
+        GridBagConstraints g = new GridBagConstraints();
+        //Initialisierung/Erzeugen des Inhalts
+            this.name = name;
+            nameDisplay = new JLabel("<html><font size = +5><font color = 'white'>Profilname : <font color='green'><font size = +5>"+name+"</font></html>");
+            //Erstellen der Anordnung
+                g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
+
+                g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
+
+                g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
+
+                g.insets= new Insets(100,0,0,0);// Erzeugen eines Abstandes mit dem nächsten Button
+
+                g.gridy = 0;
+            //Einfügen der Buttons in Abhängigkeit der GridBag
+            this.add(nameDisplay,g);
+
+        //Initialisierung/Erzeugen des Inhalts
+            this.level = level;
+            levelDisplay = new JLabel("<html><font size = +5><font color = 'white'>Level : <font color='red'><font size = +5>"+level+"</font></html>");
+            //Erstellen der Anordnung
+                g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
+
+                g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
+
+                g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
+
+                g.insets= new Insets(100,0,0,0);// Erzeugen eines Abstandes mit dem nächsten Button
+
+                g.gridy = 1;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
+
+            //Einfügen der Buttons in Abhängigkeit der GridBag
+            this.add(levelDisplay,g);
+
+        //Initialisierung/Erzeugen des Inhalts
+            panzer = new JLabel();
+            if(System.getProperty("os.name").contains("Win")) {
+                panzerImg = new ImageIcon("res\\buttons\\KnopfSingleplayerMetallic1.png" );
+            }
+            else{
+                panzerImg = new ImageIcon("res/buttons/KnopfSingleplayerMetallic1.png" );
+            }
+            panzer.setIcon(panzerImg);
+            //Erstellen der Anordnung
+                g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
+
+                g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
+
+                g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
+
+                g.insets= new Insets(100,0,0,0);// Erzeugen eines Abstandes mit dem nächsten Button
+
+                g.gridy = 2;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
+
+            //Einfügen der Buttons in Abhängigkeit der GridBag
+            this.add(panzer,g);
+
+        //Initialisierung/Erzeugen des Inhalts
+            deleteProfil = new MyButton("","Profil löschen",deleProfilImg);
+            deleteProfil.addActionListener(this);
+            //Erstellen der Anordnung
+                g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
+
+                g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
+
+                g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
+
+                g.insets= new Insets(100,0,0,0);// Erzeugen eines Abstandes mit dem nächsten Button
+
+                g.gridy = 3;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
+
+            //Einfügen der Buttons in Abhängigkeit der GridBag
+            this.add(deleteProfil,g);
+
+
+        //Initialisierung/Erzeugen des Inhalts
+            back = new MyButton("KnopfZurückMetallic1.png","back",backImg);
+            back.addActionListener(this);
+            //Erstellen der Anordnung
+                g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
+
+                g.fill = GridBagConstraints.VERTICAL;
+
+                g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
+
+                g.insets= new Insets(100,0,0,0);// Erzeugen eines Abstandes mit dem nächsten Button
+
+                g.gridy = 4;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
+
+            //Einfügen der Buttons in Abhängigkeit der GridBag
+            this.add(back,g);
+
+    }
+
+
+    //Aufruf/Schnittstelle mit Manuel-Methoden/Was bei knopfdruck ausgeführt werden soll
     @Override
     public void actionPerformed(ActionEvent e)
     {
