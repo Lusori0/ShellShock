@@ -34,7 +34,7 @@ public class SettingsView extends JPanel implements ActionListener {
         GridBagConstraints g = new GridBagConstraints();
 
         //Initialisierung/Erzeugen des Inhalts
-            muteMusik = new MyButton("","muteMusik",muteMusikImg);
+            muteMusik = new MyButton("KnopfSoundMetallic1.png","muteMusik",muteMusikImg);
             muteMusik.addActionListener(this);
             //Einstellen von der Anordnung
                 g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
