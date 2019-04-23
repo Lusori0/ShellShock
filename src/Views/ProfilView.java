@@ -30,7 +30,8 @@ public class ProfilView extends JPanel implements ActionListener {
     {
         this.profilModell = profilModell;
         this.setBackground(MyWindow.backgroundColor);
-
+        this.level = level;
+        this.name = name;
         erzeugenOverlay();
 
     }
@@ -42,7 +43,6 @@ public class ProfilView extends JPanel implements ActionListener {
         this.setLayout(new GridBagLayout());
         GridBagConstraints g = new GridBagConstraints();
         //Initialisierung/Erzeugen des Inhalts
-            this.name = name;
             nameDisplay = new JLabel("<html><font size = +5><font color = 'white'>Profilname : <font color='green'><font size = +5>"+name+"</font></html>");
             //Erstellen der Anordnung
                 g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
@@ -58,7 +58,6 @@ public class ProfilView extends JPanel implements ActionListener {
             this.add(nameDisplay,g);
 
         //Initialisierung/Erzeugen des Inhalts
-            this.level = level;
             levelDisplay = new JLabel("<html><font size = +5><font color = 'white'>Level : <font color='red'><font size = +5>"+level+"</font></html>");
             //Erstellen der Anordnung
                 g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
