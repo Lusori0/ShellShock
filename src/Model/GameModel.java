@@ -32,7 +32,7 @@ public class GameModel {
 
         height = MyWindow.HEIGHT-MyWindow.HEIGHT/4;
         gameView = new GameView();
-        gameView.addKeyListener(new MyKeys());
+
 
         map = new GameMap(this);
 
