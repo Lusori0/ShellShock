@@ -12,8 +12,8 @@ import java.awt.event.ActionListener;
 public class MultiPlayerView extends JPanel implements ActionListener {
     MultiPlayerModel multiPlayerModel;
 
-    ImageIcon lokalImg,lanImg;
-    MyButton lokal,lan;
+    ImageIcon lokalImg,lanImg,backImg;
+    MyButton lokal,lan,back;
 
     public  MultiPlayerView(MultiPlayerModel multiPlayerModel) {
         this.multiPlayerModel = multiPlayerModel;
@@ -62,6 +62,23 @@ public class MultiPlayerView extends JPanel implements ActionListener {
 
         //Einfügen der Inhalte in Abhängigkeit der GridBags
         this.add(lan,g);
+
+        back = new MyButton("KnopfZurückMetallic1.png","",backImg);
+        back.addActionListener(this);
+        //Einstellen von der Anordnung
+
+        g.weightx = 0.5f;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
+
+        g.fill = GridBagConstraints.VERTICAL; //Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
+
+        g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
+
+        g.insets = new Insets(100, 0, 0, 0);// Erzeugen eines Abstandes mit dem nächsten Button
+
+        g.gridy = 2;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
+
+        //Einfügen der Inhalte in Abhängigkeit der GridBags
+        this.add(back,g);
     }
 
 
@@ -75,6 +92,10 @@ public class MultiPlayerView extends JPanel implements ActionListener {
         if (e.getSource() == lan)
         {
             multiPlayerModel.lanAction();
+        }
+        if(e.getSource() == back)
+        {
+            multiPlayerModel.backAction();
         }
     }
 }

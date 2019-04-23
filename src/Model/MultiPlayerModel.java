@@ -20,4 +20,7 @@ public class MultiPlayerModel {
         new PreGameModel();
     }
 
+    public void backAction() {new MainMenuModel();}
+
+
 }
