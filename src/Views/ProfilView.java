@@ -98,7 +98,7 @@ public class ProfilView extends JPanel implements ActionListener {
             this.add(panzer,g);
 
         //Initialisierung/Erzeugen des Inhalts
-            deleteProfil = new MyButton("","Profil löschen",deleProfilImg);
+            deleteProfil = new MyButton("KnopfProfilLöschenMetallic1.png","Profil löschen",deleProfilImg);
             deleteProfil.addActionListener(this);
             //Erstellen der Anordnung
                 g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
