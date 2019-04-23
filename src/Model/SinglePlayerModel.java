@@ -13,11 +13,11 @@ public class SinglePlayerModel {
     }
 
     public void gegenKiAction(){
-
+        new PreGameModel();
     }
 
     public void sandboxAction(){
-        new GameModel();
+        new PreGameModel();
     }
 
     public void backAction(){
