@@ -42,6 +42,7 @@ public class MyWindow{
         window.addKeyListener(new MyKeys());
 
 
+
         window.setUndecorated(true);
         //Festlegung der Variablen für spätere Verwendung
         WIDTH = (int)getWidth();
@@ -55,9 +56,9 @@ public class MyWindow{
 
 
         music = new Sound();
-        //new LogInModel();
+        new LogInModel();
         //Niels Dawumms
-         new GameModel();
+        // new GameModel();
 
 
 
@@ -80,7 +81,6 @@ public class MyWindow{
     public static void muteMusic(){
         music.muteMusic();
     }
-
 
     //getter und setter
 

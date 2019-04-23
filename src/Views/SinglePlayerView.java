@@ -52,7 +52,7 @@ public class SinglePlayerView extends JPanel implements ActionListener {
 
 
         //Initialisierung/Erzeugen des Inhalts
-            sandbox = new MyButton("","Sandbox",sandboxImg);
+            sandbox = new MyButton("KnopfSandboxMetallic1.png","Sandbox",sandboxImg);
             sandbox.addActionListener(this);
 
             //Einstellen von der Anordnung
