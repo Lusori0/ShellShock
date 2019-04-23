@@ -1,7 +1,7 @@
 package Window;
 
-import Model.LogInModel;
-import Model.ProfilModel;
+
+import Model.*;
 import Views.Sound;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -30,12 +30,16 @@ public class MyWindow{
 
     // Image als Hintergrund  C:\Users\Santo\Desktop\Schule\Informatik\ShellShock\res\buttons\KnopfSingleplayerMetallic1.png
 
-    public static void main(String args[]) throws UnsupportedAudioFileException, IOException, LineUnavailableException {new MyWindow();}
+    public static void main(String args[]) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        new Var();
+        new MyWindow();
+    }
 
 
 
     public MyWindow() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         window = new JFrame("SchoolShock");
+        window.addKeyListener(new MyKeys());
 
 
         window.setUndecorated(true);
@@ -51,7 +55,9 @@ public class MyWindow{
 
 
         music = new Sound();
-        new LogInModel();
+        //new LogInModel();
+        //Niels Dawumms
+         new GameModel();
 
 
 
