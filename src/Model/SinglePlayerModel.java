@@ -17,7 +17,7 @@ public class SinglePlayerModel {
     }
 
     public void sandboxAction(){
-
+        new GameModel();
     }
 
     public void backAction(){

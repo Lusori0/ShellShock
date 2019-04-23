@@ -39,7 +39,7 @@ public class MyWindow{
 
     public MyWindow() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         window = new JFrame("SchoolShock");
-        window.addKeyListener(new MyKeys());
+
 
 
         window.setUndecorated(true);
@@ -52,12 +52,12 @@ public class MyWindow{
 
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setVisible(true);
-
+        window.addKeyListener(new MyKeys());
 
         music = new Sound();
-        //new LogInModel();
+        new LogInModel();
         //Niels Dawumms
-         new GameModel();
+        //new GameModel();
 
 
 
@@ -102,6 +102,7 @@ public class MyWindow{
 
         window.setVisible(true);
 
+        window.requestFocusInWindow();
     }
 
 
