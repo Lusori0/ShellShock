@@ -1,20 +1,17 @@
 package Views;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
 
-public class GameView extends JPanel implements ActionListener {
+public class GameView extends JPanel {
 
+    BorderLayout mainLayout;
 
+    public GameView(){
 
+        mainLayout = new BorderLayout();
 
-
-
-
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
+        this.setLayout(mainLayout);
 
     }
 }
