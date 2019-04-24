@@ -33,6 +33,7 @@ public class MyWindow{
     public static void main(String args[]) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         new Var();
         new MyWindow();
+
     }
 
 
