@@ -31,12 +31,8 @@ public class Background {
         } else
         {
             try {
-                if(System.getProperty("os.name").contains("Win")) {
-                    background = ImageIO.read(new File("res\\gameimages\\Menübildschirm_big.png"));
-                }
-                else{
+
                     background = ImageIO.read(new File("res/gameimages/Menübildschirm_big.png"));
-                }
             } catch (IOException e) {
                 System.out.println("Fehler entstanden bim laden der File!!" + e);
             }
@@ -52,8 +48,7 @@ public class Background {
                 {
                     //Displaygröße größer als Full HD
                     return background = background.getSubimage(cropX,cropY,MyWindow.WIDTH,MyWindow.HEIGHT);
-                } else
-                {
+                } else {
                     //Beschneidung von Bildschirmauflösungen von Full HD und kleiner
                     return background = background.getSubimage(cropX, cropY, MyWindow.WIDTH, MyWindow.HEIGHT);
                 }

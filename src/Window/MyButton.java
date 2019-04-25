@@ -23,12 +23,9 @@ public class MyButton extends JButton {
         this.setToolTipText(text);
 
         //Zugriff auf die Images für den Button(If-Abfrage für verschiedeme Betriebssysteme)
-        if(System.getProperty("os.name").contains("Win")) {
-            imageIcon = new ImageIcon("res\\buttons\\" + dateiname);
-        }
-        else{
+
             imageIcon = new ImageIcon("res/buttons/" + dateiname);
-        }
+
 
         imageIcon.setImage(imageIcon.getImage().getScaledInstance(buttonWidth + 2,buttonHeigth + 2,Image.SCALE_SMOOTH));
         this.setIcon(imageIcon);

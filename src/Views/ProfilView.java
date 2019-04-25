@@ -49,7 +49,6 @@ public class ProfilView extends JPanel implements ActionListener {
         //Initialisierung/Erzeugen des Inhalts
             nameDisplay = new JLabel("<html><font size = +5><font color = 'white'>Profilname : <font color='green'><font size = +5>"+name+"</font></html>");
             //Erstellen der Anordnung
-                g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
                 g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 
@@ -64,7 +63,6 @@ public class ProfilView extends JPanel implements ActionListener {
         //Initialisierung/Erzeugen des Inhalts
             levelDisplay = new JLabel("<html><font size = +5><font color = 'white'>Level : <font color='red'><font size = +5>"+level+"</font></html>");
             //Erstellen der Anordnung
-                g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
                 g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 
@@ -79,15 +77,11 @@ public class ProfilView extends JPanel implements ActionListener {
 
         //Initialisierung/Erzeugen des Inhalts
             panzer = new JLabel();
-            if(System.getProperty("os.name").contains("Win")) {
-                panzerImg = new ImageIcon("res\\buttons\\KnopfSingleplayerMetallic1.png" );
-            }
-            else{
+
                 panzerImg = new ImageIcon("res/buttons/KnopfSingleplayerMetallic1.png" );
-            }
+
             panzer.setIcon(panzerImg);
             //Erstellen der Anordnung
-                g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
                 g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 
@@ -104,7 +98,6 @@ public class ProfilView extends JPanel implements ActionListener {
             deleteProfil = new MyButton("KnopfProfilLöschenMetallic1.png","Profil löschen",deleProfilImg);
             deleteProfil.addActionListener(this);
             //Erstellen der Anordnung
-                g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
                 g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 

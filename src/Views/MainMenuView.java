@@ -92,7 +92,6 @@ public class MainMenuView extends JPanel implements ActionListener {
             singelplayer.addActionListener(this);
                 //Einstellen von der Anordnung
 
-                    g.weightx = 0.5f;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
                     g.fill = GridBagConstraints.VERTICAL; //Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 
@@ -111,7 +110,6 @@ public class MainMenuView extends JPanel implements ActionListener {
             multiplayer.addActionListener(this);
             //Einstellen von der Anordnung
 
-                g.weightx = 0.5f;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
                 g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 
@@ -128,8 +126,6 @@ public class MainMenuView extends JPanel implements ActionListener {
             einstellungen = new MyButton("KnopfEinstellungenMetallic1.png", "Einstellungen", einstellungenImg);
             einstellungen.addActionListener(this);
             //Einstellen von der Anordnung
-
-                g.weightx = 0.5f;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
                 g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 
@@ -150,8 +146,6 @@ public class MainMenuView extends JPanel implements ActionListener {
 
             //Einstellen von der Anordnung
 
-                g.weightx = 0.5f;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
-
                 g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 
                 g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
@@ -168,8 +162,6 @@ public class MainMenuView extends JPanel implements ActionListener {
             exit = new MyButton("KnopfExitMetallic1.png", "Exit", exitImg);
             exit.addActionListener(this);
             //Einstellen von der Anordnung
-
-                g.weightx = 0.5f; // Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
                 g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 

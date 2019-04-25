@@ -33,7 +33,6 @@ public class MultiPlayerView extends JPanel implements ActionListener {
         lokal.addActionListener(this);
         //Einstellen von der Anordnung
 
-        g.weightx = 0.5f;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
         g.fill = GridBagConstraints.VERTICAL; //Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 
@@ -50,7 +49,6 @@ public class MultiPlayerView extends JPanel implements ActionListener {
         lan.addActionListener(this);
         //Einstellen von der Anordnung
 
-        g.weightx = 0.5f;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
         g.fill = GridBagConstraints.VERTICAL; //Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 
@@ -67,7 +65,6 @@ public class MultiPlayerView extends JPanel implements ActionListener {
         back.addActionListener(this);
         //Einstellen von der Anordnung
 
-        g.weightx = 0.5f;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
         g.fill = GridBagConstraints.VERTICAL; //Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 
