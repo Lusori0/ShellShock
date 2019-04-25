@@ -126,7 +126,7 @@ public class LogInView extends JPanel implements ActionListener {
             this.add(submit, g);
 
         //Initialisierung/Erzeugen des Inhalts
-            createProfil = new MyButton("KnopfSingleplayerMetallic1.png", "CreateNewAccount", singleplayerImg);
+            createProfil = new MyButton("KnopfProfilErstellenMetallic1.png", "CreateNewAccount", singleplayerImg);
             createProfil.addActionListener(this);
             //Einstellen von der Anordnung
                 g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer

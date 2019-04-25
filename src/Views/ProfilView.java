@@ -6,6 +6,8 @@ import Window.MyButton;
 import Window.MyWindow;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +23,8 @@ public class ProfilView extends JPanel implements ActionListener {
     MyButton back,deleteProfil;
 
     JLabel panzer;
+
+    JSlider musicbar;
 
     ImageIcon backImg,deleProfilImg,panzerImg;
 
@@ -148,4 +152,6 @@ public class ProfilView extends JPanel implements ActionListener {
           profilModell.profilLoeschenAction();
       }
     }
+
+
 }

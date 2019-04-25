@@ -21,7 +21,7 @@ public class MyWindow{
     public final static Color backgroundColor = new Color(30,30,30);
 
 
-    private static Sound music;
+
 
     static JFrame window;
 
@@ -56,10 +56,8 @@ public class MyWindow{
         window.setVisible(true);
         window.addKeyListener(new MyKeys());
 
-        music = new Sound();
-        new LogInModel();
-        //Niels Dawumms
 
+        new LogInModel();
 
 
     }
@@ -79,7 +77,7 @@ public class MyWindow{
     }
 
     public static void muteMusic(){
-        music.muteMusic();
+        Var.music.muteMusic();
     }
 
     //getter und setter
