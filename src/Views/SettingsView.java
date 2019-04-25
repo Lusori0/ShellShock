@@ -40,28 +40,32 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
         GridBagConstraints g = new GridBagConstraints();
 
         //Slidebar test Anfang
-            musicbar = new JSlider(SwingConstants.HORIZONTAL,0,100,100);
+            musicbar = new JSlider(SwingConstants.HORIZONTAL,0,100,50);
             musicbar.addChangeListener(this);
             musicbar.setMajorTickSpacing(10);
             musicbar.setPaintTicks(true);
+            musicbar.setPaintLabels(true);
             musicbar.setSnapToTicks(true);
             //Test den Slider zu beschriften
-            Dictionary<Integer, Component> labelTable = new Hashtable<Integer, Component>();
-            labelTable.put(0, new JLabel("0%"));
-            labelTable.put(10, new JLabel("10%"));
-            labelTable.put(20, new JLabel("20%"));
-            labelTable.put(30, new JLabel("30%"));
-            labelTable.put(40, new JLabel("40%"));
-            labelTable.put(50, new JLabel("50%"));
-            labelTable.put(60, new JLabel("60%"));
-            labelTable.put(70, new JLabel("70%"));
-            labelTable.put(80, new JLabel("80%"));
-            labelTable.put(90, new JLabel("90%"));
-            labelTable.put(100, new JLabel("100%"));
+                Dictionary<Integer, Component> labelTable = new Hashtable<Integer, Component>();
+                labelTable.put(0, new JLabel("0%"));
+                labelTable.put(10, new JLabel("10%"));
+                labelTable.put(20, new JLabel("20%"));
+                labelTable.put(30, new JLabel("30%"));
+                labelTable.put(40, new JLabel("40%"));
+                labelTable.put(50, new JLabel("50%"));
+                labelTable.put(60, new JLabel("60%"));
+                labelTable.put(70, new JLabel("70%"));
+                labelTable.put(80, new JLabel("80%"));
+                labelTable.put(90, new JLabel("90%"));
+                labelTable.put(100, new JLabel("100%"));
+            //Slider beschifeten Ende
             musicbar.setLabelTable(labelTable);
+            musicbar.setPreferredSize(new Dimension(500,100));
+            musicbar.setBackground(MyWindow.backgroundColor);
 
             //Einstellen von der Anordnung
-                g.weightx = 1;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
+                g.weightx = 1f;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
                 g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 
