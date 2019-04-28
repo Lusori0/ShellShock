@@ -78,7 +78,7 @@ public class ProfilView extends JPanel implements ActionListener {
         //Initialisierung/Erzeugen des Inhalts
             panzer = new JLabel();
 
-                panzerImg = new ImageIcon("res/buttons/KnopfSingleplayerMetallic1.png" );
+                panzerImg = new ImageIcon("res/buttons/PanzerDefaultMetallic1.png" );
 
             panzer.setIcon(panzerImg);
             //Erstellen der Anordnung

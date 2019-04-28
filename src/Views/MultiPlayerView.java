@@ -45,7 +45,7 @@ public class MultiPlayerView extends JPanel implements ActionListener {
         //Einfügen der Inhalte in Abhängigkeit der GridBags
         this.add(lokal,g);
 
-        lan = new MyButton("","Lan Spiel starten",lanImg);
+        lan = new MyButton("KnopfMultiplayerLANMetallic1.png","Lan Spiel starten",lanImg);
         lan.addActionListener(this);
         //Einstellen von der Anordnung
 

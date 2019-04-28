@@ -105,7 +105,7 @@ public class LogInView extends JPanel implements ActionListener {
         //Initialisierung/Erzeugen des Inhalts
             ImageIcon singleplayerImg = new ImageIcon();
 
-            submit = new MyButton("KnopfSingleplayerMetallic1.png", "LogIn", singleplayerImg);
+            submit = new MyButton("KnopfProfilLoginMetallic1.png", "LogIn", singleplayerImg);
             submit.addActionListener(this);
             //Einstellen von der Anordnung
 

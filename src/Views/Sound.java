@@ -46,14 +46,9 @@ public class Sound {
             clip.start();
         }
     }
-    // Volume Slider test
-    public float getVolume() {
-        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        return (float) Math.pow(10f, gainControl.getValue() / 20f);
-    }
-
+    // Methode um mit dem Slider das Volumen in gewünschte Lautstätke setzen
     public void setVolume(float volume) {
-        if (volume < 0f || volume > 1f)
+        if (volume < 0f || volume > 1f)// Abfrage ob gewünschtes Volumen zwischen 0% und 100% ist
             throw new IllegalArgumentException("Volume not valid: " + volume);
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         gainControl.setValue(20f * (float) Math.log10(volume));

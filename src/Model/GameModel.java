@@ -1,6 +1,7 @@
 package Model;
 
 import Views.GameLoop;
+import Views.GameUiView;
 import Views.GameView;
 
 
@@ -32,7 +33,6 @@ public class GameModel {
 
         height = MyWindow.HEIGHT-MyWindow.HEIGHT/4;
         gameView = new GameView();
-
 
         map = new GameMap(this);
 

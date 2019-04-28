@@ -33,7 +33,7 @@ public class PreGameView extends JPanel implements ActionListener{
         GridBagConstraints g = new GridBagConstraints();
 
         //Initialisierung/Erzeugen des Inhalts
-            start = new MyButton("","START",startImg);
+            start = new MyButton("KnopfSpielStartenMetallic1.png","START",startImg);
             start.addActionListener(this);
             //Einstellen von der Anordnung
 
@@ -49,7 +49,7 @@ public class PreGameView extends JPanel implements ActionListener{
             this.add(start,g);
 
         //Initialisierung/Erzeugen des Inhalts
-            gameSettings = new MyButton("","Spieleinstellungen",gameSettingsImg);
+            gameSettings = new MyButton("KnopfSpielEinstellungenMetallic1.png","Spieleinstellungen",gameSettingsImg);
             gameSettings.addActionListener(this);
             //Einstellen von der Anordnung
 
