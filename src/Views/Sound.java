@@ -15,15 +15,9 @@ public class Sound {
 
     public Sound() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 
-        //Zugriff auf die Sound-Datei für das Game(If-Abfrage für verschiedeme Betriebssysteme)
-        if(System.getProperty("os.name").contains("Win")) {
-                //Windows
-                soundFile = new File("res\\sounds\\HauptmenüMusic.wav");
-            }
-            else{
-                // Linux
+
                 soundFile = new File("res/sounds/HauptmenüMusic.wav");
-            }
+
 
 
 

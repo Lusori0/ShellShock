@@ -2,7 +2,7 @@ package Window;
 
 
 import Model.*;
-import Views.Sound;
+
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -26,9 +26,6 @@ public class MyWindow{
     static JFrame window;
 
     private static String activeUser;
-
-
-    // Image als Hintergrund  C:\Users\Santo\Desktop\Schule\Informatik\ShellShock\res\buttons\KnopfSingleplayerMetallic1.png
 
     public static void main(String args[]) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         new Var();

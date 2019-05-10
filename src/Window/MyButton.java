@@ -22,13 +22,12 @@ public class MyButton extends JButton {
         //Hinweist-Text wir eingefügt
         this.setToolTipText(text);
 
-        //Zugriff auf die Images für den Button(If-Abfrage für verschiedeme Betriebssysteme)
 
-            imageIcon = new ImageIcon("res/buttons/" + dateiname);
+        imageIcon = new ImageIcon("res/buttons/" + dateiname);
 
 
         imageIcon.setImage(imageIcon.getImage().getScaledInstance(buttonWidth + 2,buttonHeigth + 2,Image.SCALE_SMOOTH));
         this.setIcon(imageIcon);
         this.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
-    }
+}
 }

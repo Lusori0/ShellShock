@@ -1,7 +1,6 @@
 package Model;
 
 import Views.GameLoop;
-import Views.GameUiView;
 import Views.GameView;
 
 

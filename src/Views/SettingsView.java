@@ -46,7 +46,7 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
             musicbar.setPaintTicks(true);
             musicbar.setPaintLabels(true);
             musicbar.setSnapToTicks(true);
-            //Test den Slider zu beschriften
+            // Beschriftung des Sliders
                 Dictionary<Integer, Component> labelTable = new Hashtable<Integer, Component>();
                 labelTable.put(0, new JLabel("0%"));
                 labelTable.put(10, new JLabel("10%"));
@@ -59,7 +59,7 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
                 labelTable.put(80, new JLabel("80%"));
                 labelTable.put(90, new JLabel("90%"));
                 labelTable.put(100, new JLabel("100%"));
-            //Slider beschifeten Ende
+            //
             musicbar.setLabelTable(labelTable);
             musicbar.setPreferredSize(new Dimension(500,100));
             musicbar.setBackground(MyWindow.backgroundColor);
