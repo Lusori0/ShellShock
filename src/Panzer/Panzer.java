@@ -3,13 +3,13 @@ package Panzer;
 import Model.GameMap;
 import Model.GameModel;
 import Window.*;
-import javafx.scene.text.FontPosture;
 
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.image.BufferedImage;
-import java.nio.Buffer;
+
 import java.util.LinkedList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Panzer {
 
@@ -32,7 +32,7 @@ public abstract class Panzer {
     private double targetX,targetY;
     private int leben,sprit,maxSprit;
 
-    private LinkedList<Screentext> strings = new LinkedList<>();
+    private CopyOnWriteArrayList<Screentext> strings = new CopyOnWriteArrayList<>();
 
     public Panzer(BufferedImage image,BufferedImage rohr,int leben,int maxSprit){
 
