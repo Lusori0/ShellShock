@@ -1,5 +1,9 @@
 package Model;
 
+import Network.Client;
+import Network.Networktest;
+import Network.Server;
+import Panzer.Panzer;
 import Views.GameLoop;
 import Views.GameView;
 
@@ -11,7 +15,10 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.net.InetAddress;
 import java.util.LinkedList;
+import java.util.List;
+import java.net.*;
 
 public class GameModel {
 
@@ -21,11 +28,18 @@ public class GameModel {
     private LinkedList<Weapon> currentWeapons;
     private GameMap map;
     private int height;
-    private Player currentPlayer,lastLocalHuman;
+    private Player lastLocalHuman;
+    private LinkedList<Player> currentPlayer;
     private boolean shot;
     private int weaponsShowedTime = 0;
+    private int spielmode = 0,teamanzahl = 0;
 
-    public GameModel(){
+    private boolean isServer,network;
+    private Server server;
+
+    private int highId = 0;
+
+    public GameModel(boolean temp){
         //map = Var.map;
 
         //collisionMap = new CollisionMap(map,this);
@@ -33,38 +47,86 @@ public class GameModel {
         height = MyWindow.HEIGHT-MyWindow.HEIGHT/4;
         gameView = new GameView();
 
+        gameView.addKeyListener(new MyKeys());
+
+
         map = new GameMap(this);
 
 
 
         players = new LinkedList<>();
+        currentPlayer = new LinkedList<>();
+
 
         //Erster spieler ist ein lokaler mensch
 
-        players.add(new HumanPlayer(this,1));
-        players.add(new KiPlayer(this,2));
+
+
+
+
+        teamanzahl = 2;
+
+        spielmode = 3;
 
         currentWeapons = new LinkedList<>();
 
-        currentPlayer = players.getFirst();
-
-        lastLocalHuman = currentPlayer;
 
 
+
+    }
+
+    public void start(LinkedList<Player> players,Client client,Server server){
+
+
+        if(server != null || client != null){
+            network = true;
+        }
+
+        if(server != null){
+            this.server = server;
+            isServer = true;
+        }
+
+        this.players = players;
+
+        if(spielmode == 1){
+            currentPlayer.add(players.getFirst());
+        }else if(spielmode == 2){
+            int team = players.getFirst().getTeam();
+
+            for(Player player : players){
+                if(player.getTeam() == team){
+                    currentPlayer.add(player);
+                }
+            }
+        }else{
+            currentPlayer.addAll(players);
+        }
+
+        for(Player player : currentPlayer) {
+            player.setOnTurn(true);
+            if(player.isLocalHuman()){
+                lastLocalHuman = player;
+
+                if(network && !isServer) {
+                    ((HumanPlayer) player).setClient(client);
+                }
+            }
+        }
 
         gameLoop = new GameLoop(this);
         gameView.add(gameLoop, BorderLayout.CENTER);
-
         MyWindow.setContent(gameView);
+        gameLoop.createStrategy();
+        gameLoop.mainGameLoop();
+
+
+
 
 
         for(Player player : players){
             player.getPanzer().moveNotTurn(map);
         }
-
-
-
-
     }
 
 
@@ -85,6 +147,7 @@ public class GameModel {
         for(Player player : players){
             if(player == lastLocalHuman) {
                 player.getPanzer().draw(g2d,0);
+
             }else if(player.getTeam() == lastLocalHuman.getTeam()){
                 player.getPanzer().draw(g2d,1);
             }else{
@@ -95,20 +158,24 @@ public class GameModel {
 
     public void movePanzer(){
         for(Player player : players){
-            if(player == currentPlayer) {
-                if(!shot) {
-                    if(player.isKi()) {
-                        player.move(this);
-                    }else if(player.isLocalHuman()) {
 
-                        player.getPanzer().setMove();
-                    }
-                    player.getPanzer().move(map);
-                }
-            }else{
-                player.getPanzer().moveNotTurn(map);
+            if(!shot) {
+
+                player.move(this,map);
+            }
+            if(allLockedIn()){
+                shoot();
             }
         }
+    }
+
+    public boolean allLockedIn(){
+        for(Player player : currentPlayer){
+            if(!player.isLockedIn()){
+                return false;
+            }
+        }
+        return true;
     }
 
 
@@ -121,20 +188,45 @@ public class GameModel {
         this.shot = shot;
     }
 
-    public Player nextPlayer(){
-        int index = players.indexOf(currentPlayer);
+    public void nextPlayer(){
 
-        currentPlayer.getPanzer().resetSprit();
+       switch(spielmode){
+           case 1:
+               for(Player player : players){
+                   if(player == currentPlayer.getFirst()){
+                       currentPlayer.remove(player);
 
-        if(index < players.indexOf(players.getLast())) {
-            shot = false;
-            return players.get(index + 1);
+                       if(players.indexOf(player) == players.indexOf(players.getLast())){
+                           currentPlayer.add(players.getFirst());
+                           break;
+                       }else{
+                           currentPlayer.add(players.get(players.indexOf(player) + 1));
+                           break;
+                       }
+                   }
+               }
+               break;
+           case 2:
+               if(currentPlayer.getFirst().getTeam() == teamanzahl){
+                   currentPlayer = new LinkedList<>();
+                   for(Player player : players){
+                       if(player.getTeam() == 1){
+                           currentPlayer.add(player);
+                       }
+                   }
+               }else{
+                   int t = currentPlayer.getFirst().getTeam();
+                   for(Player player : players){
+                       if(player.getTeam() == t+1){
+                           currentPlayer.add(player);
+                       }
+                   }
+               }
 
-        }else{
-
-            shot = false;
-            return players.getFirst();
-        }
+               break;
+           case 3:
+               break;
+       }
 
 
     }
@@ -148,22 +240,55 @@ public class GameModel {
     }
 
     public void nextTurn(){
+
+        if(currentWeapons.size() == 0) {
+
+            for (Player player : players) {
+                if (player.getPanzer().getLeben() <= 0) {
+                    players.remove(player);
+                }
+            }
+            if (!battleEnd()) {
+                for (Player player : currentPlayer) {
+                    player.setOnTurn(false);
+                    player.setLockedIn(false);
+                    player.getPanzer().resetSprit();
+                    System.out.println(player);
+                }
+
+                nextPlayer();
+
+                for (Player player : currentPlayer) {
+                    player.setOnTurn(true);
+                    System.out.println(player);
+                }
+
+                changeGui();
+
+                for (Player player : currentPlayer) {
+                    if (player.isLocalHuman()) {
+                        lastLocalHuman = player;
+                    } else if (player.isKi()) {
+                        player.prepare(this);
+                    }
+                }
+
+                shot = false;
+            } else {
+                endGame();
+            }
+        }
+    }
+
+    public boolean battleEnd(){
+        int t = players.getFirst().getTeam();
         for(Player player : players){
-            if(player.getPanzer().getLeben() <=0){
-                players.remove(player);
+            if(player.getTeam() != t){
+                return false;
             }
         }
-        if(players.size()>1) {
-            currentPlayer = nextPlayer();
-            changeGui();
-            if(currentPlayer.isLocalHuman()){
-                lastLocalHuman = currentPlayer;
-            }else if(currentPlayer.isKi()){
-                currentPlayer.prepare(this);
-            }
-        }else{
-            endGame();
-        }
+
+        return true;
     }
 
     public void endGame(){
@@ -172,50 +297,61 @@ public class GameModel {
 
     public void handleMousePressed(int x,int y){
         if(!shot) {
-            if (currentPlayer.isLocalHuman()) {
-                if (currentPlayer.getPanzer().isSelected()) {
+
+            for(Player player : currentPlayer){
+                if (player.isLocalHuman()) {
+                    if (player.getPanzer().isSelected()) {
 
 
-                    currentPlayer.getPanzer().setTemps();
+                        player.getPanzer().setTemps();
 
-                    currentPlayer.getPanzer().changeRohr(x,y,this);
+                        player.getPanzer().changeRohr(x,y,this);
 
-                    currentPlayer.getPanzer().setShootready(true);
+                        player.getPanzer().setShootready(true);
 
 
+                    }
                 }
             }
+
+
         }
     }
 
     public void handleMouseClicked(int x,int y){
         if(!shot) {
-            if (currentPlayer.isLocalHuman()) {
-                if (currentPlayer.getPanzer().isSelected()) {
 
-                    currentPlayer.getPanzer().setTemps();
+            for(Player player : currentPlayer){
+                if (player.isLocalHuman()) {
+                    if (player.getPanzer().isSelected()) {
 
-                    currentPlayer.getPanzer().changeRohr(x,y,this);
+                        player.getPanzer().setTemps();
 
-                    currentPlayer.getPanzer().setShootready(true);
+                        player.getPanzer().changeRohr(x,y,this);
+
+                        player.getPanzer().setShootready(true);
 
 
 
+
+                    }
+                    if (player.getPanzer().isHit(x, y)) {
+                        player.getPanzer().setSelected(true);
+                    }
 
                 }
-                if (currentPlayer.getPanzer().isHit(x, y)) {
-                    currentPlayer.getPanzer().setSelected(true);
-                }
-
             }
+
         }
     }
 
     public void drawUi(Graphics2D g2d,int x,int y) {
         if (currentPlayer != null) {
-            if (currentPlayer.getPanzer().isSelected()) {
-                if(!shot) {
-                    currentPlayer.getPanzer().drawUi(g2d,x,y,this);
+            if (!shot) {
+                for (Player player : currentPlayer) {
+                    if(player.isLocalHuman()) {
+                        player.getPanzer().drawUi(g2d, x, y, this);
+                    }
                 }
             }
         }
@@ -229,7 +365,7 @@ public class GameModel {
         return weaponsShowedTime;
     }
 
-    public void showWeapons(Graphics2D g2d, int mousex, int mousey, boolean clicked,int art){
+    public boolean showWeapons(Graphics2D g2d, int mousex, int mousey, boolean clicked,int art){
 
         if(weaponsShowedTime <= getHeight()/20) {
             g2d.fillRect(0, getHeight() - 20 * weaponsShowedTime, MyWindow.WIDTH, (int) 20 * weaponsShowedTime);
@@ -288,6 +424,8 @@ public class GameModel {
             MyKeys.weapon = false;
         }
 
+        return clicked;
+
 
     }
 
@@ -297,34 +435,84 @@ public class GameModel {
         }
     }
 
-    public boolean isCollisionPanzer(int x,int y){
+    public boolean isCollisionPanzer(int x, int y, Panzer herkunft){
         for(Player player : players){
-            if(player != currentPlayer) {
+            if(player.getPanzer() != herkunft) {
                 if (player.getPanzer().isHit(x, y)) {
                     return true;
                 }
             }
+
         }
         return map.isCollision(x,y);
     }
 
-    public void feuerButtonAction(){
-
+    public void shoot(){
         if(!shot) {
+            if(isServer){
+                sendWeaponsToAll();
+            }
 
-            currentPlayer.getSelectedWeapon().create((int)(currentPlayer.getPanzer().getBulletspawn().getX()), (int) currentPlayer.getPanzer().getBulletspawn().getY(),
-                    currentPlayer.getPanzer().getRohrWinkel(), currentPlayer.getPanzer().getShotstrength(), currentPlayer.getPanzer().isOrientationRight());
+            for(Player player : currentPlayer) {
+
+                player.shoot(this);
 
 
-            currentWeapons.add(currentPlayer.getSelectedWeapon());
+                currentWeapons.add(player.getSelectedWeapon());
+
+
+
+                if(player.isLocalHuman() || player.isKi()) {
+                    player.getWeapons().remove(player.getSelectedWeapon());
+
+                    player.setSelectedWeapon(player.getWeapons().getFirst());
+                }
+
+            }
+
             shot = true;
-
-            currentPlayer.getWeapons().remove(currentPlayer.getSelectedWeapon());
-
-            currentPlayer.setSelectedWeapon(currentPlayer.getWeapons().getFirst());
-
-
         }
+    }
+
+    private void sendWeaponsToAll() {
+        for(Player playert : players){
+            if(playert.getId() == 3){
+                ((InetPlayer)playert).sendTCP("testWeapon");
+            }
+        }
+        if(isServer && network){
+            for(Player player : players){
+                if(!player.isLocalHuman() && !player.isKi()){
+                    for (Player player1 : players){
+                        ((InetPlayer)player).sendTCP("weapon:" + player1.getId() +":"+ player1.getSelectedWeapon().getId());
+                        ((InetPlayer)player).sendTCP("weaponvalues:" + player1.getId()
+                                        + ":" + String.valueOf(player1.getPanzer().getBulletspawn().getX())
+                                        + ":" + String.valueOf(player1.getPanzer().getBulletspawn().getY())
+                                        + ":" + String.valueOf(player1.getPanzer().getRohrWinkel())
+                                        + ":" + String.valueOf(player1.getPanzer().getShotstrength())
+                                        + ":" + String.valueOf(player1.getPanzer().isOrientationRight()));
+                    }
+                }
+            }
+        }
+    }
+
+    public void feuerButtonAction(){
+        for(Player player : currentPlayer) {
+            if(player.isLocalHuman()) {
+                player.setLockedIn(true);
+                if(network && !isServer){
+                    ((HumanPlayer)player).sendTCP("weapon:" + player.getId() +":"+ player.getSelectedWeapon().getId());
+                    ((HumanPlayer)player).sendTCP("weaponvalues:" + player.getId()
+                            + ":" + String.valueOf(player.getPanzer().getBulletspawn().getX())
+                            + ":" + String.valueOf(player.getPanzer().getBulletspawn().getY())
+                            + ":" + String.valueOf(player.getPanzer().getRohrWinkel())
+                            + ":" + String.valueOf(player.getPanzer().getShotstrength())
+                            + ":" + String.valueOf(player.getPanzer().isOrientationRight()));
+                }
+            }
+        }
+
     }
 
     public void addWeapon(Weapon weapon){
@@ -332,14 +520,21 @@ public class GameModel {
     }
 
 
-    public void explosion(int x,int y,int size,int damage){
-        map.explosion(x,y,size,damage);
+    public void explosion(int x,int y,int size,int damage,Panzer herkunft){
+        map.explosion(x,y,size,damage,herkunft);
     }
 
 
 
-    public void movePanzerDown(int x,int y,int size,int damage) {
+    public void movePanzerDown(int x,int y,int size,int damage,Panzer herkunft) {
 
+        int team = 0;
+
+        for(Player player : players){
+            if(player.getPanzer() == herkunft){
+                team = player.getTeam();
+            }
+        }
 
 
         for(Player player : players){
@@ -350,7 +545,7 @@ public class GameModel {
 
 
 
-                if(player != currentPlayer) {
+                if(player.getTeam() != team) {
 
                     player.getPanzer().schaden(damage, 0);
                 }else{
@@ -362,12 +557,43 @@ public class GameModel {
         }
     }
 
-    public Player getGegener(){
+    public Player getGegener(Player playert){
         for(Player player : players){
-            if(player.getTeam() != currentPlayer.getTeam()){
+            if(player.getTeam() != playert.getTeam()){
                 return player;
             }
         }
         return null;
+    }
+
+    public LinkedList<Player> getPlayer() {
+        return players;
+    }
+
+    public boolean isCollision(int x,int y){
+        return map.isCollision(x,y);
+    }
+
+    public void sendToServer() {
+        if(!isServer && network){
+            for(Player player : players){
+                if(player.isLocalHuman()){
+                    ((HumanPlayer)player).sendToServer();
+                }
+            }
+        }
+    }
+
+    public void sendToAll() {
+        if(isServer && network){
+            for(Player player : players){
+                player.send(server);
+            }
+        }
+    }
+
+    public int getNextId(){
+        highId++;
+        return highId;
     }
 }

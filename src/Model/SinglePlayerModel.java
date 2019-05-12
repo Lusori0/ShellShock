@@ -3,6 +3,9 @@ package Model;
 import Views.SinglePlayerView;
 import Window.MyWindow;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class SinglePlayerModel {
 
 

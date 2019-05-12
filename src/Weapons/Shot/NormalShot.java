@@ -11,7 +11,7 @@ public class NormalShot extends Shot {
 
 
     public NormalShot(GameModel gameModel) {
-        super(gameModel,"Normal Shot",1);
+        super(gameModel,"Normal Shot",1,1);
 
         effecttime = 1;
 

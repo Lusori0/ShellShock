@@ -97,5 +97,9 @@ public class MyWindow{
         window.requestFocusInWindow();
     }
 
+    public static JFrame getFrame(){
+        return window;
+    }
+
 
 }

@@ -1,11 +1,14 @@
 package Weapons.Shot;
 
 import Model.GameModel;
+import Panzer.Panzer;
 import Weapons.Weapon;
 import Window.*;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
@@ -13,19 +16,22 @@ public abstract class Shot extends Weapon {
 
 
     protected int weaponsize;
-    private double speed = 3;
+    private double speed = 2;
     private double gravity = 0.007;
     private double downspeed = 0;
     private int explosionTimer = 0;
     protected int explosionRadius;
     protected int damage;
+    private int steps = 5;
+    private boolean hit = false;
+
 
     private LinkedList<int[]> coords = new LinkedList<>();
     private int starttimer = 0;
     protected int effecttime;
 
-    public Shot(GameModel gameModel, String name,int level) {
-        super(gameModel,name);
+    public Shot(GameModel gameModel, String name, int level,int id) {
+        super(gameModel,name,id);
 
         icons = new BufferedImage[]{Var.shotIcon, Var.shotIcon, Var.panzer};
 
@@ -36,71 +42,108 @@ public abstract class Shot extends Weapon {
 
         weaponsize = gameModel.getHeight()/60;
 
-        for(int i = 0; i < 20;i++){
+        for(int i = 0; i < 40;i++){
             coords.add(new int[]{(int) xPosition, (int) yPosition});
         }
     }
 
     @Override
-    public void create(int startX, int startY, double winkel, double strength, boolean rechts) {
-        super.create(startX, startY, winkel, strength, rechts);
+    public void create(int startX, int startY, double winkel, double strength, boolean rechts,Panzer herkunft) {
+        super.create(startX, startY, winkel, strength, rechts,herkunft);
     }
 
     @Override
     public void draw(Graphics2D g2d) {
-        if(!gameModel.isCollisionPanzer((int)xPosition + weaponsize/2,(int)yPosition + weaponsize/2) && explosionTimer == 0){
-            if(starttimer == effecttime) {
-                coords.add(new int[]{(int) xPosition, (int) yPosition});
-                starttimer = 0;
-            }else{
-                starttimer++;
-            }
 
-            if(coords.size() > 20){
-                coords.remove(coords.getFirst());
-            }
+        System.out.println(xPosition);
+
+
+
+
 
             int temp = 0;
             for(int[] cord : coords){
-                int opac = 255/20 * temp;
+                int[] xPos = new int []{};
                 g2d.setColor(new Color(200,150,0,255));
-                double size = (weaponsize*1.2)/20 * temp;
-                g2d.fill(new Ellipse2D.Double(cord[0] - size/2,cord[1] - size/2,size,size));
+                double size = (weaponsize*1.2)/40 * temp;
+                if(cord[0] != (int)xPosition) {
+                    g2d.fill(new Ellipse2D.Double(cord[0] - size / 2, cord[1] - size / 2, size, size));
+                }
 
                 temp++;
             }
 
             g2d.setColor(Color.WHITE);
-            g2d.fill(new Ellipse2D.Double(xPosition-weaponsize/(double)2,yPosition-weaponsize/(double)2,weaponsize,weaponsize));
+
+            if(explosionTimer == 0) {
+                g2d.fill(new Ellipse2D.Double(xPosition - weaponsize / (double) 2, yPosition - weaponsize / (double) 2, weaponsize, weaponsize));
+            }
 
             callculateNewCoords();
-        }else if(explosionTimer == 0){
-            gameModel.explosion((int)xPosition,(int)yPosition,explosionRadius,damage);
 
-            g2d.setColor(Color.WHITE);
-            g2d.fillOval((int)xPosition - explosionRadius/2,(int)yPosition-explosionRadius/2,explosionRadius,explosionRadius);
-            explosionTimer++;
-        }else if(explosionTimer <=100){
-            g2d.setColor(new Color(255,255,255,(int)(255 - 255 * explosionTimer/(double)100)));
-            g2d.fillOval((int)xPosition - explosionRadius/2,(int)yPosition-explosionRadius/2,explosionRadius,explosionRadius);
-            explosionTimer++;
-        }else{
-            weaponEnd();
+        if(gameModel.isCollisionPanzer((int)xPosition + weaponsize/2,(int)yPosition + weaponsize/2,herkunft)){
+            hit = true;
+        }
+
+        if(hit) {
+            if (explosionTimer == 0) {
+                gameModel.explosion((int) xPosition, (int) yPosition, explosionRadius, damage, herkunft);
+
+                g2d.setColor(Color.WHITE);
+                g2d.setTransform(affineTransform);
+                g2d.fillOval((int) xPosition - explosionRadius / 2, (int) yPosition - explosionRadius / 2, explosionRadius, explosionRadius);
+                g2d.setTransform(new AffineTransform());
+                explosionTimer++;
+            } else if (explosionTimer <= 100) {
+                g2d.setColor(new Color(255, 255, 255, (int) (255 - 255 * explosionTimer / (double) 100)));
+                g2d.fillOval((int) xPosition - explosionRadius / 2, (int) yPosition - explosionRadius / 2, explosionRadius, explosionRadius);
+                explosionTimer++;
+            } else {
+
+
+                    if (coords.getFirst()[0] == (int) xPosition) {
+                        weaponEnd();
+                    }
+
+            }
         }
     }
 
     protected void callculateNewCoords(){
-        double ht = speed * strength;
-        downspeed += gravity;
+
+        for(int i = 0; i < steps;i++) {
+
+            double ht = speed * strength;
+            downspeed += gravity;
 
 
-        if(rechts) {
-            xPosition += Math.cos(winkel) * ht;
-            yPosition += Math.sin(winkel) * ht + downspeed;
-        }else{
-            xPosition += -Math.cos(winkel) * ht;
-            yPosition += -Math.sin(winkel) * ht + downspeed;
+            affineTransform.setToRotation(winkel, getCenter().getX(), getCenter().getY());
+
+
+            if(explosionTimer == 0) {
+                if (rechts) {
+                    xPosition += Math.cos(winkel) * ht;
+                    yPosition += Math.sin(winkel) * ht + downspeed;
+                } else {
+                    xPosition += -Math.cos(winkel) * ht;
+                    yPosition += -Math.sin(winkel) * ht + downspeed;
+                }
+            }
+
+            if (starttimer == effecttime) {
+                coords.add(new int[]{(int) xPosition, (int) yPosition});
+                starttimer = 0;
+            } else {
+                starttimer++;
+            }
+
+            if (coords.size() > 40) {
+                coords.remove(coords.getFirst());
+            }
+
+
         }
+
     }
 
     private void weaponEnd(){
@@ -132,5 +175,10 @@ public abstract class Shot extends Weapon {
     @Override
     public double getSpeed() {
         return speed;
+    }
+
+    @Override
+    public Point2D getCenter() {
+        return new Point2D.Double(xPosition + weaponsize/(double)2,yPosition + weaponsize/(double)2);
     }
 }
