@@ -1,6 +1,10 @@
 package Window;
 
+import Views.Sound;
+
 import javax.imageio.ImageIO;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +12,7 @@ import java.io.IOException;
 public class Var {
 
     public static BufferedImage map,panzer,shotIcon,greenBar,greenLock,greenUnlock,shotIconDig,panzerRohr;
-
+    public static Sound music;
 
 
     public Var() {
@@ -23,6 +27,15 @@ public class Var {
             panzerRohr = ImageIO.read(new File("res/rohr.png"));
 
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            music = new Sound();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         }
     }

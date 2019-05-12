@@ -3,8 +3,7 @@ package Model;
 import Views.SettingsView;
 
 import Window.MyWindow;
-
-
+import Window.Var;
 
 
 public class SettingsModel {
@@ -21,6 +20,10 @@ public class SettingsModel {
     public void muteMusikAction(){
 
         MyWindow.muteMusic();
+    }
+
+    public void changeMusicVolume(Float f){
+        Var.music.setVolume(f);
     }
 
 

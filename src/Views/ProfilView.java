@@ -6,6 +6,8 @@ import Window.MyButton;
 import Window.MyWindow;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +24,8 @@ public class ProfilView extends JPanel implements ActionListener {
 
     JLabel panzer;
 
+    JSlider musicbar;
+
     ImageIcon backImg,deleProfilImg,panzerImg;
 
     JLabel nameDisplay,levelDisplay;
@@ -30,7 +34,8 @@ public class ProfilView extends JPanel implements ActionListener {
     {
         this.profilModell = profilModell;
         this.setBackground(MyWindow.backgroundColor);
-
+        this.level = level;
+        this.name = name;
         erzeugenOverlay();
 
     }
@@ -42,10 +47,8 @@ public class ProfilView extends JPanel implements ActionListener {
         this.setLayout(new GridBagLayout());
         GridBagConstraints g = new GridBagConstraints();
         //Initialisierung/Erzeugen des Inhalts
-            this.name = name;
             nameDisplay = new JLabel("<html><font size = +5><font color = 'white'>Profilname : <font color='green'><font size = +5>"+name+"</font></html>");
             //Erstellen der Anordnung
-                g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
                 g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 
@@ -58,10 +61,8 @@ public class ProfilView extends JPanel implements ActionListener {
             this.add(nameDisplay,g);
 
         //Initialisierung/Erzeugen des Inhalts
-            this.level = level;
             levelDisplay = new JLabel("<html><font size = +5><font color = 'white'>Level : <font color='red'><font size = +5>"+level+"</font></html>");
             //Erstellen der Anordnung
-                g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
                 g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 
@@ -76,15 +77,11 @@ public class ProfilView extends JPanel implements ActionListener {
 
         //Initialisierung/Erzeugen des Inhalts
             panzer = new JLabel();
-            if(System.getProperty("os.name").contains("Win")) {
-                panzerImg = new ImageIcon("res\\buttons\\KnopfSingleplayerMetallic1.png" );
-            }
-            else{
-                panzerImg = new ImageIcon("res/buttons/KnopfSingleplayerMetallic1.png" );
-            }
+
+                panzerImg = new ImageIcon("res/buttons/PanzerDefaultMetallic1.png" );
+
             panzer.setIcon(panzerImg);
             //Erstellen der Anordnung
-                g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
                 g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 
@@ -98,10 +95,9 @@ public class ProfilView extends JPanel implements ActionListener {
             this.add(panzer,g);
 
         //Initialisierung/Erzeugen des Inhalts
-            deleteProfil = new MyButton("","Profil löschen",deleProfilImg);
+            deleteProfil = new MyButton("KnopfProfilLöschenMetallic1.png","Profil löschen",deleProfilImg);
             deleteProfil.addActionListener(this);
             //Erstellen der Anordnung
-                g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
                 g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 
@@ -149,4 +145,6 @@ public class ProfilView extends JPanel implements ActionListener {
           profilModell.profilLoeschenAction();
       }
     }
+
+
 }

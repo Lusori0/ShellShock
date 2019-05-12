@@ -16,7 +16,7 @@ public class MainMenuModel {
     }
 
     public void multiplayerAction(){
-        new PreGameModel();
+        new MultiPlayerModel();
     }
 
     public void einstellungenAction(){

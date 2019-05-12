@@ -33,10 +33,9 @@ public class SinglePlayerView extends JPanel implements ActionListener {
         GridBagConstraints g = new GridBagConstraints();
 
         //Initialisierung/Erzeugen des Inhalts
-            gegenKi = new MyButton("","GegenKI", gegenKiImg);
+            gegenKi = new MyButton("KnopfGegenKIMetallic1.png","GegenKI", gegenKiImg);
             gegenKi.addActionListener(this);
             //Einstellen von der Anordnung
-                g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
                 g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 
@@ -52,11 +51,10 @@ public class SinglePlayerView extends JPanel implements ActionListener {
 
 
         //Initialisierung/Erzeugen des Inhalts
-            sandbox = new MyButton("","Sandbox",sandboxImg);
+            sandbox = new MyButton("KnopfSandboxMetallic1.png","Sandbox",sandboxImg);
             sandbox.addActionListener(this);
 
             //Einstellen von der Anordnung
-                g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
                 g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 
@@ -73,7 +71,6 @@ public class SinglePlayerView extends JPanel implements ActionListener {
             back = new MyButton("KnopfZurückMetallic1.png","Back",backImg);
             back.addActionListener(this);
             //Einstellen von der Anordnung
-                g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
                 g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 

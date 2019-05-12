@@ -14,7 +14,7 @@ public class PreGameModel {
     }
 
     public void startAction(){
-
+            new GameModel();
     }
 
     public void backAction(){
