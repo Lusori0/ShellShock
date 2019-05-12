@@ -87,9 +87,6 @@ public class MyWindow{
         activeUser = u;
     }
 
-
-
-
     public static void setContent(JPanel panel){
 
         window.setContentPane(panel);
