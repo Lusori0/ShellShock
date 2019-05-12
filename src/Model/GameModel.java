@@ -46,10 +46,9 @@ public class GameModel {
 
         height = MyWindow.HEIGHT-MyWindow.HEIGHT/4;
         gameView = new GameView();
-<<<<<<< HEAD
+
         gameView.addKeyListener(new MyKeys());
-=======
->>>>>>> 5ac31eccd55eae1742d160c46db4d87337be89e7
+
 
         map = new GameMap(this);
 
