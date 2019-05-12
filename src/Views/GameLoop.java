@@ -3,17 +3,15 @@ package Views;
 import Model.GameModel;
 
 import Window.*;
-//import sun.plugin2.util.ColorUtil;
+
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
+
 import java.util.Random;
 
 
