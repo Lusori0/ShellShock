@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 public class HugeShot extends Shot {
 
     public HugeShot(GameModel gameModel) {
-        super(gameModel,"Huge Shot", 3);
+        super(gameModel,"Huge Shot", 3,3);
 
         effecttime = 2;
 

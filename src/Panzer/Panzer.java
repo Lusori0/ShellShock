@@ -3,7 +3,7 @@ package Panzer;
 import Model.GameMap;
 import Model.GameModel;
 import Window.*;
-
+import javafx.scene.text.FontPosture;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -17,7 +17,7 @@ public abstract class Panzer {
 
     private double xPosition,yPosition;
 
-    private double width,height,winkel,shotstrength,rohrwinkel,drawAncle;
+    private double width,height,winkel,shotstrength,rohrwinkel,drawAncle,tempAncle;
 
     private AffineTransform affineTransform;
 
@@ -64,7 +64,7 @@ public abstract class Panzer {
         }
 
 
-        xPosition = Math.random() *1000;
+        xPosition = 500;
         yPosition = 30;
         targetX = getCenterX();
         targetY = yPosition;
@@ -92,8 +92,6 @@ public abstract class Panzer {
 
     public void draw(Graphics2D g2d, int art){
         AffineTransform old = new AffineTransform();
-
-
 
         Point2D rohrpoint = affineTransform.transform(new Point2D.Double(xPosition +width/2,yPosition),null);
 
@@ -168,38 +166,70 @@ public abstract class Panzer {
 
     public void move(GameMap map){
 
-        double xDifferece = width/40;
+        double xDifferece = width/60;
 
-        double ancleDiffrence;
+        double ancleDiffrence = xDifferece/20;
 
         accuracy = (int)(1 + (width/8) - (drawAncle/(Math.PI/2) * (width/8)));
 
         if(moveRight && xPosition < MyWindow.WIDTH-width*1.5 && sprit > 0){
 
-            winkel = map.getWinkel(getCenterX());
+            winkel = map.getWinkel(getCenterX()+5);
 
-            xPosition += Math.cos(winkel) * xDifferece;
 
-            yPosition += Math.sin(winkel) * xDifferece;
 
-            affineTransform.setToRotation(winkel,getCenterX(),getCenterY());
+
+            xPosition += Math.cos(winkel) * xDifferece * (1 - (Math.abs(drawAncle - winkel)));
+
+
+
+
+            //yPosition += Math.sin(winkel) * xDifferece;
+
+            if(Math.abs(drawAncle - winkel)<ancleDiffrence){
+                drawAncle = winkel;
+
+            }else{
+                if(drawAncle > winkel){
+                    drawAncle -= ancleDiffrence;
+                }else{
+                    drawAncle +=  ancleDiffrence;
+                }
+            }
+
+
+            affineTransform.setToRotation(drawAncle,getCenterX(),getCenterY());
+
+
 
             sprit--;
 
         }else if(moveLeft && xPosition > 0 && sprit > 0){
 
-            winkel = map.getWinkel( getCenterX());
+            winkel = map.getWinkel( getCenterX()-5);
 
-            xPosition -= Math.cos(winkel) * xDifferece;
 
-            yPosition -= Math.sin(winkel) * xDifferece;
 
-            affineTransform.setToRotation(winkel,getCenterX(),getCenterY());
+            xPosition -=  Math.cos(winkel) * xDifferece * (1 - (Math.abs(drawAncle - winkel)));
+
+            if(Math.abs(drawAncle - winkel)<ancleDiffrence){
+                drawAncle = winkel;
+
+            }else{
+                if(drawAncle > winkel){
+                    drawAncle -= ancleDiffrence;
+                }else{
+                    drawAncle +=  ancleDiffrence;
+                }
+            }
+
+
+            affineTransform.setToRotation(drawAncle,getCenterX(),getCenterY());
 
             sprit--;
 
 
-        }else {
+        }
 
 
            if(map.getHeight((int) getCenterX()) != getCenterY()) {
@@ -207,12 +237,13 @@ public abstract class Panzer {
                 double x = getCenterX();
 
                 winkel = map.getWinkel(x);
+                //drawAncle = winkel;
                 yPosition = map.getHeight(x) - height/2;
 
-                affineTransform.setToRotation(winkel,x,getCenterY());
+                affineTransform.setToRotation(drawAncle,x,getCenterY());
 
             }
-        }
+
 
         moveRight = false;
         moveLeft = false;
@@ -220,6 +251,8 @@ public abstract class Panzer {
         Shape hit = new Rectangle2D.Double((int)xPosition,(int)yPosition - height/2,(int)width,(int)height);
 
         hitbox = affineTransform.createTransformedShape(hit);
+
+        //TODO slow anclechange
     }
 
     public void resetSprit(){
@@ -236,9 +269,10 @@ public abstract class Panzer {
             double x = getCenterX();
 
             winkel = map.getWinkel(x);
+            drawAncle = winkel;
             yPosition = map.getHeight(x) - height/2;
 
-            affineTransform.setToRotation(winkel,x,getCenterY());
+            affineTransform.setToRotation(drawAncle,x,getCenterY());
 
         }
     }
@@ -291,6 +325,7 @@ public abstract class Panzer {
         setPolyPoints(model);
     }
 
+
     public Point2D getBulletspawn(){
         return affineTransform.transform(new Point2D.Double(getCenterX(),yPosition + height/4 - height/2),null);
     }
@@ -299,6 +334,7 @@ public abstract class Panzer {
 
         int x = (int) (mouseX );
         int y = (int) (mouseY + height/2);
+
 
 
 
@@ -316,7 +352,7 @@ public abstract class Panzer {
         shotstrength = new Point2D.Double(tempXPoint,tempYPoint).distance(x,y)/(model.getHeight()/(double)8);
 
 
-        rohrwinkel = winkel + Math.atan((tempYPoint - y)/(double)(tempXPoint - x));
+        rohrwinkel = drawAncle + Math.atan((tempYPoint - y)/(double)(tempXPoint - x));
 
         orientationRight = (tempXPoint -x) < 0;
 
@@ -339,6 +375,10 @@ public abstract class Panzer {
 
     public boolean isOrientationRight(){
         return orientationRight;
+    }
+
+    public void setOrientationRight(boolean orientationRight) {
+        this.orientationRight = orientationRight;
     }
 
     public int[] getPolyXPoints(){
@@ -405,25 +445,23 @@ public abstract class Panzer {
     }
 
     public void drawUi(Graphics2D g2d, int x, int y,GameModel model) {
-        g2d.setColor(new Color(255, 255, 255, 125));
+        setPolyPoints(model);
 
-        g2d.setTransform(getAffineTransform());
+        if(isSelected()) {
+            g2d.setColor(new Color(255, 255, 255, 125));
 
-        g2d.fillOval((int) getCenter().getX() - model.getHeight() / 8, (int) ((int) getCenter().getY() - model.getHeight() / (double)8 - height/2), model.getHeight() / 4, model.getHeight() / 4);
+            g2d.setTransform(getAffineTransform());
 
-        if (isShootready()) {
-            setPolyPoints(model);
+            g2d.fillOval((int) getCenter().getX() - model.getHeight() / 8, (int) ((int) getCenter().getY() - model.getHeight() / (double) 8 - height / 2), model.getHeight() / 4, model.getHeight() / 4);
+
+            if (isShootready()) {
 
 
 
-            g2d.fillPolygon(getPolyXPoints(), getPolyYPoints(), 3);
-            g2d.fillPolygon(getxPointsSmall(),getyPointsSmall(),3);
+                g2d.fillPolygon(getPolyXPoints(), getPolyYPoints(), 3);
+                g2d.fillPolygon(getxPointsSmall(), getyPointsSmall(), 3);
+            }
         }
-    }
-
-    public void setMove(){
-        moveRight = MyKeys.right;
-        moveLeft = MyKeys.left;
     }
 
     public boolean isMoveRight() {
@@ -440,6 +478,21 @@ public abstract class Panzer {
 
     public void setMoveLeft(boolean moveLeft) {
         this.moveLeft = moveLeft;
+    }
+
+    public double getDrawWinkel() {
+        return drawAncle;
+    }
+
+    public void setDrawWinkel(double drawWinkel,double winkel,double rohrwinkel){
+        this.winkel = winkel;
+        drawAncle = drawWinkel;
+        this.rohrwinkel = rohrwinkel;
+        affineTransform.setToRotation(drawAncle,getCenterX(),getCenterY());
+    }
+
+    public double getWinkel() {
+        return winkel;
     }
 
     private class Screentext{
@@ -493,5 +546,21 @@ public abstract class Panzer {
         public int getTime() {
             return time;
         }
+    }
+
+    public double getxPosition() {
+        return xPosition;
+    }
+
+    public void setxPosition(double xPosition) {
+        this.xPosition = xPosition;
+    }
+
+    public double getyPosition() {
+        return yPosition;
+    }
+
+    public void setyPosition(double yPosition) {
+        this.yPosition = yPosition;
     }
 }

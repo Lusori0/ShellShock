@@ -8,6 +8,6 @@ public class StandartPanzer extends Panzer{
 
 
     public StandartPanzer() {
-        super(Var.panzer,Var.panzerRohr, 100, 30000);
+        super(Var.panzer,Var.panzerRohr, 100, 300);
     }
 }
