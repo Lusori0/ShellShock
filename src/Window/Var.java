@@ -31,6 +31,7 @@ public class Var {
         }
         try {
             music = new Sound();
+            music.setVolume(0.5f);
         } catch (LineUnavailableException e) {
             e.printStackTrace();
         } catch (IOException e) {

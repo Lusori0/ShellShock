@@ -3,6 +3,7 @@ package Views;
 import Model.SettingsModel;
 import Window.MyButton;
 import Window.MyWindow;
+import Window.Var;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -40,7 +41,7 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
         GridBagConstraints g = new GridBagConstraints();
 
         //Slidebar test Anfang
-            musicbar = new JSlider(SwingConstants.HORIZONTAL,0,100,50);
+            musicbar = new JSlider(SwingConstants.HORIZONTAL,0,100,Var.music.getVolume() );
             musicbar.addChangeListener(this);
             musicbar.setMajorTickSpacing(10);
             musicbar.setPaintTicks(true);
