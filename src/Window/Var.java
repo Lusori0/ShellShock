@@ -13,6 +13,7 @@ public class Var {
 
     public static BufferedImage map,panzer,shotIcon,greenBar,greenLock,greenUnlock,shotIconDig,panzerRohr;
     public static Sound music;
+    public static int soundBarVolume = 0;
 
 
     public Var() {
@@ -32,6 +33,7 @@ public class Var {
         try {
             music = new Sound();
             music.setVolume(0.5f);
+            soundBarVolume = music.getVolume();
         } catch (LineUnavailableException e) {
             e.printStackTrace();
         } catch (IOException e) {

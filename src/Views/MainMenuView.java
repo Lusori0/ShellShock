@@ -42,14 +42,12 @@ public class MainMenuView extends JPanel implements ActionListener {
 
             //Laden und Skalieren des Hintergrundbildes
             File backgroundFile;
-            if(System.getProperty("os.name").contains("Win")) {
-                backgroundFile = new File("res\\gameimages\\Menübildschirm.png");
-            }
-            else{
-                backgroundFile = new File("res/gameimages/Menübildschirm.png");
-            }
+
+                backgroundFile = new File("res/gameimages/Menübildschirm2k.png");
+
             //Erzeugen vom Background /Verweis auf die Background class
             background = new Background(backgroundFile).backgroundScaling(backgroundFile);
+
             /*
             try {
                 background = ImageIO.read(backgroundFile);

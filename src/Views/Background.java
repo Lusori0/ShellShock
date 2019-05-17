@@ -48,6 +48,7 @@ public class Background {
                 {
                     //Displaygröße größer als Full HD
                     return background = background.getSubimage(cropX,cropY,MyWindow.WIDTH,MyWindow.HEIGHT);
+
                 } else {
                     //Beschneidung von Bildschirmauflösungen von Full HD und kleiner
                     return background = background.getSubimage(cropX, cropY, MyWindow.WIDTH, MyWindow.HEIGHT);
