@@ -64,11 +64,6 @@ public class ProfilView extends JPanel implements ActionListener {
             levelDisplay = new JLabel("<html><font size = +5><font color = 'white'>Level : <font color='red'><font size = +5>"+level+"</font></html>");
             //Erstellen der Anordnung
 
-                g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
-
-                g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
-
-                g.insets= new Insets(100,0,0,0);// Erzeugen eines Abstandes mit dem nächsten Button
 
                 g.gridy = 1;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
 
@@ -83,11 +78,6 @@ public class ProfilView extends JPanel implements ActionListener {
             panzer.setIcon(panzerImg);
             //Erstellen der Anordnung
 
-                g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
-
-                g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
-
-                g.insets= new Insets(100,0,0,0);// Erzeugen eines Abstandes mit dem nächsten Button
 
                 g.gridy = 2;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
 
@@ -98,12 +88,6 @@ public class ProfilView extends JPanel implements ActionListener {
             deleteProfil = new MyButton("KnopfProfilLöschenMetallic1.png","Profil löschen",deleProfilImg);
             deleteProfil.addActionListener(this);
             //Erstellen der Anordnung
-
-                g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
-
-                g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
-
-                g.insets= new Insets(100,0,0,0);// Erzeugen eines Abstandes mit dem nächsten Button
 
                 g.gridy = 3;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
 
