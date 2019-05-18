@@ -64,6 +64,7 @@ public class Sound {
     }
 
     // Methode um mit dem Slider das Volumen in gewünschte Lautstätke setzen
+
     public void setVolume(float volume) {
         this.volume = (int) (volume*100);
         if(volume == 0f) {setMuted(true);}

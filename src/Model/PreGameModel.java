@@ -7,7 +7,10 @@ import java.util.LinkedList;
 
 public class PreGameModel {
 
-    public PreGameModel() {
+    private GameType gametype;
+
+    public PreGameModel(GameType gametype) {
+        this.gametype = gametype;
         MyWindow.setContent(new PreGameView(this));
     }
 

@@ -6,6 +6,8 @@ import Window.MyWindow;
 import javax.swing.*;
 import java.io.*;
 
+import java.util.prefs.*;
+
 public class LogInModel {
 
     private LogInView logInView;
@@ -68,4 +70,5 @@ public class LogInModel {
         }
 
     }
+
 }
