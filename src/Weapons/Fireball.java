@@ -30,25 +30,33 @@ public class Fireball extends Weapon {
     private int starttimer = 0;
 
     public Fireball(GameModel gameModel) {
-        super(gameModel,"Fireball",4);
+        super(gameModel,"Fireball",4,new Color(255,150,0),Var.shotIcon);
 
         icons = new BufferedImage[]{Var.shotIcon};
 
         icon = icons[0];
 
-        createImage(Var.greenBar,Var.shotIconDig,Var.greenUnlock,Var.greenLock);
+        createImage();
 
 
         weaponsize = gameModel.getHeight()/60;
 
-        for(int i = 0; i < 20;i++){
-            coords.add(new int[]{(int) xPosition, (int) yPosition});
-        }
+    }
+
+    public void reset(){
+        explosionTimer = 0;
+        downspeed = 0;
+        hit = false;
+        affineTransform = new AffineTransform();
     }
 
     @Override
     public void create(int startX, int startY, double winkel, double strength, boolean rechts,Panzer herkunft) {
         super.create(startX, startY, winkel, strength, rechts,herkunft);
+
+        for(int i = 0; i < 20;i++){
+            coords.add(new int[]{(int) xPosition, (int) yPosition});
+        }
     }
 
     @Override

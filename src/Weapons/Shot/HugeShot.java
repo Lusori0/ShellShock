@@ -13,7 +13,7 @@ public class HugeShot extends Shot {
 
         effecttime = 2;
 
-        weaponsize = gameModel.getHeight()/60;
+        weaponsize = 15;
 
         explosionRadius = 100;
 

@@ -2,10 +2,14 @@ package Model;
 
 import Network.Server;
 import Panzer.Panzer;
+import Weapons.Bounce.BigBouncer;
 import Weapons.Bounce.Bouncer;
+import Weapons.Bounce.MiddleBouncer;
+import Weapons.Bounce.SmallBouncer;
 import Weapons.Fireball;
 import Weapons.*;
 import Panzer.*;
+import Weapons.Shot.BigShot;
 import Weapons.Shot.HugeShot;
 import Weapons.Shot.NormalShot;
 
@@ -29,7 +33,7 @@ public abstract class Player {
     private String name;
 
     public Player(GameModel model,int team,int id,String name){
-        panzer = new StandartPanzer();
+        panzer = new StandartPanzer(model,name);
 
         this.id = id;
         this.name = name;
@@ -42,15 +46,35 @@ public abstract class Player {
 
         weapons = new LinkedList<>();
 
+
+
+
+
         for(int i = 0; i < 10;i++){
-            weapons.add(new NormalShot(model));
+            addWeapon(new NormalShot(model));
         }
 
-        weapons.add(new Bouncer(model,"ww",1));
+        addWeapon(new MiddleBouncer(model));
+        addWeapon(new SmallBouncer(model));
+        addWeapon(new Fireball(model));
+        addWeapon(new HugeShot(model));
+        addWeapon(new BigShot(model));
+
+
 
         selectedWeapon = weapons.getFirst();
 
 
+    }
+
+    public void addWeapon(Weapon weapon){
+        for(Weapon w : weapons){
+            if(weapon.getId() == w.getId()){
+                w.addAnzahl();
+                return;
+            }
+        }
+        weapons.add(weapon);
     }
 
     public Panzer getPanzer(){

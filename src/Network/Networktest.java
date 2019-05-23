@@ -2,8 +2,10 @@ package Network;
 
 import Model.*;
 import Window.MyWindow;
+import Window.Var;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.InetAddress;
@@ -77,7 +79,7 @@ public class Networktest{
                 @Override
                 public void run() {
                     server.sendToAllTCP("start:start");
-                    model.start(players,client,server);
+                    model.start(players,client,server,false,new Color(0,195,255),new Color(150,150,0));
                 }
             }).start();
 
@@ -90,7 +92,7 @@ public class Networktest{
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    model.start(players,client,server);
+                    model.start(players,client,server,false,new Color(0,195,255),new Color(150,150,0));
                 }
             }).start();
 
@@ -102,11 +104,11 @@ public class Networktest{
         isServer = true;
         MyWindow.getFrame().setTitle("server");
         MyWindow.setContent(hostPanel);
-        model = new GameModel(true);
+        model = new GameModel();
         server = new Server(model,this);
         server.start();
-        addPlayer(new HumanPlayer(model,1,model.getNextId(),"host"));
-        addPlayer(new KiPlayer(model,2,model.getNextId()));
+        addPlayer(new HumanPlayer(model,1,model.getNextId(),"hosttestttaanasgkjh"));
+        addPlayer(new KiPlayer(model,2,model.getNextId(),3));
         hostPanel.updateUI();
     }
 
@@ -135,7 +137,7 @@ public class Networktest{
 
     public void startJoin(){
         MyWindow.setContent(joinPanel);
-        model = new GameModel(false);
+        model = new GameModel();
         try {
             client = new Client(model,this, InetAddress.getLocalHost().toString());
         } catch (UnknownHostException e) {

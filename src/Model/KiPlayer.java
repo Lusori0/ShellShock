@@ -1,11 +1,5 @@
 package Model;
 
-import Views.GameLoop;
-import Window.MyKeys;
-
-import java.awt.*;
-import java.awt.geom.Area;
-import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.LinkedList;
 
@@ -19,8 +13,11 @@ public class KiPlayer extends Player {
 
     private int movementMode = 0;
 
-    public KiPlayer(GameModel model, int team,int id) {
+    private int difficoulty = 0;
+
+    public KiPlayer(GameModel model, int team,int id,int difficoulty) {
         super(model, team,id,"KI");
+        this.difficoulty = difficoulty;
     }
 
     public void prepare(GameModel model){
@@ -28,6 +25,7 @@ public class KiPlayer extends Player {
             targety = getPanzer().getBulletspawn().getY()-ziel.getPanzer().getBulletspawn().getY();
             x = (ziel.getPanzer().getBulletspawn().getX() - getPanzer().getBulletspawn().getX());
             myY = getPanzer().getBulletspawn().getY();
+
         }else{
             if(action(model) == 2) {
                 movementMode = 1;
@@ -82,6 +80,7 @@ public class KiPlayer extends Player {
 
                 } else {
                     movementFinished = true;
+                    movementMode = 0;
                 }
                 getPanzer().move(map);
             }else{
@@ -165,20 +164,24 @@ public class KiPlayer extends Player {
             }
         }else{
 
-            finalWinkel = 1;
-            finalSpeed = getSelectedWeapon().getSpeed();
+
+            finalSpeed = 1;
 
             double xtempRohr;
             double ytempRohr;
 
 
             if(x<0) {
+                finalWinkel = 1;
                 xtempRohr = -Math.sin(Math.PI / 2 + finalWinkel) * 100 + getPanzer().getCenterX();
                 ytempRohr = -Math.cos(-Math.PI / 2 + finalWinkel) * 100 + getPanzer().getCenter().getY();
+
             }else{
 
+                finalWinkel = -1;
                 xtempRohr = -Math.sin(-Math.PI / 2 + finalWinkel) * 100 + getPanzer().getCenterX();
                 ytempRohr = -Math.cos(Math.PI / 2 + finalWinkel) * 100 + getPanzer().getCenter().getY();
+
             }
 
 
@@ -192,20 +195,24 @@ public class KiPlayer extends Player {
 
         if(Double.isNaN(finalWinkel)){
 
-            finalWinkel = 1;
-            finalSpeed = getSelectedWeapon().getSpeed();
+
+            finalSpeed = 1;
 
             double xtempRohr;
             double ytempRohr;
 
 
             if(x<0) {
+                finalWinkel = 1;
                 xtempRohr = -Math.sin(Math.PI / 2 + finalWinkel) * 100 + getPanzer().getCenterX();
                 ytempRohr = -Math.cos(-Math.PI / 2 + finalWinkel) * 100 + getPanzer().getCenter().getY();
+
             }else{
 
+                finalWinkel = -1;
                 xtempRohr = -Math.sin(-Math.PI / 2 + finalWinkel) * 100 + getPanzer().getCenterX();
                 ytempRohr = -Math.cos(Math.PI / 2 + finalWinkel) * 100 + getPanzer().getCenter().getY();
+
             }
 
 
@@ -248,6 +255,7 @@ public class KiPlayer extends Player {
 
 
 
+
         return 0;
     }
 
@@ -260,12 +268,15 @@ public class KiPlayer extends Player {
 
     public void shoot(GameModel model){
 
+        finalWinkel += (-0.1 + Math.random() * 0.2)*difficoulty;
+
+
         if (x > 0) {
             getSelectedWeapon().create((int) (getPanzer().getBulletspawn().getX()), (int) getPanzer().getBulletspawn().getY(),
-                    finalWinkel, finalSpeed, getPanzer().isOrientationRight(),getPanzer());
+                    finalWinkel - Math.PI, finalSpeed, false,getPanzer());
         } else {
             getSelectedWeapon().create((int) (getPanzer().getBulletspawn().getX()), (int) getPanzer().getBulletspawn().getY(),
-                    finalWinkel, finalSpeed, getPanzer().isOrientationRight(),getPanzer());
+                    finalWinkel, finalSpeed,false,getPanzer());
         }
     }
 
@@ -350,6 +361,8 @@ public class KiPlayer extends Player {
                 targety = getPanzer().getBulletspawn().getY() - ziel.getPanzer().getBulletspawn().getY();
                 x = (ziel.getPanzer().getBulletspawn().getX() - getPanzer().getBulletspawn().getX());
                 myY = getPanzer().getBulletspawn().getY();
+
+                System.out.println(x + ":" + targety);
 
                 if (action(model) == 0) {
                     return true;

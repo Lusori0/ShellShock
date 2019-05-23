@@ -1,8 +1,6 @@
 package Model;
 
-import java.awt.*;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+
 
 import Network.Client;
 import Window.*;
@@ -13,11 +11,6 @@ public class HumanPlayer extends Player {
 
     public HumanPlayer(GameModel model, int team,int id,String name) {
         super(model, team,id,name);
-    }
-
-    public HumanPlayer(GameModel model, int team,int id,String name, String ipAdress){
-        super(model,team,id,name);
-
     }
 
     public void setClient(Client client) {

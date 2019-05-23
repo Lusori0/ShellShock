@@ -1,10 +1,10 @@
 package Model;
 
 import Network.Client;
-import Network.Networktest;
 import Network.Server;
 import Panzer.Panzer;
 import Views.GameLoop;
+import Views.GameUiView;
 import Views.GameView;
 
 
@@ -15,17 +15,17 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.net.InetAddress;
+
 import java.util.LinkedList;
-import java.util.List;
-import java.net.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 
 public class GameModel {
 
     private GameView gameView;
     private GameLoop gameLoop;
     private LinkedList<Player>  players;
-    private LinkedList<Weapon> currentWeapons;
+    private CopyOnWriteArrayList<Weapon> currentWeapons;
     private GameMap map;
     private int height;
     private Player lastLocalHuman;
@@ -39,43 +39,38 @@ public class GameModel {
 
     private int highId = 0;
 
-    public GameModel(boolean temp){
+    private double redTriTimer = 0;
+    private boolean sandbox;
+    private GameUiView gameUiView;
+
+
+    public GameModel(){
         //map = Var.map;
 
         //collisionMap = new CollisionMap(map,this);
 
-        height = MyWindow.HEIGHT-MyWindow.HEIGHT/4;
+        height = (int) (GameLoop.imgH);
         gameView = new GameView();
 
         gameView.addKeyListener(new MyKeys());
 
-
-        map = new GameMap(this);
-
-
+        map = new GameMap(this,5);
 
         players = new LinkedList<>();
         currentPlayer = new LinkedList<>();
 
-
         //Erster spieler ist ein lokaler mensch
-
-
-
-
 
         teamanzahl = 2;
 
         spielmode = 3;
 
-        currentWeapons = new LinkedList<>();
-
-
-
-
+        currentWeapons = new CopyOnWriteArrayList<>();
     }
 
-    public void start(LinkedList<Player> players,Client client,Server server){
+    public void start(LinkedList<Player> players,Client client,Server server,boolean sandbox,Color background,Color forground){
+
+        this.sandbox = sandbox;
 
 
         if(server != null || client != null){
@@ -114,8 +109,10 @@ public class GameModel {
             }
         }
 
-        gameLoop = new GameLoop(this);
+        gameLoop = new GameLoop(this,background);
         gameView.add(gameLoop, BorderLayout.CENTER);
+        gameUiView = new GameUiView(this);
+        gameView.add(gameUiView,BorderLayout.PAGE_END);
         MyWindow.setContent(gameView);
         gameLoop.createStrategy();
         gameLoop.mainGameLoop();
@@ -153,6 +150,31 @@ public class GameModel {
             }else{
                 player.getPanzer().draw(g2d,2);
             }
+
+            if(currentPlayer.contains(player)){
+                if(!shot) {
+                    drawRedRect(player, g2d);
+                }
+            }
+        }
+    }
+
+    private void drawRedRect(Player player,Graphics2D g2d){
+
+        int timerAdd = (int) Math.abs(redTriTimer);
+
+        int triSize = 10;
+        int[] xPos = new int[]{(int) (player.getPanzer().getBulletspawn().getX() - triSize), (int) player.getPanzer().getBulletspawn().getX(), (int) (player.getPanzer().getBulletspawn().getX() + triSize)};
+        int ytemp = (int) (player.getPanzer().getCenter().getY() - 50 - timerAdd);
+        int[] yPos = new int[]{ytemp - triSize,ytemp,ytemp - triSize};
+
+        g2d.setColor(Color.RED);
+        g2d.fill(new Polygon(xPos,yPos,3));
+
+        if(redTriTimer > -10){
+            redTriTimer -= 0.2;
+        }else{
+            redTriTimer = 10;
         }
     }
 
@@ -232,7 +254,9 @@ public class GameModel {
     }
 
     public void removeWeapon(Weapon weapon){
-        currentWeapons.remove(weapon);
+        if(!sandbox) {
+            currentWeapons.remove(weapon);
+        }
     }
 
     public void changeGui(){
@@ -253,14 +277,14 @@ public class GameModel {
                     player.setOnTurn(false);
                     player.setLockedIn(false);
                     player.getPanzer().resetSprit();
-                    System.out.println(player);
+
                 }
 
                 nextPlayer();
 
                 for (Player player : currentPlayer) {
                     player.setOnTurn(true);
-                    System.out.println(player);
+
                 }
 
                 changeGui();
@@ -357,9 +381,6 @@ public class GameModel {
         }
     }
 
-    public void setWeaponsShowTime(int t){
-        weaponsShowedTime  = t;
-    }
 
     public int getWeaponsShowedTime() {
         return weaponsShowedTime;
@@ -367,19 +388,23 @@ public class GameModel {
 
     public boolean showWeapons(Graphics2D g2d, int mousex, int mousey, boolean clicked,int art){
 
-        if(weaponsShowedTime <= getHeight()/20) {
-            g2d.fillRect(0, getHeight() - 20 * weaponsShowedTime, MyWindow.WIDTH, (int) 20 * weaponsShowedTime);
-        }else{
-            g2d.fillRect(0, 0, MyWindow.WIDTH, getHeight());
+        if(art == 1) {
+            if (weaponsShowedTime <= GameLoop.imgH / 20) {
+                g2d.fillRect(0, (int) (GameLoop.imgH - 20 * weaponsShowedTime), GameLoop.imgW, (int) 20 * weaponsShowedTime);
+                weaponsShowedTime += 2;
+            } else {
+                g2d.fillRect(0, 0, GameLoop.imgW, GameLoop.imgH);
 
+            }
+        }else{
+            if (weaponsShowedTime > 0) {
+                g2d.fillRect(0, (int) (GameLoop.imgH - 20 * weaponsShowedTime), GameLoop.imgW, (int) 20 * weaponsShowedTime);
+                weaponsShowedTime -= 4;
+            }
         }
 
-
-
-
-
-        int xtemp = MyWindow.WIDTH/5;
-        int ytemp = height/8;
+        int xtemp = GameLoop.imgW/5;
+        int ytemp = GameLoop.imgH/8;
 
         int size = lastLocalHuman.getWeapons().size();
 
@@ -403,6 +428,7 @@ public class GameModel {
                         MyKeys.weapon = false;
                         lastLocalHuman.setSelectedWeapon(weapon);
                         handeld = true;
+                        weapon.drawImage((int) (t % 5 * xtemp - xtemp * 0.1), (int) ((t / 5) * ytemp + height - h * ytemp - ytemp * 0.1), (int) (xtemp * 1.2), (int) (ytemp * 1.2), g2d);
                     } else {
                         weapon.drawImage((int) (t % 5 * xtemp - xtemp * 0.1), (int) ((t / 5) * ytemp + height - h * ytemp - ytemp * 0.1), (int) (xtemp * 1.2), (int) (ytemp * 1.2), g2d);
                     }
@@ -414,10 +440,6 @@ public class GameModel {
             }else{
                 temp = true;
             }
-        }
-
-        if(temp || art < 0){
-            weaponsShowedTime += art;
         }
 
         if(clicked && !handeld){
@@ -463,9 +485,15 @@ public class GameModel {
 
 
                 if(player.isLocalHuman() || player.isKi()) {
-                    player.getWeapons().remove(player.getSelectedWeapon());
+                    if(player.getSelectedWeapon().getAnzahl() == 1) {
+                        player.getWeapons().remove(player.getSelectedWeapon());
+                        player.setSelectedWeapon(player.getWeapons().getFirst());
+                    }else{
+                        player.getSelectedWeapon().subAnzahl();
+                        player.getSelectedWeapon().reset();
+                    }
 
-                    player.setSelectedWeapon(player.getWeapons().getFirst());
+
                 }
 
             }
@@ -540,6 +568,7 @@ public class GameModel {
         for(Player player : players){
 
             player.getPanzer().moveNotTurn(map);
+            player.getPanzer().setPolyPoints(this);
 
             if(new Ellipse2D.Double(x - size/(double)2,y -size/(double)2,size,size).intersects(player.getPanzer().getHitbox().getBounds2D())){
 
@@ -547,10 +576,10 @@ public class GameModel {
 
                 if(player.getTeam() != team) {
 
-                    player.getPanzer().schaden(damage, 0);
+                    player.getPanzer().schaden(damage, 0,sandbox);
                 }else{
 
-                    player.getPanzer().schaden(damage, 1);
+                    player.getPanzer().schaden(damage, 1,sandbox);
                 }
             }
 
@@ -595,5 +624,13 @@ public class GameModel {
     public int getNextId(){
         highId++;
         return highId;
+    }
+
+    public boolean isSandbox() {
+        return sandbox;
+    }
+
+    public Player getLastLocalHuman() {
+        return lastLocalHuman;
     }
 }

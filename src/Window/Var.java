@@ -18,12 +18,13 @@ public class Var {
 
     public Var() {
         try {
+            background = ImageIO.read(new File("res/background.png"));
             map = ImageIO.read(new File("res/map3.png"));
             panzer = ImageIO.read(new File("res/panzer.png"));
             shotIcon = ImageIO.read(new File("res/shotIcon.png"));
-            greenBar = ImageIO.read(new File("res/greenBar.png"));
-            greenLock = ImageIO.read(new File("res/greenLock.png"));
-            greenUnlock = ImageIO.read(new File("res/greenUnlock.png"));
+            whiteBar = ImageIO.read(new File("res/whiteBar.png"));
+            unselected = ImageIO.read(new File("res/unselected.png"));
+            selected = ImageIO.read(new File("res/selected1.png"));
             shotIconDig = ImageIO.read(new File("res/shotIconDig.png"));
             panzerRohr = ImageIO.read(new File("res/rohr.png"));
 

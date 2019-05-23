@@ -15,9 +15,9 @@ public class NormalShot extends Shot {
 
         effecttime = 1;
 
-        weaponsize = gameModel.getHeight()/120;
+        weaponsize = 12;
 
-        explosionRadius = 40;
+        explosionRadius = 80;
 
         damage = 20;
 

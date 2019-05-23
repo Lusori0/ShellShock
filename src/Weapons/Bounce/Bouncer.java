@@ -15,8 +15,9 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-public class Bouncer extends Weapon {
+public abstract class Bouncer extends Weapon {
 
 
 
@@ -36,68 +37,85 @@ public class Bouncer extends Weapon {
     private int starttimer = 0;
     protected int effecttime;
 
-    public Bouncer(GameModel gameModel, String name,int level) {
-        super(gameModel, name,5);
+    private int bounces;
+    private boolean always;
+    private double reduce;
+
+    private CopyOnWriteArrayList<Explosion> explosions = new CopyOnWriteArrayList<>();
+
+    public Bouncer(GameModel gameModel, String name,int level,int bounces,boolean always,int size,int expsize,int damage,double reduce,int id) {
+        super(gameModel, name,id,new Color(200,0,255),Var.shotIcon);
+
+        this.reduce = reduce;
 
         icons = new BufferedImage[]{Var.shotIcon, Var.shotIcon, Var.panzer};
 
         icon = icons[level-1];
 
-        createImage(Var.greenBar,Var.shotIconDig,Var.greenUnlock,Var.greenLock);
+        createImage();
 
 
-        weaponsize = gameModel.getHeight()/60;
+        weaponsize = size;
+        explosionRadius = expsize;
+        this.always = always;
+        this.bounces = bounces;
+        this.damage = damage;
 
-        for(int i = 0; i < 40;i++){
-            coords.add(new double[]{(int) xPosition, (int) yPosition,0});
-        }
 
+
+
+    }
+
+    public void reset(){
+        explosionTimer = 0;
+        downspeed = 0;
+        hit = 0;
+        drawWinkel = 0;
+        starttimer = 0;
+        affineTransform = new AffineTransform();
     }
 
 
     @Override
     public void create(int startX, int startY, double winkel, double strength, boolean rechts, Panzer herkunft) {
         super.create(startX, startY, winkel, strength, rechts,herkunft);
+        for(int i = 0; i < 40;i++){
+            coords.add(new double[]{(int) xPosition, (int) yPosition,0});
+        }
     }
 
     @Override
     public void draw(Graphics2D g2d) {
 
+        if(explosionTimer == 0) {
+
+            AffineTransform t = new AffineTransform();
+            int temp = 0;
+            for(double[] cord : coords){
+
+                g2d.setColor(new Color(200,0,250,255));
+                double size = (weaponsize*1.2)/40 * temp;
+                if(cord[0] != (int)xPosition) {
 
 
+                    t.setToRotation(cord[2],cord[0],cord[1]);
+
+                    g2d.setTransform(t);
+
+                    g2d.fill(new Ellipse2D.Double(cord[0] - size/2, cord[1]-size/2, size, size));
 
 
+                }
 
-
-        AffineTransform t = new AffineTransform();
-        int temp = 0;
-        for(double[] cord : coords){
-
-            g2d.setColor(new Color(200,150,0,255));
-            double size = (weaponsize*1.2)/40 * temp;
-            if(cord[0] != (int)xPosition) {
-
-
-                t.setToRotation(cord[2],cord[0],cord[1]);
-
-                g2d.setTransform(t);
-
-                g2d.fill(new Ellipse2D.Double(cord[0] - size/2, cord[1]-size/2, size, size));
-
-
+                temp++;
             }
 
-            temp++;
-        }
+            g2d.setTransform(new AffineTransform());
 
-        g2d.setTransform(new AffineTransform());
-
-        g2d.setColor(Color.WHITE);
-
-        if(explosionTimer == 0) {
+            g2d.setColor(Color.WHITE);
             g2d.setTransform(affineTransform);
             //g2d.fill(new Ellipse2D.Double(xPosition - weaponsize / (double) 2, yPosition - weaponsize / (double) 2, weaponsize, weaponsize));
-            g2d.fill(new Rectangle2D.Double(xPosition-weaponsize/2,yPosition - weaponsize/2,weaponsize,weaponsize));
+            g2d.fill(new Ellipse2D.Double(xPosition-weaponsize/2,yPosition - weaponsize/2,weaponsize,weaponsize));
             g2d.setTransform(new AffineTransform());
         }
 
@@ -110,7 +128,7 @@ public class Bouncer extends Weapon {
             xPosition = coords.get(coords.indexOf(coords.getLast())-1)[0];
             yPosition = coords.get(coords.indexOf(coords.getLast())-1)[1];
 
-            strength /= 1.5;
+            strength /= reduce;
 
             System.out.println(drawWinkel);
 
@@ -121,52 +139,64 @@ public class Bouncer extends Weapon {
             }
             drawWinkel = winkel;
 
-            System.out.println(gameModel.getMap().getWinkel(xPosition + weaponsize/2));
-
-            System.out.println(drawWinkel);
 
 
 
             downspeed = 0;
 
+            if(always && hit<=bounces){
+
+                    gameModel.explosion((int) xPosition, (int) yPosition, explosionRadius, damage, herkunft);
+                    explosions.add(new Explosion((int)xPosition,(int)yPosition,explosionRadius,Color.WHITE));
+                    hit ++;
+                    if(hit > bounces){
+                        explosionTimer++;
+                    }
+            }
 
 
-            hit ++;
+            if(hit == bounces && !always){
+                System.out.println("test");
+                gameModel.explosion((int) xPosition, (int) yPosition, explosionRadius, damage, herkunft);
+                explosions.add(new Explosion((int)xPosition,(int)yPosition,explosionRadius,Color.WHITE));
+                explosionTimer++;
+                hit ++;
+                if(hit > bounces){
+                    explosionTimer++;
+                }
+            }else if(!always){
+                hit++;
+            }
+
+
         }
-        if(hit > 0){
-            g2d.drawLine((int)tCollisionPoint.getX(),(int)tCollisionPoint.getY(),(int)(tCollisionPoint.getX() +(Math.cos(winkel) * 100)),(int)(tCollisionPoint.getY()+(Math.sin(winkel) * 100)));
 
+        for(Explosion exp : explosions){
+            exp.draw(g2d);
+            if(exp.getOpac() == 0){
+                explosions.remove(exp);
+                if(hit > bounces && always){
+                    explosionTimer++;
+                    if(explosions.size() == 0){
+                        weaponEnd();
+                    }
+                }else if(hit > bounces && explosionTimer > 0){
+
+                    if(explosions.size() == 0){
+                        System.out.println("test");
+                        weaponEnd();
+                    }
+                }
+            }
         }
 
         callculateNewCoords();
 
-        /*if(hit == 2) {
-            if (explosionTimer == 0) {
-                gameModel.explosion((int) xPosition, (int) yPosition, explosionRadius, damage, herkunft);
-
-                g2d.setColor(Color.WHITE);
-                g2d.setTransform(affineTransform);
-                g2d.fillOval((int) xPosition - explosionRadius / 2, (int) yPosition - explosionRadius / 2, explosionRadius, explosionRadius);
-                g2d.setTransform(new AffineTransform());
-                explosionTimer++;
-            } else if (explosionTimer <= 100) {
-                g2d.setColor(new Color(255, 255, 255, (int) (255 - 255 * explosionTimer / (double) 100)));
-                g2d.fillOval((int) xPosition - explosionRadius / 2, (int) yPosition - explosionRadius / 2, explosionRadius, explosionRadius);
-                explosionTimer++;
-            } else {
-
-
-                if (coords.getFirst()[0] == (int) xPosition) {
-                    weaponEnd();
-                }
-
-            }
-        }*/
     }
 
     protected void callculateNewCoords(){
 
-        for(int i = 0; i < 1;i++) {
+        for(int i = 0; i < 3;i++) {
 
             double ht = speed * strength;
             downspeed += gravity;
@@ -257,6 +287,36 @@ public class Bouncer extends Weapon {
         return affineTransform.transform(new Point2D.Double(xPosition + weaponsize/2,yPosition+weaponsize/2),null);
     }
 
+
+    private class Explosion{
+
+        private int x,y,size,opac;
+
+        private Color expColor;
+
+        public Explosion(int x, int y, int size,Color color) {
+            this.x = x;
+            this.y = y;
+            this.size = size;
+            this.expColor = color;
+            opac = 255;
+        }
+
+        public void draw(Graphics2D g2d){
+            g2d.setColor(new Color(expColor.getRed(),expColor.getGreen(),expColor.getBlue(),opac));
+            g2d.fillOval((int) x - size / 2, (int) y - size / 2, size, size);
+
+            opac -=4;
+
+            if(opac<0){
+                opac = 0;
+            }
+        }
+
+        public int getOpac() {
+            return opac;
+        }
+    }
 
 
 }

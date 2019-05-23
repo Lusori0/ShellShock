@@ -1,6 +1,5 @@
 package Model;
 
-import Network.Client;
 import Network.ServerHandler;
 import Weapons.Weapon;
 

@@ -2,13 +2,13 @@ package Panzer;
 
 import Model.GameMap;
 import Model.GameModel;
+import Views.GameLoop;
 import Window.*;
 
 
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.image.BufferedImage;
-
 import java.util.LinkedList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -35,7 +35,16 @@ public abstract class Panzer {
 
     private CopyOnWriteArrayList<Screentext> strings = new CopyOnWriteArrayList<>();
 
-    public Panzer(BufferedImage image,BufferedImage rohr,int leben,int maxSprit){
+    private String name;
+
+    public Panzer(GameModel model,BufferedImage image,BufferedImage rohr,int leben,int maxSprit,String name){
+
+        if(name.length() > 10) {
+            this.name = name.substring(0, 8);
+            this.name = this.name + "..";
+        }else{
+            this.name = name;
+        }
 
         affineTransform = new AffineTransform();
 
@@ -65,12 +74,13 @@ public abstract class Panzer {
         }
 
 
-        xPosition = 500;
+        xPosition = (GameLoop.imgW - 100) * Math.random() + 50;
         yPosition = 30;
+        moveNotTurn(model.getMap());
         targetX = getCenterX();
         targetY = yPosition;
-        width = MyWindow.WIDTH/(double)60;
-        height = width/2;
+        width = 60;
+        height = 30;
         accuracy = (int) (width/8);
 
         this.leben = leben;
@@ -89,6 +99,8 @@ public abstract class Panzer {
         Shape hit = new Rectangle2D.Double((int)xPosition,(int)yPosition - height/2,(int)width,(int)height);
 
         hitbox = affineTransform.createTransformedShape(hit);
+
+        strings.add(new Screentext(this.name,(int)getBulletspawn().getX() - 30, (int) (getBulletspawn().getY() - 100),2));
     }
 
     public void draw(Graphics2D g2d, int art){
@@ -149,7 +161,14 @@ public abstract class Panzer {
 
         for(Screentext screentext : strings) {
 
-            screentext.drawText(g2d, (int) width);
+            if(screentext.getArt() == 2){
+                screentext.setX((int) (getBulletspawn().getX()));
+                screentext.setY((int) (getBulletspawn().getY() - 65));
+                screentext.drawName(g2d);
+            }else {
+
+                screentext.drawText(g2d, (int) width);
+            }
 
             if(screentext.getTime() == 0){
                 strings.remove(screentext);
@@ -173,7 +192,7 @@ public abstract class Panzer {
 
         accuracy = (int)(1 + (width/8) - (drawAncle/(Math.PI/2) * (width/8)));
 
-        if(moveRight && xPosition < MyWindow.WIDTH-width*1.5 && sprit > 0){
+        if(moveRight && xPosition < GameLoop.imgW-width*1.5 && sprit > 0){
 
             winkel = map.getWinkel(getCenterX()+5);
 
@@ -275,6 +294,7 @@ public abstract class Panzer {
 
             affineTransform.setToRotation(drawAncle,x,getCenterY());
 
+
         }
     }
 
@@ -300,6 +320,8 @@ public abstract class Panzer {
 
     public boolean isHit(int xt, int yt){
         Shape hit = new Rectangle2D.Double((int)xPosition,(int)yPosition - height/2,(int)width,(int)height);
+
+
 
         hitbox = affineTransform.createTransformedShape(hit);
 
@@ -358,14 +380,14 @@ public abstract class Panzer {
         orientationRight = (tempXPoint -x) < 0;
 
         int tempx = x-tempXPoint;
-        xPoints = new int[]{(int) getCenter().getX(),(int)(getCenter().getX() +tempx - (tempYPoint - y)/(model.getHeight()/80)), (int)(getCenter().getX() +tempx + (tempYPoint - y)/ (model.getHeight()/(double)80))};
-        xPointsSmall = new int[]{(int) getCenter().getX(),(int)(getCenter().getX() +tempx - (tempYPoint - y)/(model.getHeight()/30)), (int)(getCenter().getX() +tempx + (tempYPoint - y)/ (model.getHeight()/(double)30))};
+        xPoints = new int[]{(int) getCenter().getX(),(int)(getCenter().getX() +tempx - (tempYPoint - y)/(model.getHeight()/120)), (int)(getCenter().getX() +tempx + (tempYPoint - y)/ (model.getHeight()/(double)120))};
+        xPointsSmall = new int[]{(int) getCenter().getX(),(int)(getCenter().getX() +tempx - (tempYPoint - y)/(model.getHeight()/45)), (int)(getCenter().getX() +tempx + (tempYPoint - y)/ (model.getHeight()/(double)45))};
 
 
 
         int tempy = y-tempYPoint;
-        yPoints = new int[]{(int) ((int)getCenter().getY() - height/2), (int)(getCenter().getY()+tempy - (x - tempXPoint) / (double)(model.getHeight()/80) - height/2), (int)(getCenter().getY()+tempy + (x - tempXPoint) /(double) (model.getHeight()/80) - height/2)};
-        yPointsSmall = new int[]{(int) ((int)getCenter().getY() - height/2), (int)(getCenter().getY()+tempy - (x - tempXPoint) / (double)(model.getHeight()/30) - height/2), (int)(getCenter().getY()+tempy + (x - tempXPoint) /(double) (model.getHeight()/30) - height/2)};
+        yPoints = new int[]{(int) ((int)getCenter().getY() - height/2), (int)(getCenter().getY()+tempy - (x - tempXPoint) / (double)(model.getHeight()/120) - height/2), (int)(getCenter().getY()+tempy + (x - tempXPoint) /(double) (model.getHeight()/120) - height/2)};
+        yPointsSmall = new int[]{(int) ((int)getCenter().getY() - height/2), (int)(getCenter().getY()+tempy - (x - tempXPoint) / (double)(model.getHeight()/45) - height/2), (int)(getCenter().getY()+tempy + (x - tempXPoint) /(double) (model.getHeight()/45) - height/2)};
 
     }
 
@@ -426,8 +448,10 @@ public abstract class Panzer {
         return hitbox;
     }
 
-    public void schaden(int damage, int art) {
-        leben -= damage;
+    public void schaden(int damage, int art,boolean sandbox) {
+        if(!sandbox) {
+            leben -= damage;
+        }
         int x = (int) (xPosition - width + Math.random() * width * 3);
         int y = (int) (yPosition + height - Math.random() * 2 * height);
 
@@ -513,10 +537,28 @@ public abstract class Panzer {
             switch(art){
                 case 0:time = 200;foreground = Color.WHITE;background = new Color(0,200,200,200);break;
                 case 1:time = 200;foreground = Color.RED;background = Color.BLACK;break;
+                case 2:time = 1;foreground = Color.WHITE;break;
             }
         }
 
+        public void drawName(Graphics2D g2d){
+
+            Font font = new Font("Calibri",Font.BOLD, (int) ((int) (height)/1.2));
+
+            FontMetrics metrics = g2d.getFontMetrics(font);
+            // Determine the X coordinate for the text
+            int xt = x - (metrics.stringWidth(text)) / 2;
+
+
+            g2d.setColor(foreground);
+            g2d.setFont(font);
+            g2d.drawString(text,xt,y);
+        }
+
         public void drawText(Graphics2D g2d,int width){
+
+
+
             g2d.setColor(background);
             g2d.setFont(new Font("Calibri",Font.BOLD, (int) (height * 1.1)));
             g2d.drawString(text, (int) (x- height*0.05), (float) (y + height * 0.05));
@@ -536,6 +578,18 @@ public abstract class Panzer {
 
         public int getY() {
             return y;
+        }
+
+        public void setX(int x) {
+            this.x = x;
+        }
+
+        public void setY(int y) {
+            this.y = y;
+        }
+
+        public int getArt() {
+            return art;
         }
 
         public void subTime() {
@@ -563,5 +617,9 @@ public abstract class Panzer {
 
     public void setyPosition(double yPosition) {
         this.yPosition = yPosition;
+    }
+
+    public int getMaxSprit() {
+        return maxSprit;
     }
 }

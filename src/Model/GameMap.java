@@ -1,11 +1,10 @@
 package Model;
 
 import Panzer.Panzer;
+import Views.GameLoop;
 import Window.MyWindow;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 
 public class GameMap {
@@ -18,7 +17,7 @@ public class GameMap {
     private double winkelgenauigkeit;
 
 
-    public GameMap(GameModel gameModel){
+    public GameMap(GameModel gameModel,int art){
         genauigkeit = 400;
         this.gameModel = gameModel;
 
@@ -26,23 +25,41 @@ public class GameMap {
         mapY = new int[genauigkeit + 2];
 
         mapX[genauigkeit + 1] = 0;
-        mapX[genauigkeit] = MyWindow.WIDTH;
+        mapX[genauigkeit] = GameLoop.imgW;
 
-        mapY[genauigkeit + 1] = gameModel.getHeight();
-        mapY[genauigkeit] = gameModel.getHeight();
+        mapY[genauigkeit + 1] = GameLoop.imgH;
+        mapY[genauigkeit] = GameLoop.imgH;
 
         for(int i = 0;i < genauigkeit;i++){
-            mapX[i] = (int) (MyWindow.WIDTH/(double)genauigkeit * (i));
-            mapY[i] = (int) (gameModel.getHeight()/(double)2 + Math.sin(i * 0.1) * gameModel.getHeight()/8);
+            mapX[i] = (int) (GameLoop.imgW/(double)genauigkeit * (i));
+
+            switch(art){
+                case 1:
+                    mapY[i] = (int) (gameModel.getHeight()/(double)2 + Math.sin(i * 0.1) * gameModel.getHeight()/8);
+                    break;
+                case 2:
+                    mapY[i] = (int) (gameModel.getHeight()/(double)2 + Math.sin(i * 0.01) * gameModel.getHeight()/8);
+                    break;
+                case 3:
+                    mapY[i] = (int) (gameModel.getHeight()/(double)2 + Math.sin(i * 0.1) * gameModel.getHeight()/12 + i);
+                    break;
+                case 4:
+                    mapY[i] = (int) (gameModel.getHeight()*0.8 - 1/(2000 + Math.pow(i - (genauigkeit - 2)/2.0,2)) * 1500000);
+                    break;
+                case 5:
+                    mapY[i] = (int) (gameModel.getHeight()/(double)2 + Math.pow(Math.sin(i * 0.03),3) * gameModel.getHeight()/4);
+
+            }
+
         }
 
 
 
         map = new Polygon(mapX,mapY,genauigkeit+2);
 
-        xDifference = MyWindow.WIDTH/(double)genauigkeit;
+        xDifference = GameLoop.imgW/(double)genauigkeit;
 
-        winkelgenauigkeit = 5;
+        winkelgenauigkeit = 2;
     }
 
     public Polygon getMap(){
@@ -73,7 +90,7 @@ public class GameMap {
     }
 
     public boolean isCollision(int x, int y) {
-        if(x > -MyWindow.WIDTH/10 && x < MyWindow.WIDTH * 1.1 && y > 0) {
+        if(x > -GameLoop.imgW/10 && x < GameLoop.imgW * 1.1 && y > 0) {
             return map.contains(new Point2D.Double(x, y));
         }else if(y > 0){
             return true;
@@ -82,45 +99,36 @@ public class GameMap {
         }
     }
 
-    public void explosion(int x, int y, int sizePara, int damage,Panzer herkunft) {
+    public void explosion(int x, int y, int sizeParat, int damage,Panzer herkunft) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
 
+                int sizePara = sizeParat/2;
+
                 int size = (int) (sizePara/xDifference) * 2;
 
 
+                for(int i = 0;i < size;i++){
+                    int xCoord = (int)((x - size/2 * xDifference)/xDifference)  +  1 + i;
 
 
+                    if(xCoord > 0 && xCoord < genauigkeit-2) {
 
-                for(int i = 0; i < size*2;i++){
-                    int coord = (int) (x / xDifference - size + i);
-                    if(coord >=0 && coord < mapX.length-2) {
+                        double diffrence = Math.sqrt(Math.pow(sizePara, 2) - Math.pow(Math.abs(x - mapX[xCoord]), 2));
 
-                            double xtemp = Math.abs(size / 2 - i) * xDifference / (size / (double) 2 * xDifference);
-
-                            double temp = size/(double)8;
-
-                            double diffrence2 = Math.abs(Math.pow((i-size)/temp,4)) * 2;
-
-
-
-
-
-
-                                if(mapY[coord] < y + size - diffrence2) {
-                                    mapY[coord] = (int) (y+size - (diffrence2));
-                                }
-
-
-
-                            /*double ytemp = Math.abs((mapY[(int) (x / xDifference - size / 2 + i)] - y)) / (size / (double) 2 * xDifference);
-                            mapY[(int) (x / xDifference - size / 2 + i)] += ((size / 2 * xDifference) * Math.sqrt(1 - Math.pow(xtemp, 2))) * Math.sqrt(1 - Math.pow(ytemp, 2));
-                            if (mapY[(int) (x / xDifference - size / 2 + i)] > gameModel.getHeight() * 0.9) {
-                                mapY[(int) (x / xDifference - size / 2 + i)] = (int) (gameModel.getHeight() * 0.9);
-                            }*/
+                        if (mapY[xCoord] < y - diffrence) {
+                            mapY[xCoord] += diffrence * 2;
+                        } else if (mapY[xCoord] < y + diffrence) {
+                            mapY[xCoord] = (int) (y + diffrence);
+                        }
+                        if (mapY[xCoord] > GameLoop.imgH * 0.99) {
+                            mapY[xCoord] = (int) (GameLoop.imgH*0.99);
+                        }
 
                     }
+
+
                 }
 
                 map = new Polygon(mapX,mapY,genauigkeit+2);
