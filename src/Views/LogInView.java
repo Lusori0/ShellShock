@@ -114,7 +114,6 @@ public class LogInView extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource() == submit && !textFieldName.getText().isEmpty() && !textFieldPw.getText().isEmpty()) {
             logInModel.LogInAction(textFieldName.getText(), textFieldPw.getText());
-            System.out.println(textFieldPw.getText());
         }
         if(actionEvent.getSource() == createProfil && !textFieldName.getText().isEmpty() && !textFieldPw.getText().isEmpty()){
             logInModel.makeNewProfileAction(textFieldName.getText(), textFieldPw.getText());
