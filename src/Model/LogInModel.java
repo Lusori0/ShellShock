@@ -6,7 +6,7 @@ import Window.MyWindow;
 import javax.swing.*;
 import java.io.*;
 
-import java.util.prefs.*;
+import java.util.*;
 
 public class LogInModel {
 
@@ -52,10 +52,16 @@ public class LogInModel {
         //Überprüfen ob Nutzer schon existiert
         if(!f.exists()) {
             try {
+                List<Integer> weaponsListTemp = new ArrayList<>();
+                weaponsListTemp.add(0);
+                weaponsListTemp.add(1);
+                weaponsListTemp.add(2);
+                weaponsListTemp.add(3);
+                weaponsListTemp.add(4);
                 //erstellen der Profil.bin datei
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("data/" + name + ".bin"));
 
-                Profil profil = new Profil(name, 0, password);
+                Profil profil = new Profil(name, 0, password,0,weaponsListTemp);
                 objectOutputStream.writeObject(profil);
                 objectOutputStream.close();
 
