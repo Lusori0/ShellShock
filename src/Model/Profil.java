@@ -22,4 +22,14 @@ public class Profil implements Serializable {
     public int getLevel(){return level;}
     public String getPassword(){return password;}
 
+    /*TODO:
+        waffen liste int
+        get unlocked weap return weapon list
+        get xp
+        get lvl
+        unlock new weapon
+        (levelup)
+    */
+
+
 }

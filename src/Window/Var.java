@@ -11,14 +11,14 @@ import java.io.IOException;
 
 public class Var {
 
-    public static BufferedImage map,panzer,shotIcon,greenBar,greenLock,greenUnlock,shotIconDig,panzerRohr;
+    public static BufferedImage map,panzer,shotIcon,greenBar,greenLock,greenUnlock,shotIconDig,panzerRohr,background,whiteBar,unselected,selected;
     public static Sound music;
     public static int soundBarVolume = 0;
 
 
     public Var() {
         try {
-            background = ImageIO.read(new File("res/background.png"));
+            //background = ImageIO.read(new File("res/background.png")); Nils dem sein background
             map = ImageIO.read(new File("res/map3.png"));
             panzer = ImageIO.read(new File("res/panzer.png"));
             shotIcon = ImageIO.read(new File("res/shotIcon.png"));

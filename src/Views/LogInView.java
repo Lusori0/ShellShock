@@ -72,7 +72,7 @@ public class LogInView extends JPanel implements ActionListener {
             this.add(labelPw,g);
 
         //Initialisierung/Erzeugen des Inhalts
-            textFieldPw = new JTextField(10);
+            textFieldPw = new JPasswordField(10);
             textFieldPw.setBackground(Color.GRAY);
             textFieldPw.setBorder(BorderFactory.createRaisedBevelBorder());
             textFieldPw.setFont(font);
@@ -114,6 +114,7 @@ public class LogInView extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource() == submit && !textFieldName.getText().isEmpty() && !textFieldPw.getText().isEmpty()) {
             logInModel.LogInAction(textFieldName.getText(), textFieldPw.getText());
+            System.out.println(textFieldPw.getText());
         }
         if(actionEvent.getSource() == createProfil && !textFieldName.getText().isEmpty() && !textFieldPw.getText().isEmpty()){
             logInModel.makeNewProfileAction(textFieldName.getText(), textFieldPw.getText());
