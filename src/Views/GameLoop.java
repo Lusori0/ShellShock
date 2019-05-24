@@ -75,7 +75,7 @@ public class GameLoop extends JPanel implements MouseListener {
 
         canvas.setIgnoreRepaint(true);
 
-        canvas.setSize(new Dimension(MyWindow.WIDTH, (int) (MyWindow.HEIGHT)));
+        canvas.setSize(new Dimension(MyWindow.WIDTH, (MyWindow.HEIGHT)));
 
         MyWindow.getFrame().setVisible(true);
         //MyWindow.getFrame().add(canvas);

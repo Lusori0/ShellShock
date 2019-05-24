@@ -256,9 +256,8 @@ public class GameModel {
     }
 
     public void removeWeapon(Weapon weapon){
-        if(!sandbox) {
-            currentWeapons.remove(weapon);
-        }
+        currentWeapons.remove(weapon);
+
     }
 
     public void changeGui(){
@@ -267,9 +266,11 @@ public class GameModel {
 
     public void nextTurn(){
 
+        System.out.println(currentWeapons.size());
 
 
         if(currentWeapons.size() == 0) {
+
 
 
 
