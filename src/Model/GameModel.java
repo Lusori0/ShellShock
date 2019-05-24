@@ -25,6 +25,7 @@ public class GameModel {
     private GameView gameView;
     private GameLoop gameLoop;
     private LinkedList<Player>  players;
+    private LinkedList<Player>  deadPlayers;
     private CopyOnWriteArrayList<Weapon> currentWeapons;
     private GameMap map;
     private int height;
@@ -66,6 +67,7 @@ public class GameModel {
         spielmode = 3;
 
         currentWeapons = new CopyOnWriteArrayList<>();
+        deadPlayers = new LinkedList<>();
     }
 
     public void start(LinkedList<Player> players,Client client,Server server,boolean sandbox,Color background,Color forground){
@@ -165,7 +167,7 @@ public class GameModel {
 
         int triSize = 10;
         int[] xPos = new int[]{(int) (player.getPanzer().getBulletspawn().getX() - triSize), (int) player.getPanzer().getBulletspawn().getX(), (int) (player.getPanzer().getBulletspawn().getX() + triSize)};
-        int ytemp = (int) (player.getPanzer().getCenter().getY() - 50 - timerAdd);
+        int ytemp = (int) (player.getPanzer().getCenter().getY() - 110 - timerAdd);
         int[] yPos = new int[]{ytemp - triSize,ytemp,ytemp - triSize};
 
         g2d.setColor(Color.RED);
@@ -265,13 +267,24 @@ public class GameModel {
 
     public void nextTurn(){
 
+
+
         if(currentWeapons.size() == 0) {
 
+
+
             for (Player player : players) {
+
                 if (player.getPanzer().getLeben() <= 0) {
-                    players.remove(player);
+
+                    player.setDead(true);
+                    explosion((int)player.getPanzer().getBulletspawn().getX(), (int) player.getPanzer().getBulletspawn().getY(),80,20,player.getPanzer());
+                    deadPlayers.add(player);
                 }
             }
+
+            players.removeAll(deadPlayers);
+
             if (!battleEnd()) {
                 for (Player player : currentPlayer) {
                     player.setOnTurn(false);
@@ -305,6 +318,9 @@ public class GameModel {
     }
 
     public boolean battleEnd(){
+        if(players.size() == 0){
+            return true;
+        }
         int t = players.getFirst().getTeam();
         for(Player player : players){
             if(player.getTeam() != t){
@@ -316,6 +332,36 @@ public class GameModel {
     }
 
     public void endGame(){
+        if(players.size() == 0){
+            endingScreen(1);
+        }else {
+            int t = players.getFirst().getTeam();
+            for (Player player : players) {
+                player.getPanzer().addXP(50);
+            }
+
+            for (Player player : deadPlayers) {
+                if (player.getTeam() == t) {
+                    player.getPanzer().addXP(25);
+                }
+            }
+
+            deadPlayers.addAll(players);
+
+            endingScreen(2);
+        }
+    }
+
+    public void endingScreen(int art){
+        String text;
+        if(art == 1){
+            text = "DRAW";
+            gameLoop.drawEndScreen(text,-1);
+        }else{
+            text = "TEAM " + players.getFirst().getTeam() + " WINS";
+            gameLoop.drawEndScreen(text,players.getFirst().getTeam());
+        }
+
 
     }
 
@@ -424,7 +470,36 @@ public class GameModel {
             if(weaponsShowedTime/5 > t) {
 
                 if (new Rectangle2D.Double(t % 5 * xtemp, (t / 5) * ytemp + height - h * ytemp, xtemp, ytemp).contains(mousex, mousey)) {
-                    if (clicked) {
+
+                    if(mousey < (int) ((t / 5) * ytemp + height - h * ytemp - ytemp * 0.1) + (int) (ytemp * 1.2 * (2.0/9.0))  && clicked && sandbox) {
+
+                        System.out.println((int)((mousex - ((xtemp) * 0.1) - (int) (t % 5 * xtemp - xtemp * 0.1))/((xtemp) * (1/5.6))) );
+
+                        if((int)((mousex - ((xtemp) * 0.1) - (int) (t % 5 * xtemp - xtemp * 0.1))/((xtemp) * (1.2/5.6))) < weapon.getLevelAnzhal()){
+
+                            System.out.println(22);
+
+                            Weapon weapon1 = weapon.getLevelWeapon((int)((mousex - ((xtemp) * 0.1) - (int) (t % 5 * xtemp - xtemp * 0.1))/((xtemp) * (1.2/5.6))) + 1,this);
+                            int anzahl = weapon.getAnzahl();
+                            weapon1.setAnzahl(anzahl);
+                            weapon1.createImage();
+
+
+
+
+                            int index = lastLocalHuman.getWeapons().indexOf(weapon);
+                            lastLocalHuman.getWeapons().remove(weapon);
+                            lastLocalHuman.getWeapons().add(index,weapon1);
+
+
+                            handeld = true;
+
+                        }
+
+                        weapon.drawImage((int) (t % 5 * xtemp - xtemp * 0.1), (int) ((t / 5) * ytemp + height - h * ytemp - ytemp * 0.1), (int) (xtemp * 1.2), (int) (ytemp * 1.2), g2d);
+
+
+                    }else if (clicked) {
                         MyKeys.weapon = false;
                         lastLocalHuman.setSelectedWeapon(weapon);
                         handeld = true;
@@ -487,7 +562,7 @@ public class GameModel {
                 if(player.isLocalHuman() || player.isKi()) {
                     if(player.getSelectedWeapon().getAnzahl() == 1) {
                         player.getWeapons().remove(player.getSelectedWeapon());
-                        player.setSelectedWeapon(player.getWeapons().getFirst());
+                        player.setSelectedWeapon(player.getWeapons().get(0));
                     }else{
                         player.getSelectedWeapon().subAnzahl();
                         player.getSelectedWeapon().reset();
@@ -577,6 +652,8 @@ public class GameModel {
                 if(player.getTeam() != team) {
 
                     player.getPanzer().schaden(damage, 0,sandbox);
+
+                    herkunft.addXP(damage);
                 }else{
 
                     player.getPanzer().schaden(damage, 1,sandbox);
@@ -632,5 +709,9 @@ public class GameModel {
 
     public Player getLastLocalHuman() {
         return lastLocalHuman;
+    }
+
+    public LinkedList<Player> getDeadPlayer() {
+        return deadPlayers;
     }
 }

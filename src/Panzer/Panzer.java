@@ -14,7 +14,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Panzer {
 
-    BufferedImage image,imageRed,imageBlue,rohrGreen,rohrRed,rohrBlue;
+    private BufferedImage image,imageRed,imageBlue,rohrGreen,rohrRed,rohrBlue;
 
     private double xPosition,yPosition;
 
@@ -30,12 +30,13 @@ public abstract class Panzer {
 
     private int[] xPoints,yPoints,xPointsSmall,yPointsSmall;
     private int tempXPoint = 0,tempYPoint = 0,mouseX = 0,mouseY = 0;
-    private double targetX,targetY;
-    private int leben,sprit,maxSprit;
+    private int leben,sprit,maxSprit,maxLeben;
 
     private CopyOnWriteArrayList<Screentext> strings = new CopyOnWriteArrayList<>();
 
     private String name;
+
+    private int xp;
 
     public Panzer(GameModel model,BufferedImage image,BufferedImage rohr,int leben,int maxSprit,String name){
 
@@ -77,13 +78,14 @@ public abstract class Panzer {
         xPosition = (GameLoop.imgW - 100) * Math.random() + 50;
         yPosition = 30;
         moveNotTurn(model.getMap());
-        targetX = getCenterX();
-        targetY = yPosition;
+        double targetX = getCenterX();
+        double targetY = yPosition;
         width = 60;
         height = 30;
         accuracy = (int) (width/8);
 
         this.leben = leben;
+        maxLeben = leben;
 
         xPoints = new int[3];
         yPoints = new int[3];
@@ -176,6 +178,11 @@ public abstract class Panzer {
                 screentext.subTime();
             }
         }
+
+
+        g2d.setColor(Color.GREEN);
+        g2d.fillRect((int)(getBulletspawn().getX() - width/2),(int)(getBulletspawn().getY() - width/1.3),(int)(width/maxLeben * leben), (int) (width/8));
+
         //g2d.setColor(Color.RED);
         //g2d.drawRect((int)xPosition,(int)yPosition,(int)width,(int)height);
         //g2d.drawRect((int)(xPosition + width/2),collisionMap.getMapHeight((int)(xPosition + width/2)),1,1);
@@ -520,6 +527,21 @@ public abstract class Panzer {
         return winkel;
     }
 
+    public void addXP(int damage) {
+        xp += damage;
+        if(xp>400){
+            xp=400;
+        }
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
     private class Screentext{
         private String text;
         private int x,y;
@@ -621,5 +643,9 @@ public abstract class Panzer {
 
     public int getMaxSprit() {
         return maxSprit;
+    }
+
+    public String getName() {
+        return name;
     }
 }

@@ -223,6 +223,10 @@ public abstract class Weapon {
         createImage();
     }
 
+    public void setAnzahl(int anzahl) {
+        this.anzahl = anzahl;
+    }
+
     public static Weapon getById(int id, GameModel model){
 
         switch (id){
@@ -236,5 +240,17 @@ public abstract class Weapon {
             default:return null;
         }
 
+    }
+
+    public BufferedImage getIcon() {
+        return icon;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public String getName() {
+        return name;
     }
 }

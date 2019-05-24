@@ -15,12 +15,13 @@ import Weapons.Shot.NormalShot;
 
 import java.awt.*;
 import java.util.LinkedList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Player {
 
     private Panzer panzer;
 
-    private LinkedList<Weapon> weapons;
+    private CopyOnWriteArrayList<Weapon> weapons;
 
     private Weapon selectedWeapon;
 
@@ -31,9 +32,16 @@ public abstract class Player {
     private int id;
 
     private String name;
+    protected boolean dead;
+    private int xp,level;
+    private Weapon unlockedWeapon;
 
     public Player(GameModel model,int team,int id,String name){
         panzer = new StandartPanzer(model,name);
+
+        xp = 10;
+
+        level = 1;
 
         this.id = id;
         this.name = name;
@@ -44,7 +52,7 @@ public abstract class Player {
 
         this.team = team;
 
-        weapons = new LinkedList<>();
+        weapons = new CopyOnWriteArrayList<>();
 
 
 
@@ -62,7 +70,7 @@ public abstract class Player {
 
 
 
-        selectedWeapon = weapons.getFirst();
+        selectedWeapon = weapons.get(0);
 
 
     }
@@ -89,7 +97,7 @@ public abstract class Player {
         return false;
     }
 
-    public LinkedList<Weapon> getWeapons() {
+    public CopyOnWriteArrayList<Weapon> getWeapons() {
         return weapons;
     }
 
@@ -154,5 +162,37 @@ public abstract class Player {
         getPanzer().setDrawWinkel(drawWinkel,winkel,rohrwinkel);
         getPanzer().setOrientationRight(right);
 
+    }
+
+    public void setDead(boolean b) {
+        dead = true;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public int getXP() {
+        return xp;
+    }
+
+    public void addXP() {
+        xp ++;
+    }
+
+    public int getLevel(){
+        return level;
+    }
+
+    public int levelUp() {
+        return 1;
+    }
+
+    public void setUnlockedWeapon(Weapon unlockedWeapon) {
+        this.unlockedWeapon = unlockedWeapon;
+    }
+
+    public Weapon getUnlockedWeapon() {
+        return unlockedWeapon;
     }
 }

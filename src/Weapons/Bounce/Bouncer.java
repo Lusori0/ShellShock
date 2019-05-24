@@ -244,19 +244,14 @@ public abstract class Bouncer extends Weapon {
     }
 
     @Override
-    public Weapon getLevelWeapon(int level, GameModel model) {
-        return null;
-    }
-
-    /*@Override
     public Weapon getLevelWeapon(int level,GameModel model){
         switch (level){
-            case 1:return new NormalShot(model);
-            case 2:return new BigShot(model);
-            case 3:return new HugeShot(model);
+            case 1:return new SmallBouncer(model);
+            case 2:return new MiddleBouncer(model);
+            case 3:return new BigBouncer(model);
             default:return null;
         }
-    }*/
+    }
 
     @Override
     public int getLevelAnzhal() {
@@ -317,6 +312,8 @@ public abstract class Bouncer extends Weapon {
             return opac;
         }
     }
+
+
 
 
 }
