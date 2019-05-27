@@ -1,7 +1,5 @@
 package Model;
 
-import Network.Client;
-import Network.Server;
 import Panzer.Panzer;
 import Views.GameLoop;
 import Views.GameUiView;
@@ -37,7 +35,7 @@ public class GameModel {
     private int spielmode = 0,teamanzahl = 0;
 
     private boolean isServer,network;
-    private Server server;
+
 
     private int highId = 0;
 
@@ -72,19 +70,9 @@ public class GameModel {
         deadPlayers = new LinkedList<>();
     }
 
-    public void start(LinkedList<Player> players,Client client,Server server,boolean sandbox,Color background,Color forground){
+    public void start(LinkedList<Player> players,boolean sandbox,Color background,Color forground){
 
         this.sandbox = sandbox;
-
-
-        if(server != null || client != null){
-            network = true;
-        }
-
-        if(server != null){
-            this.server = server;
-            isServer = true;
-        }
 
         this.players = players;
 
@@ -106,10 +94,6 @@ public class GameModel {
             player.setOnTurn(true);
             if(player.isLocalHuman()){
                 lastLocalHuman = player;
-
-                if(network && !isServer) {
-                    ((HumanPlayer) player).setClient(client);
-                }
             }
         }
 
@@ -549,9 +533,7 @@ public class GameModel {
 
     public void shoot(){
         if(!shot) {
-            if(isServer){
-                sendWeaponsToAll();
-            }
+
 
             for(Player player : currentPlayer) {
 
@@ -580,42 +562,11 @@ public class GameModel {
         }
     }
 
-    private void sendWeaponsToAll() {
-        for(Player playert : players){
-            if(playert.getId() == 3){
-                ((InetPlayer)playert).sendTCP("testWeapon");
-            }
-        }
-        if(isServer && network){
-            for(Player player : players){
-                if(!player.isLocalHuman() && !player.isKi()){
-                    for (Player player1 : players){
-                        ((InetPlayer)player).sendTCP("weapon:" + player1.getId() +":"+ player1.getSelectedWeapon().getId());
-                        ((InetPlayer)player).sendTCP("weaponvalues:" + player1.getId()
-                                        + ":" + String.valueOf(player1.getPanzer().getBulletspawn().getX())
-                                        + ":" + String.valueOf(player1.getPanzer().getBulletspawn().getY())
-                                        + ":" + String.valueOf(player1.getPanzer().getRohrWinkel())
-                                        + ":" + String.valueOf(player1.getPanzer().getShotstrength())
-                                        + ":" + String.valueOf(player1.getPanzer().isOrientationRight()));
-                    }
-                }
-            }
-        }
-    }
 
     public void feuerButtonAction(){
         for(Player player : currentPlayer) {
             if(player.isLocalHuman()) {
                 player.setLockedIn(true);
-                if(network && !isServer){
-                    ((HumanPlayer)player).sendTCP("weapon:" + player.getId() +":"+ player.getSelectedWeapon().getId());
-                    ((HumanPlayer)player).sendTCP("weaponvalues:" + player.getId()
-                            + ":" + String.valueOf(player.getPanzer().getBulletspawn().getX())
-                            + ":" + String.valueOf(player.getPanzer().getBulletspawn().getY())
-                            + ":" + String.valueOf(player.getPanzer().getRohrWinkel())
-                            + ":" + String.valueOf(player.getPanzer().getShotstrength())
-                            + ":" + String.valueOf(player.getPanzer().isOrientationRight()));
-                }
             }
         }
 
@@ -683,23 +634,6 @@ public class GameModel {
         return map.isCollision(x,y);
     }
 
-    public void sendToServer() {
-        if(!isServer && network){
-            for(Player player : players){
-                if(player.isLocalHuman()){
-                    ((HumanPlayer)player).sendToServer();
-                }
-            }
-        }
-    }
-
-    public void sendToAll() {
-        if(isServer && network){
-            for(Player player : players){
-                player.send(server);
-            }
-        }
-    }
 
     public int getNextId(){
         highId++;

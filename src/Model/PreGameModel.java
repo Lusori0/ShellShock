@@ -3,6 +3,7 @@ package Model;
 import Views.PreGameView;
 import Window.MyWindow;
 
+import java.io.PrintStream;
 import java.util.LinkedList;
 import java.awt.*;
 
@@ -24,9 +25,18 @@ public class PreGameModel {
     public void startAction(){
         GameModel model = new GameModel();
         LinkedList<Player> players = new LinkedList<>();
-        players.add(new HumanPlayer(model,1,1,"name"));
-        players.add(new KiPlayer(model,2,2, 10));
-        new Thread(() -> model.start(players,null,null, true,Color.WHITE,Color.BLACK)).start();
+
+        LinkedList<Integer> weaponsTest = new LinkedList<>();
+
+        weaponsTest.add(1);
+        weaponsTest.add(4);
+        weaponsTest.add(5);
+
+        Profil profil = new Profil("test",1,"test",1,weaponsTest);
+
+        players.add(new HumanPlayer(model,1,1,profil));
+        players.add(new KiPlayer(model,2,2, 4,profil));
+        new Thread(() -> model.start(players, true,Color.WHITE,Color.BLACK)).start();
 
     }
 
@@ -36,7 +46,7 @@ public class PreGameModel {
 
     public void startAction(LinkedList<Player> players, Color background, Color foreground){
         GameModel model = new GameModel();
-        new Thread(() -> model.start(players,null,null, sandbox, background, foreground)).start();
+        new Thread(() -> model.start(players,sandbox, background, foreground)).start();
 
     }
 }

@@ -210,9 +210,6 @@ public class GameLoop extends JPanel implements MouseListener {
 
                     gameModel.movePanzer();
 
-                    gameModel.sendToServer();
-
-                    gameModel.sendToAll();
 
                     if (MyKeys.shoot) {
                         gameModel.feuerButtonAction();

@@ -1,6 +1,6 @@
 package Model;
 
-import Network.Server;
+
 import Panzer.Panzer;
 import Weapons.Bounce.BigBouncer;
 import Weapons.Bounce.Bouncer;
@@ -33,18 +33,21 @@ public abstract class Player {
 
     private String name;
     protected boolean dead;
+    private Profil profil;
     private int xp,level;
     private Weapon unlockedWeapon;
 
-    public Player(GameModel model,int team,int id,String name){
-        panzer = new StandartPanzer(model,name);
+    public Player(GameModel model,int team,int id,Profil profil){
+        panzer = new StandartPanzer(model,profil.getName());
 
-        xp = 10;
+        this.profil = profil;
 
-        level = 1;
+        xp = profil.getXp();
+
+        level = profil.getLevel();
 
         this.id = id;
-        this.name = name;
+        this.name = profil.getName();
 
         onTurn = false;
 
@@ -57,18 +60,11 @@ public abstract class Player {
 
 
 
-
-        for(int i = 0; i < 10;i++){
-            addWeapon(new NormalShot(model));
+        for(int i = 0;i < 10;i++){
+            int t = profil.getUnlockedWeapons().size();
+            int nr = (int) (t * Math.random());
+            addWeapon(Weapon.getById(profil.getUnlockedWeapons().get(nr),model));
         }
-
-        addWeapon(new MiddleBouncer(model));
-        addWeapon(new SmallBouncer(model));
-        addWeapon(new Fireball(model));
-        addWeapon(new HugeShot(model));
-        addWeapon(new BigShot(model));
-
-
 
         selectedWeapon = weapons.get(0);
 
@@ -137,17 +133,6 @@ public abstract class Player {
 
     public abstract void shoot(GameModel model);
 
-    public void send(Server server){
-        String xPosition = String.valueOf((int)getPanzer().getxPosition());
-        String yPosition = String.valueOf((int)getPanzer().getyPosition());
-        String drawWinkel = String.valueOf(getPanzer().getDrawWinkel());
-        String winkel = String.valueOf(getPanzer().getWinkel());
-        String rohrwinkel = String.valueOf(getPanzer().getRohrWinkel());
-        String right = String.valueOf(getPanzer().isOrientationRight());
-
-        server.sendtoAll(("move:"+ id + ":" + xPosition + ":" + yPosition + ":" + drawWinkel + ":" + winkel + ":" + rohrwinkel + ":" + right).getBytes());
-    }
-
     public int getId() {
         return id;
     }
@@ -177,15 +162,16 @@ public abstract class Player {
     }
 
     public void addXP() {
-        xp ++;
+        profil.addXp();
+        xp++;
     }
 
     public int getLevel(){
-        return level;
+        return profil.getLevel();
     }
 
     public int levelUp() {
-        return 1;
+        return profil.levelUp();
     }
 
     public void setUnlockedWeapon(Weapon unlockedWeapon) {

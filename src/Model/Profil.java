@@ -34,6 +34,17 @@ public class Profil implements Serializable {
     public void unlockWeapon(int weaponID){
         unlockedWeapons.add(weaponID);
     }
+    public void addXp(){
+        xp++;
+    }
+
+    public int levelUp(){
+        level++;
+        switch(level - 1){
+            case 1:unlockWeapon(2);return 2;
+            default:return 0;
+        }
+    }
 
     /*TODO:
         (levelup)
