@@ -48,8 +48,10 @@ public class MainMenuView extends JPanel implements ActionListener {
             //Erzeugen vom Background /Verweis auf die Background class
             background = new Background(backgroundFile).backgroundScaling(backgroundFile);
 
+
+
             /*
-            try {
+           try {
                 background = ImageIO.read(backgroundFile);
             }
             catch(Exception e){
@@ -70,7 +72,7 @@ public class MainMenuView extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g){
 
-            g.drawImage(background, 0, 0, this);
+            g.drawImage(background, 0, 0, null);
 
     }
 

@@ -3,8 +3,7 @@ package Window;
 import Views.Sound;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +13,11 @@ public class Var {
     public static BufferedImage map,panzer,shotIcon,greenBar,greenLock,greenUnlock,shotIconDig,panzerRohr,background,whiteBar,unselected,selected;
     public static Sound music;
     public static int soundBarVolume = 0;
+
+
+
+    public static File test = new File("res/test.wav");
+    private static float inGameVolume = 0.4f;
 
 
     public Var() {
@@ -42,6 +46,28 @@ public class Var {
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void playSound(File soundFile) {
+        try{
+
+            //Clip wird erstellt
+            Clip clip = AudioSystem.getClip();
+            AudioInputStream in = AudioSystem.getAudioInputStream(soundFile);
+            clip.open(in);
+            FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            float range = volume.getMaximum() - volume.getMinimum();
+            float gain = (float) (range * Math.log10(inGameVolume * 9 + 1) + volume.getMinimum());
+            System.out.println(gain);
+            volume.setValue(gain);
+
+
+            clip.start();
+        }
+        catch(Exception ex) {
+            ex.printStackTrace();
+        }
+
     }
 
 }

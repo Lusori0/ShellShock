@@ -49,6 +49,7 @@ public class MyWindow{
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 
+
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setVisible(true);
         window.addKeyListener(new MyKeys());

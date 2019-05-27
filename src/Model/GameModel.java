@@ -11,6 +11,7 @@ import Views.GameView;
 import Weapons.Weapon;
 import Window.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
@@ -51,6 +52,7 @@ public class GameModel {
         //collisionMap = new CollisionMap(map,this);
 
         height = (int) (GameLoop.imgH);
+
         gameView = new GameView();
 
         gameView.addKeyListener(new MyKeys());
@@ -112,7 +114,8 @@ public class GameModel {
         }
 
         gameLoop = new GameLoop(this,background);
-        gameView.add(gameLoop, BorderLayout.CENTER);
+
+        gameView.add(gameLoop,BorderLayout.CENTER);
         gameUiView = new GameUiView();
         gameView.add(gameUiView,BorderLayout.PAGE_END);
         MyWindow.setContent(gameView);
@@ -256,8 +259,9 @@ public class GameModel {
     }
 
     public void removeWeapon(Weapon weapon){
-        currentWeapons.remove(weapon);
-
+        if(!sandbox) {
+            currentWeapons.remove(weapon);
+        }
     }
 
     public void changeGui(){
@@ -266,11 +270,9 @@ public class GameModel {
 
     public void nextTurn(){
 
-        System.out.println(currentWeapons.size());
 
 
         if(currentWeapons.size() == 0) {
-
 
 
 

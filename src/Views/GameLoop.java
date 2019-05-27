@@ -51,6 +51,8 @@ public class GameLoop extends JPanel implements MouseListener {
     private Canvas canvas;
     private GraphicsConfiguration gc;
 
+    private FlowLayout layout;
+
     private boolean game = true;
 
     public static boolean pauset;
@@ -61,6 +63,12 @@ public class GameLoop extends JPanel implements MouseListener {
 
 
         this.background = background;
+
+        layout = new FlowLayout();
+        layout.setVgap(0);
+
+        this.setLayout(layout);
+
 
         System.getProperties().setProperty("sun.java2d.opengl", "true");
 
@@ -81,14 +89,17 @@ public class GameLoop extends JPanel implements MouseListener {
         //MyWindow.getFrame().add(canvas);
         //MyWindow.getFrame().pack();
 
-
-
         this.add(canvas);
 
         GraphicsEnvironment ge =
                 GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gd = ge.getDefaultScreenDevice();
         gc = gd.getDefaultConfiguration();
+
+        //gd.setFullScreenWindow( MyWindow.getFrame() );
+        if( gd.isDisplayChangeSupported() ) {
+            gd.setDisplayMode(new DisplayMode(MyWindow.WIDTH,MyWindow.HEIGHT, 32, DisplayMode.REFRESH_RATE_UNKNOWN ));
+        }
 
 
         bi = gc.createCompatibleVolatileImage(2800,1800);
@@ -106,6 +117,11 @@ public class GameLoop extends JPanel implements MouseListener {
 
 
 
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.fillRect(0,0,MyWindow.WIDTH,MyWindow.HEIGHT);
     }
 
     public void createStrategy(){
@@ -276,7 +292,7 @@ public class GameLoop extends JPanel implements MouseListener {
                     graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 
-                    graphics.drawImage(bi, 0, 0,MyWindow.WIDTH, (int) (MyWindow.HEIGHT*0.7),null);
+                    graphics.drawImage(bi, 0, 0,MyWindow.WIDTH, (int) (MyWindow.HEIGHT * 0.7),null);
 
 
 
