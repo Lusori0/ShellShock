@@ -2,6 +2,8 @@ package Views;
 
 import Model.GameModel;
 
+import Model.Player;
+import Weapons.Weapon;
 import Window.*;
 
 import javax.swing.*;
@@ -14,7 +16,9 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.VolatileImage;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class GameLoop extends JPanel implements MouseListener {
@@ -47,6 +51,10 @@ public class GameLoop extends JPanel implements MouseListener {
     private Canvas canvas;
     private GraphicsConfiguration gc;
 
+    private FlowLayout layout;
+
+    private boolean game = true;
+
     public static boolean pauset;
 
 
@@ -55,6 +63,12 @@ public class GameLoop extends JPanel implements MouseListener {
 
 
         this.background = background;
+
+        layout = new FlowLayout();
+        layout.setVgap(0);
+
+        this.setLayout(layout);
+
 
         System.getProperties().setProperty("sun.java2d.opengl", "true");
 
@@ -69,13 +83,11 @@ public class GameLoop extends JPanel implements MouseListener {
 
         canvas.setIgnoreRepaint(true);
 
-        canvas.setSize(new Dimension(MyWindow.WIDTH, (int) (MyWindow.HEIGHT)));
+        canvas.setSize(new Dimension(MyWindow.WIDTH, (MyWindow.HEIGHT)));
 
         MyWindow.getFrame().setVisible(true);
         //MyWindow.getFrame().add(canvas);
         //MyWindow.getFrame().pack();
-
-
 
         this.add(canvas);
 
@@ -83,6 +95,11 @@ public class GameLoop extends JPanel implements MouseListener {
                 GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gd = ge.getDefaultScreenDevice();
         gc = gd.getDefaultConfiguration();
+
+        //gd.setFullScreenWindow( MyWindow.getFrame() );
+        if( gd.isDisplayChangeSupported() ) {
+            gd.setDisplayMode(new DisplayMode(MyWindow.WIDTH,MyWindow.HEIGHT, 32, DisplayMode.REFRESH_RATE_UNKNOWN ));
+        }
 
 
         bi = gc.createCompatibleVolatileImage(2800,1800);
@@ -102,6 +119,11 @@ public class GameLoop extends JPanel implements MouseListener {
 
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.fillRect(0,0,MyWindow.WIDTH,MyWindow.HEIGHT);
+    }
+
     public void createStrategy(){
         canvas.createBufferStrategy(2);
         buffer = canvas.getBufferStrategy();
@@ -115,7 +137,7 @@ public class GameLoop extends JPanel implements MouseListener {
 
 
 
-            while (true) {
+            while (game) {
 
 
 
@@ -188,9 +210,6 @@ public class GameLoop extends JPanel implements MouseListener {
 
                     gameModel.movePanzer();
 
-                    gameModel.sendToServer();
-
-                    gameModel.sendToAll();
 
                     if (MyKeys.shoot) {
                         gameModel.feuerButtonAction();
@@ -270,7 +289,7 @@ public class GameLoop extends JPanel implements MouseListener {
                     graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 
-                    graphics.drawImage(bi, 0, 0,MyWindow.WIDTH, (int) (MyWindow.HEIGHT*0.7),null);
+                    graphics.drawImage(bi, 0, 0,MyWindow.WIDTH, (int) (MyWindow.HEIGHT * 0.7),null);
 
 
 
@@ -316,5 +335,274 @@ public class GameLoop extends JPanel implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
         mouseEntered = false;
+    }
+
+    public void drawEndScreen(String text,int team) {
+        game = false;
+
+        g2d = bi.createGraphics();
+
+        CopyOnWriteArrayList<BufferedImage> imges = new CopyOnWriteArrayList<>();
+        BufferedImage temp;
+        Graphics2D g2dt;
+        int timer = 0;
+        int startTimer = 0;
+
+        int time = 250;
+
+
+
+
+        boolean ended =  false;
+
+        boolean isCounting = true;
+
+        boolean isLevelUp = false;
+
+        boolean finished = false;
+
+        while(!finished){
+
+            g2dt = bi.createGraphics();
+
+            if(text.equals("DRAW")) {
+                g2dt.setColor(Color.WHITE);
+                Font font9 = new Font("Calibri", Font.BOLD, 300);
+                FontMetrics metrics9 = g2d.getFontMetrics(font9);
+                // Determine the X coordinate for the text
+                int xt9 = (metrics9.stringWidth(text)) / 2;
+                g2dt.setFont(font9);
+                g2dt.drawString(text, 1400 - xt9, 250);
+            }else{
+                g2dt.setColor(new Color(100,200,0));
+                Font font9 = new Font("Calibri", Font.BOLD, 300);
+                FontMetrics metrics9 = g2d.getFontMetrics(font9);
+                // Determine the X coordinate for the text
+                int xt9 = (metrics9.stringWidth(text)) / 2;
+                g2dt.setFont(font9);
+                g2dt.drawString(text, 1400 - xt9, 250);
+            }
+
+
+            if(timer <= time/4){
+                g2dt.setColor(new Color(200,200,200,250/time * timer));
+                g2dt.fillRect(0,0,2800,1800);
+                timer ++;
+            }else{
+                finished = true;
+                timer = 0;
+            }
+
+            graphics = (Graphics2D) buffer.getDrawGraphics();
+            graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            graphics.drawImage(bi,0,0,MyWindow.WIDTH, (int) (MyWindow.HEIGHT * 0.7),null);
+            if (!buffer.contentsLost()) {
+                buffer.show();
+            }
+
+        }
+
+        int anzahl = 0;
+
+        for(Player player : gameModel.getDeadPlayer()){
+            if(player.isLocalHuman()){
+                anzahl++;
+            }
+        }
+
+
+
+
+        while(!ended) {
+
+            for (Player player : gameModel.getDeadPlayer()) {
+                if (player.isLocalHuman()) {
+                    temp = new BufferedImage(500, 1300, BufferedImage.TYPE_4BYTE_ABGR);
+
+                    int ws = 500/20;
+
+                    int hs = 900/20;
+
+                    g2dt = temp.createGraphics();
+
+                    g2dt.setColor(new Color(150, 150, 150));
+                    g2dt.fillRect(0, 0, ws * 20, hs * 28);
+
+                    g2dt.drawImage(player.getPanzer().getImage(), ws * 2, hs * 3, ws * 16, hs * 5, null);
+
+                    int barY = hs * 11;
+
+                    g2dt.setColor(new Color(100, 100, 100));
+                    g2dt.fillRect(ws * 4, hs/2 + barY, ws * 12, hs);
+
+                    g2dt.setColor(Color.GREEN);
+
+                    g2dt.fillRect(ws * 4, (hs/2+barY), (int) (ws * 12 * ((player.getXP() % 400) / 400.0)), hs);
+
+                    g2dt.setColor(new Color(100, 100, 100));
+
+                    g2dt.fillOval(ws * 2, barY,  ws * 4,hs * 2);
+                    g2dt.fillOval(ws * 14, barY,  ws * 4,hs * 2);
+
+                    g2dt.setColor(Color.WHITE);
+                    Font font2 = new Font("Calibri",Font.BOLD, hs);
+                    FontMetrics metrics2 = g2d.getFontMetrics(font2);
+                    // Determine the X coordinate for the text
+                    int xt2 = (metrics2.stringWidth(String.valueOf(player.getLevel())) / 2);
+                    g2dt.setFont(font2);
+                    g2dt.drawString(String.valueOf(player.getLevel()),ws * 4 - xt2, (int) (barY + hs * 1.2));
+
+                    g2dt.setColor(Color.WHITE);
+                    Font font3 = new Font("Calibri",Font.BOLD, hs);
+                    FontMetrics metrics3 = g2d.getFontMetrics(font3);
+                    // Determine the X coordinate for the text
+                    int xt3 = (metrics3.stringWidth(String.valueOf(1 + player.getLevel())) / 2);
+                    g2dt.setFont(font3);
+                    g2dt.drawString(String.valueOf(player.getLevel()+ 1),ws * 16 - xt3, (int) (barY + hs * 1.2));
+
+
+
+                    if(player.getTeam() == team) {
+                        g2dt.setColor(new Color(100,200,0));
+                        Font font = new Font("Calibri", Font.BOLD, hs * 2);
+                        FontMetrics metrics = g2d.getFontMetrics(font);
+                        // Determine the X coordinate for the text
+                        int xt = (metrics.stringWidth(player.getPanzer().getName())) / 2;
+                        g2dt.setFont(font);
+                        g2dt.drawString(player.getPanzer().getName(), ws * 10 - xt, hs * 2);
+                    }else{
+                        g2dt.setColor(Color.WHITE);
+                        Font font = new Font("Calibri", Font.BOLD, hs * 2);
+                        FontMetrics metrics = g2d.getFontMetrics(font);
+                        // Determine the X coordinate for the text
+                        int xt = (metrics.stringWidth(player.getPanzer().getName())) / 2;
+                        g2dt.setFont(font);
+                        g2dt.drawString(player.getPanzer().getName(), ws * 10 - xt, hs * 2);
+                    }
+
+                    g2dt.setColor(Color.WHITE);
+                    Font font1 = new Font("Calibri",Font.BOLD, hs);
+                    FontMetrics metrics1 = g2d.getFontMetrics(font1);
+                    // Determine the X coordinate for the text
+                    int xt1 = (metrics1.stringWidth("+ " + player.getPanzer().getXp() + " XP")) / 2;
+                    g2dt.setFont(font1);
+                    g2dt.drawString("+ " + player.getPanzer().getXp() + " XP",ws * 10 - xt1,hs * 10);
+
+                    if(player.getXP()/400 == player.getLevel() && !isLevelUp){
+
+                        player.setUnlockedWeapon(Weapon.getById(player.levelUp(),gameModel));
+                        player.getUnlockedWeapon().createImage();
+                        isLevelUp = true;
+                    }
+
+                    if(isLevelUp){
+
+                        g2dt.setColor(Color.WHITE);
+                        Font font6 = new Font("Calibri",Font.BOLD, hs);
+                        FontMetrics metrics6 = g2d.getFontMetrics(font6);
+                        // Determine the X coordinate for the text
+                        g2dt.setFont(font6);
+
+
+                        if(timer <= time) {
+                            g2dt.setColor(new Color(255,255,255,(250/time) * timer));
+                            int xt6 = (metrics6.stringWidth("Level Up")) / 2;
+                            g2dt.drawString("Level Up", ws * 10 - xt6, hs * 15);
+                            isCounting = true;
+                        }else{
+                            g2dt.setColor(new Color(255,255,255,255));
+                            int xt6 = (metrics6.stringWidth("Level Up")) / 2;
+                            g2dt.drawString("Level Up", ws * 10 - xt6, hs * 15);
+                            isCounting = true;
+                        }
+
+                        if(timer > time && timer <= time * 2) {
+
+
+                            g2dt.setColor(new Color(100,100,100,(250/time) * (timer -time)));
+                            g2dt.fillRect(0,hs*16,ws * 20,hs * 12);
+
+
+                            g2dt.setColor(new Color(255,255,255,(250/time) * (timer -time)));
+                            int xt7 = (metrics6.stringWidth("Weapon unlocked")) / 2;
+                            g2dt.drawString("Weapon unlocked", ws * 10 - xt7, hs * 18);
+
+                            int xt8 = (metrics6.stringWidth(player.getUnlockedWeapon().getName())) / 2;
+                            g2dt.drawString(player.getUnlockedWeapon().getName(), ws * 10 - xt8, hs * 26);
+
+                            g2dt.setColor(new Color(player.getUnlockedWeapon().getColor().getRed(),player.getUnlockedWeapon().getColor().getGreen(),player.getUnlockedWeapon().getColor().getBlue(),(250/time) * (timer-time)));
+                            g2dt.fillRoundRect(ws * 6, hs * 19, ws * 8, hs * 5,ws*2,hs*2);
+
+                            float alpha = (float) ((timer - time)/(double)time);
+                            AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alpha);
+                            g2dt.setComposite(ac);
+                            g2dt.drawImage(player.getUnlockedWeapon().getIcon(), ws * 6, hs * 19, ws * 8, hs * 5,null);
+
+                            float reset = 1f;
+                            AlphaComposite reset1 = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,reset);
+                            g2dt.setComposite(reset1);
+
+                            isCounting = true;
+
+                        }else if(timer > time*2){
+
+                            g2dt.setColor(new Color(100,100,100,255));
+                            g2dt.fillRect(0,hs*16,ws * 20,hs * 12);
+
+                            g2dt.setColor(new Color(255,255,255,255));
+                            int xt7 = (metrics6.stringWidth("Weapon unlocked")) / 2;
+                            g2dt.drawString("Weapon unlocked", ws * 10 - xt7, hs * 18);
+
+                            int xt8 = (metrics6.stringWidth(player.getUnlockedWeapon().getName())) / 2;
+                            g2dt.drawString(player.getUnlockedWeapon().getName(), ws * 10 - xt8, hs * 26);
+
+                            g2dt.setColor(player.getUnlockedWeapon().getColor());
+                            g2dt.fillRoundRect(ws * 6, hs * 19, ws * 8, hs * 5,ws*2,hs*2);
+                            g2dt.drawImage(player.getUnlockedWeapon().getIcon(), ws * 6, hs * 19, ws * 8, hs * 5,null);
+                        }
+
+                        timer ++;
+                    }
+
+
+
+
+
+
+                    imges.add(temp);
+
+                    if (startTimer < player.getPanzer().getXp()) {
+                        player.addXP();
+                        isCounting = true;
+                    }
+
+                    startTimer++;
+
+
+
+                }
+            }
+
+            int tempNr = 1;
+            for(BufferedImage img : imges) {
+                g2d.drawImage(img, 2800/(anzahl+1) * tempNr - 250, 400, null);
+                imges.remove(img);
+                tempNr++;
+            }
+
+
+            graphics = (Graphics2D) buffer.getDrawGraphics();
+            graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            graphics.drawImage(bi,0,0,MyWindow.WIDTH, (int) (MyWindow.HEIGHT * 0.7),null);
+            if (!buffer.contentsLost()) {
+                buffer.show();
+            }
+
+            if(isCounting){
+                isCounting = false;
+            }else{
+                ended = true;
+            }
+        }
     }
 }

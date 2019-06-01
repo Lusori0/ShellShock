@@ -1,7 +1,5 @@
 package Model;
 
-import Network.Client;
-import Network.Server;
 import Panzer.Panzer;
 import Views.GameLoop;
 import Views.GameUiView;
@@ -11,6 +9,7 @@ import Views.GameView;
 import Weapons.Weapon;
 import Window.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
@@ -25,6 +24,7 @@ public class GameModel {
     private GameView gameView;
     private GameLoop gameLoop;
     private LinkedList<Player>  players;
+    private LinkedList<Player>  deadPlayers;
     private CopyOnWriteArrayList<Weapon> currentWeapons;
     private GameMap map;
     private int height;
@@ -35,7 +35,7 @@ public class GameModel {
     private int spielmode = 0,teamanzahl = 0;
 
     private boolean isServer,network;
-    private Server server;
+
 
     private int highId = 0;
 
@@ -50,6 +50,7 @@ public class GameModel {
         //collisionMap = new CollisionMap(map,this);
 
         height = (int) (GameLoop.imgH);
+
         gameView = new GameView();
 
         gameView.addKeyListener(new MyKeys());
@@ -66,21 +67,12 @@ public class GameModel {
         spielmode = 3;
 
         currentWeapons = new CopyOnWriteArrayList<>();
+        deadPlayers = new LinkedList<>();
     }
 
-    public void start(LinkedList<Player> players,Client client,Server server,boolean sandbox,Color background,Color forground){
+    public void start(LinkedList<Player> players,boolean sandbox,Color background,Color forground){
 
         this.sandbox = sandbox;
-
-
-        if(server != null || client != null){
-            network = true;
-        }
-
-        if(server != null){
-            this.server = server;
-            isServer = true;
-        }
 
         this.players = players;
 
@@ -102,15 +94,12 @@ public class GameModel {
             player.setOnTurn(true);
             if(player.isLocalHuman()){
                 lastLocalHuman = player;
-
-                if(network && !isServer) {
-                    ((HumanPlayer) player).setClient(client);
-                }
             }
         }
 
         gameLoop = new GameLoop(this,background);
-        gameView.add(gameLoop, BorderLayout.CENTER);
+
+        gameView.add(gameLoop,BorderLayout.CENTER);
         gameUiView = new GameUiView();
         gameView.add(gameUiView,BorderLayout.PAGE_END);
         MyWindow.setContent(gameView);
@@ -165,7 +154,7 @@ public class GameModel {
 
         int triSize = 10;
         int[] xPos = new int[]{(int) (player.getPanzer().getBulletspawn().getX() - triSize), (int) player.getPanzer().getBulletspawn().getX(), (int) (player.getPanzer().getBulletspawn().getX() + triSize)};
-        int ytemp = (int) (player.getPanzer().getCenter().getY() - 50 - timerAdd);
+        int ytemp = (int) (player.getPanzer().getCenter().getY() - 110 - timerAdd);
         int[] yPos = new int[]{ytemp - triSize,ytemp,ytemp - triSize};
 
         g2d.setColor(Color.RED);
@@ -265,13 +254,24 @@ public class GameModel {
 
     public void nextTurn(){
 
+
+
         if(currentWeapons.size() == 0) {
 
+
+
             for (Player player : players) {
+
                 if (player.getPanzer().getLeben() <= 0) {
-                    players.remove(player);
+
+                    player.setDead(true);
+                    explosion((int)player.getPanzer().getBulletspawn().getX(), (int) player.getPanzer().getBulletspawn().getY(),80,20,player.getPanzer());
+                    deadPlayers.add(player);
                 }
             }
+
+            players.removeAll(deadPlayers);
+
             if (!battleEnd()) {
                 for (Player player : currentPlayer) {
                     player.setOnTurn(false);
@@ -305,6 +305,9 @@ public class GameModel {
     }
 
     public boolean battleEnd(){
+        if(players.size() == 0){
+            return true;
+        }
         int t = players.getFirst().getTeam();
         for(Player player : players){
             if(player.getTeam() != t){
@@ -316,6 +319,36 @@ public class GameModel {
     }
 
     public void endGame(){
+        if(players.size() == 0){
+            endingScreen(1);
+        }else {
+            int t = players.getFirst().getTeam();
+            for (Player player : players) {
+                player.getPanzer().addXP(50);
+            }
+
+            for (Player player : deadPlayers) {
+                if (player.getTeam() == t) {
+                    player.getPanzer().addXP(25);
+                }
+            }
+
+            deadPlayers.addAll(players);
+
+            endingScreen(2);
+        }
+    }
+
+    public void endingScreen(int art){
+        String text;
+        if(art == 1){
+            text = "DRAW";
+            gameLoop.drawEndScreen(text,-1);
+        }else{
+            text = "TEAM " + players.getFirst().getTeam() + " WINS";
+            gameLoop.drawEndScreen(text,players.getFirst().getTeam());
+        }
+
 
     }
 
@@ -424,7 +457,36 @@ public class GameModel {
             if(weaponsShowedTime/5 > t) {
 
                 if (new Rectangle2D.Double(t % 5 * xtemp, (t / 5) * ytemp + height - h * ytemp, xtemp, ytemp).contains(mousex, mousey)) {
-                    if (clicked) {
+
+                    if(mousey < (int) ((t / 5) * ytemp + height - h * ytemp - ytemp * 0.1) + (int) (ytemp * 1.2 * (2.0/9.0))  && clicked && sandbox) {
+
+                        System.out.println((int)((mousex - ((xtemp) * 0.1) - (int) (t % 5 * xtemp - xtemp * 0.1))/((xtemp) * (1/5.6))) );
+
+                        if((int)((mousex - ((xtemp) * 0.1) - (int) (t % 5 * xtemp - xtemp * 0.1))/((xtemp) * (1.2/5.6))) < weapon.getLevelAnzhal()){
+
+                            System.out.println(22);
+
+                            Weapon weapon1 = weapon.getLevelWeapon((int)((mousex - ((xtemp) * 0.1) - (int) (t % 5 * xtemp - xtemp * 0.1))/((xtemp) * (1.2/5.6))) + 1,this);
+                            int anzahl = weapon.getAnzahl();
+                            weapon1.setAnzahl(anzahl);
+                            weapon1.createImage();
+
+
+
+
+                            int index = lastLocalHuman.getWeapons().indexOf(weapon);
+                            lastLocalHuman.getWeapons().remove(weapon);
+                            lastLocalHuman.getWeapons().add(index,weapon1);
+
+
+                            handeld = true;
+
+                        }
+
+                        weapon.drawImage((int) (t % 5 * xtemp - xtemp * 0.1), (int) ((t / 5) * ytemp + height - h * ytemp - ytemp * 0.1), (int) (xtemp * 1.2), (int) (ytemp * 1.2), g2d);
+
+
+                    }else if (clicked) {
                         MyKeys.weapon = false;
                         lastLocalHuman.setSelectedWeapon(weapon);
                         handeld = true;
@@ -471,9 +533,7 @@ public class GameModel {
 
     public void shoot(){
         if(!shot) {
-            if(isServer){
-                sendWeaponsToAll();
-            }
+
 
             for(Player player : currentPlayer) {
 
@@ -487,7 +547,7 @@ public class GameModel {
                 if(player.isLocalHuman() || player.isKi()) {
                     if(player.getSelectedWeapon().getAnzahl() == 1) {
                         player.getWeapons().remove(player.getSelectedWeapon());
-                        player.setSelectedWeapon(player.getWeapons().getFirst());
+                        player.setSelectedWeapon(player.getWeapons().get(0));
                     }else{
                         player.getSelectedWeapon().subAnzahl();
                         player.getSelectedWeapon().reset();
@@ -502,42 +562,11 @@ public class GameModel {
         }
     }
 
-    private void sendWeaponsToAll() {
-        for(Player playert : players){
-            if(playert.getId() == 3){
-                ((InetPlayer)playert).sendTCP("testWeapon");
-            }
-        }
-        if(isServer && network){
-            for(Player player : players){
-                if(!player.isLocalHuman() && !player.isKi()){
-                    for (Player player1 : players){
-                        ((InetPlayer)player).sendTCP("weapon:" + player1.getId() +":"+ player1.getSelectedWeapon().getId());
-                        ((InetPlayer)player).sendTCP("weaponvalues:" + player1.getId()
-                                        + ":" + String.valueOf(player1.getPanzer().getBulletspawn().getX())
-                                        + ":" + String.valueOf(player1.getPanzer().getBulletspawn().getY())
-                                        + ":" + String.valueOf(player1.getPanzer().getRohrWinkel())
-                                        + ":" + String.valueOf(player1.getPanzer().getShotstrength())
-                                        + ":" + String.valueOf(player1.getPanzer().isOrientationRight()));
-                    }
-                }
-            }
-        }
-    }
 
     public void feuerButtonAction(){
         for(Player player : currentPlayer) {
             if(player.isLocalHuman()) {
                 player.setLockedIn(true);
-                if(network && !isServer){
-                    ((HumanPlayer)player).sendTCP("weapon:" + player.getId() +":"+ player.getSelectedWeapon().getId());
-                    ((HumanPlayer)player).sendTCP("weaponvalues:" + player.getId()
-                            + ":" + String.valueOf(player.getPanzer().getBulletspawn().getX())
-                            + ":" + String.valueOf(player.getPanzer().getBulletspawn().getY())
-                            + ":" + String.valueOf(player.getPanzer().getRohrWinkel())
-                            + ":" + String.valueOf(player.getPanzer().getShotstrength())
-                            + ":" + String.valueOf(player.getPanzer().isOrientationRight()));
-                }
             }
         }
 
@@ -577,6 +606,8 @@ public class GameModel {
                 if(player.getTeam() != team) {
 
                     player.getPanzer().schaden(damage, 0,sandbox);
+
+                    herkunft.addXP(damage);
                 }else{
 
                     player.getPanzer().schaden(damage, 1,sandbox);
@@ -603,23 +634,6 @@ public class GameModel {
         return map.isCollision(x,y);
     }
 
-    public void sendToServer() {
-        if(!isServer && network){
-            for(Player player : players){
-                if(player.isLocalHuman()){
-                    ((HumanPlayer)player).sendToServer();
-                }
-            }
-        }
-    }
-
-    public void sendToAll() {
-        if(isServer && network){
-            for(Player player : players){
-                player.send(server);
-            }
-        }
-    }
 
     public int getNextId(){
         highId++;
@@ -632,5 +646,9 @@ public class GameModel {
 
     public Player getLastLocalHuman() {
         return lastLocalHuman;
+    }
+
+    public LinkedList<Player> getDeadPlayer() {
+        return deadPlayers;
     }
 }

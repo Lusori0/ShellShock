@@ -2,19 +2,15 @@ package Model;
 
 
 
-import Network.Client;
 import Window.*;
 
 public class HumanPlayer extends Player {
 
-    private Client client;
 
-    public HumanPlayer(GameModel model, int team,int id,String name) {
-        super(model, team,id,name);
-    }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public HumanPlayer(GameModel model, int team,int id,Profil profil) {
+        super(model, team,id,profil);
+
     }
 
     @Override
@@ -46,10 +42,6 @@ public class HumanPlayer extends Player {
         }
     }
 
-    public void sendTCP(String message){
-        client.sendTCP(message);
-    }
-
     @Override
     public void prepare(GameModel model) {
 
@@ -61,17 +53,6 @@ public class HumanPlayer extends Player {
         getSelectedWeapon().create((int)(getPanzer().getBulletspawn().getX()), (int) getPanzer().getBulletspawn().getY(),
                 getPanzer().getRohrWinkel(), getPanzer().getShotstrength(), getPanzer().isOrientationRight(),getPanzer());
 
-    }
-
-    public void sendToServer(){
-        String xPosition = String.valueOf((int)getPanzer().getxPosition());
-        String yPosition = String.valueOf((int)getPanzer().getyPosition());
-        String drawWinkel = String.valueOf(getPanzer().getDrawWinkel());
-        String winkel = String.valueOf(getPanzer().getWinkel());
-        String rohrwinkel = String.valueOf(getPanzer().getRohrWinkel());
-        String right = String.valueOf(getPanzer().isOrientationRight());
-
-        client.sendData(("move:" + getId() + ":"+xPosition + ":" + yPosition + ":" + drawWinkel + ":" + winkel + ":" + rohrwinkel + ":" + right).getBytes());
     }
 
     @Override

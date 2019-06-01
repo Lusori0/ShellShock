@@ -1,6 +1,6 @@
 package Model;
 
-import Network.Server;
+
 import Panzer.Panzer;
 import Weapons.Bounce.BigBouncer;
 import Weapons.Bounce.Bouncer;
@@ -15,12 +15,13 @@ import Weapons.Shot.NormalShot;
 
 import java.awt.*;
 import java.util.LinkedList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Player {
 
     private Panzer panzer;
 
-    private LinkedList<Weapon> weapons;
+    private CopyOnWriteArrayList<Weapon> weapons;
 
     private Weapon selectedWeapon;
 
@@ -31,12 +32,22 @@ public abstract class Player {
     private int id;
 
     private String name;
+    protected boolean dead;
+    private Profil profil;
+    private int xp,level;
+    private Weapon unlockedWeapon;
 
-    public Player(GameModel model,int team,int id,String name){
-        panzer = new StandartPanzer(model,name);
+    public Player(GameModel model,int team,int id,Profil profil){
+        panzer = new StandartPanzer(model,profil.getName());
+
+        this.profil = profil;
+
+        xp = profil.getXp();
+
+        level = profil.getLevel();
 
         this.id = id;
-        this.name = name;
+        this.name = profil.getName();
 
         onTurn = false;
 
@@ -44,25 +55,18 @@ public abstract class Player {
 
         this.team = team;
 
-        weapons = new LinkedList<>();
+        weapons = new CopyOnWriteArrayList<>();
 
 
 
 
-
-        for(int i = 0; i < 10;i++){
-            addWeapon(new NormalShot(model));
+        for(int i = 0;i < 10;i++){
+            int t = profil.getUnlockedWeapons().size();
+            int nr = (int) (t * Math.random());
+            addWeapon(Weapon.getById(profil.getUnlockedWeapons().get(nr),model));
         }
 
-        addWeapon(new MiddleBouncer(model));
-        addWeapon(new SmallBouncer(model));
-        addWeapon(new Fireball(model));
-        addWeapon(new HugeShot(model));
-        addWeapon(new BigShot(model));
-
-
-
-        selectedWeapon = weapons.getFirst();
+        selectedWeapon = weapons.get(0);
 
 
     }
@@ -89,7 +93,7 @@ public abstract class Player {
         return false;
     }
 
-    public LinkedList<Weapon> getWeapons() {
+    public CopyOnWriteArrayList<Weapon> getWeapons() {
         return weapons;
     }
 
@@ -129,17 +133,6 @@ public abstract class Player {
 
     public abstract void shoot(GameModel model);
 
-    public void send(Server server){
-        String xPosition = String.valueOf((int)getPanzer().getxPosition());
-        String yPosition = String.valueOf((int)getPanzer().getyPosition());
-        String drawWinkel = String.valueOf(getPanzer().getDrawWinkel());
-        String winkel = String.valueOf(getPanzer().getWinkel());
-        String rohrwinkel = String.valueOf(getPanzer().getRohrWinkel());
-        String right = String.valueOf(getPanzer().isOrientationRight());
-
-        server.sendtoAll(("move:"+ id + ":" + xPosition + ":" + yPosition + ":" + drawWinkel + ":" + winkel + ":" + rohrwinkel + ":" + right).getBytes());
-    }
-
     public int getId() {
         return id;
     }
@@ -154,5 +147,38 @@ public abstract class Player {
         getPanzer().setDrawWinkel(drawWinkel,winkel,rohrwinkel);
         getPanzer().setOrientationRight(right);
 
+    }
+
+    public void setDead(boolean b) {
+        dead = true;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public int getXP() {
+        return xp;
+    }
+
+    public void addXP() {
+        profil.addXp();
+        xp++;
+    }
+
+    public int getLevel(){
+        return profil.getLevel();
+    }
+
+    public int levelUp() {
+        return profil.levelUp();
+    }
+
+    public void setUnlockedWeapon(Weapon unlockedWeapon) {
+        this.unlockedWeapon = unlockedWeapon;
+    }
+
+    public Weapon getUnlockedWeapon() {
+        return unlockedWeapon;
     }
 }

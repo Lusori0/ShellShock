@@ -15,8 +15,8 @@ public class KiPlayer extends Player {
 
     private int difficoulty = 0;
 
-    public KiPlayer(GameModel model, int team,int id,int difficoulty) {
-        super(model, team,id,"KI");
+    public KiPlayer(GameModel model, int team,int id,int difficoulty,Profil profil) {
+        super(model, team,id,new Profil("KI",profil.getLevel(),"test",profil.getXp(),profil.getUnlockedWeapons()));
         this.difficoulty = difficoulty;
     }
 
@@ -227,6 +227,7 @@ public class KiPlayer extends Player {
 
 
 
+        finalWinkel += (-0.1 + Math.random() * 0.2)*difficoulty;
 
 
         //TODO improve
@@ -268,7 +269,7 @@ public class KiPlayer extends Player {
 
     public void shoot(GameModel model){
 
-        finalWinkel += (-0.1 + Math.random() * 0.2)*difficoulty;
+
 
 
         if (x > 0) {
