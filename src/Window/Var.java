@@ -13,6 +13,7 @@ public class Var {
     public static BufferedImage map,panzer,shotIcon,greenBar,greenLock,greenUnlock,shotIconDig,panzerRohr,background,whiteBar,unselected,selected;
     public static Sound music;
     public static int soundBarVolume = 0;
+    public static int[] difficulty_sliderValue_preGameView = new int[8];
 
 
 

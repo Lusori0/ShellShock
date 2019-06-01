@@ -77,7 +77,7 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
             musicbar.setBackground(MyWindow.backgroundColor);
 
             //Einstellen von der Anordnung
-                g.weightx = 1f;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
+                //g.weightx = 1f;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
                 g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
 

@@ -1,5 +1,6 @@
 package Views;
 
+import Model.GameModel;
 import Model.MainMenuModel;
 import Model.PreGameModel;
 import Window.MyButton;
@@ -14,9 +15,11 @@ public class GameUiView extends JPanel implements ActionListener {
     ImageIcon fireImg,backImg,muteMusikImg;
     MyButton fire,back,muteMusik;
 
-    public  GameUiView()
-    {
+    GameModel gameModel;
 
+    public  GameUiView(GameModel gameModel)
+    {
+        this.gameModel = gameModel;
         erzeugenOverlay();
     }
 
@@ -46,7 +49,7 @@ public class GameUiView extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if ((e.getSource() == fire))
         {
-            System.out.println("BUMM Explosion");
+            gameModel.feuerButtonAction();
         }
         if ((e.getSource() == back))
         {
@@ -54,6 +57,7 @@ public class GameUiView extends JPanel implements ActionListener {
         }
         if ((e.getSource() == muteMusik))
         {
+            System.out.println("Sollte was passiert sein!");
             Var.music.setMuted(true);
         }
     }

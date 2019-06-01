@@ -100,7 +100,7 @@ public class GameModel {
         gameLoop = new GameLoop(this,background);
 
         gameView.add(gameLoop,BorderLayout.CENTER);
-        gameUiView = new GameUiView();
+        gameUiView = new GameUiView(this);
         gameView.add(gameUiView,BorderLayout.PAGE_END);
         MyWindow.setContent(gameView);
         gameLoop.createStrategy();
