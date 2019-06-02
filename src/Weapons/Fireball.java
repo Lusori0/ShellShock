@@ -30,14 +30,11 @@ public class Fireball extends Weapon {
     private int starttimer = 0;
 
     public Fireball(GameModel gameModel) {
-        super(gameModel,"Fireball",4,new Color(255,150,0),Var.shotIcon);
+        super(gameModel,"Fireball",4,new Color(255,150,0));
 
-        icons = new BufferedImage[]{Var.shotIcon};
-
-        icon = icons[0];
+        icon = Var.fireball;
 
         createImage();
-
 
         weaponsize = gameModel.getHeight()/60;
 
@@ -63,6 +60,7 @@ public class Fireball extends Weapon {
     public void draw(Graphics2D g2d) {
 
 
+        playShotSound();
 
             int temp = 0;
             for(int[] cord : coords){
@@ -91,6 +89,7 @@ public class Fireball extends Weapon {
 
         if(hit) {
             if (explosionTimer == 0) {
+                Var.playSound(Var.fireClip);
                 gameModel.explosion((int) xPosition, (int) yPosition, explosionRadius, damage, herkunft);
 
 

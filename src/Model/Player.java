@@ -1,7 +1,9 @@
 package Model;
 
-
 import Panzer.Panzer;
+import Weapons.AirStrike.AirStrike;
+import Weapons.AirStrike.BigAirStrike;
+import Weapons.AirStrike.Bombs;
 import Weapons.Bounce.BigBouncer;
 import Weapons.Bounce.Bouncer;
 import Weapons.Bounce.MiddleBouncer;
@@ -9,9 +11,17 @@ import Weapons.Bounce.SmallBouncer;
 import Weapons.Fireball;
 import Weapons.*;
 import Panzer.*;
+import Weapons.GunShots.MG;
+import Weapons.GunShots.ShotGun;
+import Weapons.MultiShot.TripleShot;
+import Weapons.Nuke.MegaNuke;
+import Weapons.Nuke.Nuke;
 import Weapons.Shot.BigShot;
 import Weapons.Shot.HugeShot;
 import Weapons.Shot.NormalShot;
+import Weapons.Sniper.HeavySniper;
+import Weapons.Sniper.OneShot;
+import Weapons.Sniper.Sniper;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -31,23 +41,22 @@ public abstract class Player {
 
     private int id;
 
+    private Profil profil;
     private String name;
     protected boolean dead;
-    private Profil profil;
     private int xp,level;
     private Weapon unlockedWeapon;
 
     public Player(GameModel model,int team,int id,Profil profil){
         panzer = new StandartPanzer(model,profil.getName());
 
-        this.profil = profil;
+        xp = 10;
 
-        xp = profil.getXp();
-
-        level = profil.getLevel();
+        level = 1;
 
         this.id = id;
-        this.name = profil.getName();
+
+        name = profil.getName();
 
         onTurn = false;
 
@@ -58,13 +67,32 @@ public abstract class Player {
         weapons = new CopyOnWriteArrayList<>();
 
 
+        addWeapon(new MG(model));
+        addWeapon(new ShotGun(model));
 
 
-        for(int i = 0;i < 10;i++){
-            int t = profil.getUnlockedWeapons().size();
-            int nr = (int) (t * Math.random());
-            addWeapon(Weapon.getById(profil.getUnlockedWeapons().get(nr),model));
+        addWeapon(new TripleShot(model));
+
+        addWeapon(new Nuke(model));
+        addWeapon(new MegaNuke(model));
+        addWeapon(new AirStrike(model));
+        addWeapon(new BigAirStrike(model));
+        addWeapon(new Bombs(model));
+        addWeapon(new Sniper(model));
+        addWeapon(new HeavySniper(model));
+        addWeapon(new OneShot(model));
+
+        for(int i = 0; i < 10;i++){
+            addWeapon(new NormalShot(model));
         }
+
+        addWeapon(new MiddleBouncer(model));
+        addWeapon(new SmallBouncer(model));
+        addWeapon(new Fireball(model));
+        addWeapon(new HugeShot(model));
+        addWeapon(new BigShot(model));
+
+
 
         selectedWeapon = weapons.get(0);
 
@@ -162,16 +190,15 @@ public abstract class Player {
     }
 
     public void addXP() {
-        profil.addXp();
-        xp++;
+        xp ++;
     }
 
     public int getLevel(){
-        return profil.getLevel();
+        return level;
     }
 
     public int levelUp() {
-        return profil.levelUp();
+        return 1;
     }
 
     public void setUnlockedWeapon(Weapon unlockedWeapon) {

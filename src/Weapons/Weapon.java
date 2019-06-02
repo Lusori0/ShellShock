@@ -2,12 +2,25 @@ package Weapons;
 
 import Model.GameModel;
 import Panzer.Panzer;
+import Weapons.AirStrike.AirStrike;
+import Weapons.AirStrike.BigAirStrike;
+import Weapons.AirStrike.Bombs;
 import Weapons.Bounce.BigBouncer;
 import Weapons.Bounce.MiddleBouncer;
 import Weapons.Bounce.SmallBouncer;
+import Weapons.GunShots.MG;
+import Weapons.GunShots.ShotGun;
+import Weapons.MultiShot.MultiShot;
+import Weapons.MultiShot.QuadShot;
+import Weapons.MultiShot.TripleShot;
+import Weapons.Nuke.MegaNuke;
+import Weapons.Nuke.Nuke;
 import Weapons.Shot.BigShot;
 import Weapons.Shot.HugeShot;
 import Weapons.Shot.NormalShot;
+import Weapons.Sniper.HeavySniper;
+import Weapons.Sniper.OneShot;
+import Weapons.Sniper.Sniper;
 import Window.*;
 
 
@@ -39,8 +52,9 @@ public abstract class Weapon {
     private int anzahl;
 
     private Color color;
+    protected boolean played;
 
-    public Weapon(GameModel gameModel,String name,int id,Color color,BufferedImage icon) {
+    public Weapon(GameModel gameModel,String name,int id,Color color) {
         this.gameModel = gameModel;
 
         this.name = name;
@@ -50,7 +64,6 @@ public abstract class Weapon {
         anzahl = 1;
 
         this.color = color;
-        this.icon = icon;
 
         affineTransform = new AffineTransform();
     }
@@ -237,6 +250,19 @@ public abstract class Weapon {
             case 5:return new SmallBouncer(model);
             case 6:return new MiddleBouncer(model);
             case 7:return new BigBouncer(model);
+            case 8:return new Nuke(model);
+            case 9:return new MegaNuke(model);
+            case 10:return new BigAirStrike(model);
+            case 11:return new Bombs(model);
+            case 12:return new AirStrike(model);
+            case 13:return new TripleShot(model);
+            case 14:return new QuadShot(model);
+            case 15:return new MultiShot(model);
+            case 16:return new ShotGun(model);
+            case 17:return new MG(model);
+            case 18:return new Sniper(model);
+            case 19:return new HeavySniper(model);
+            case 20:return new OneShot(model);
             default:return null;
         }
 
@@ -252,5 +278,12 @@ public abstract class Weapon {
 
     public String getName() {
         return name;
+    }
+
+    public void playShotSound(){
+        if(!played){
+            Var.playSound(Var.shotClip);
+            played = true;
+        }
     }
 }

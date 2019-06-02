@@ -30,12 +30,10 @@ public abstract class Shot extends Weapon {
     private int starttimer = 0;
     protected int effecttime;
 
-    public Shot(GameModel gameModel, String name, int level,int id) {
-        super(gameModel,name,id,Color.WHITE,Var.shotIcon);
+    public Shot(GameModel gameModel, String name, int level,int id,BufferedImage icon) {
+        super(gameModel,name,id,Color.WHITE);
 
-        icons = new BufferedImage[]{Var.shotIcon, Var.shotIcon, Var.panzer};
-
-        icon = icons[level-1];
+        this.icon = icon;
 
         createImage();
 
@@ -67,6 +65,7 @@ public abstract class Shot extends Weapon {
     public void draw(Graphics2D g2d) {
 
 
+        playShotSound();
 
 
 
@@ -77,9 +76,8 @@ public abstract class Shot extends Weapon {
                 int[] xPos = new int []{};
                 g2d.setColor(new Color(200,150,0,255));
                 double size = (weaponsize*1.2)/40 * temp;
-                if(cord[0] != (int)xPosition) {
-                    g2d.fill(new Ellipse2D.Double(cord[0] - size / 2, cord[1] - size / 2, size, size));
-                }
+                g2d.fill(new Ellipse2D.Double(cord[0] - size / 2, cord[1] - size / 2, size, size));
+
 
                 temp++;
             }
@@ -98,7 +96,10 @@ public abstract class Shot extends Weapon {
 
         if(hit) {
             if (explosionTimer == 0) {
+                Var.playSound(Var.explosionClip);
                 gameModel.explosion((int) xPosition, (int) yPosition, explosionRadius, damage, herkunft);
+
+
 
                 g2d.setColor(Color.WHITE);
                 g2d.setTransform(affineTransform);

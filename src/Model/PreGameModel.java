@@ -44,7 +44,7 @@ public class PreGameModel {
             }
         } else{}
 
-        new Thread(() -> model.start(players, true,Color.WHITE,Color.BLACK)).start();
+        new Thread(() -> model.start(players, false,Color.WHITE,Color.BLACK)).start();
 
 
     }

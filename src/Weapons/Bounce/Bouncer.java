@@ -40,17 +40,15 @@ public abstract class Bouncer extends Weapon {
     private int bounces;
     private boolean always;
     private double reduce;
-
+    private boolean wasNoCollision = true;
     private CopyOnWriteArrayList<Explosion> explosions = new CopyOnWriteArrayList<>();
 
-    public Bouncer(GameModel gameModel, String name,int level,int bounces,boolean always,int size,int expsize,int damage,double reduce,int id) {
-        super(gameModel, name,id,new Color(200,0,255),Var.shotIcon);
+    public Bouncer(GameModel gameModel, String name,int level,int bounces,boolean always,int size,int expsize,int damage,double reduce,int id,BufferedImage icon) {
+        super(gameModel, name,id,new Color(200,0,255));
 
         this.reduce = reduce;
 
-        icons = new BufferedImage[]{Var.shotIcon, Var.shotIcon, Var.panzer};
-
-        icon = icons[level-1];
+       this.icon = icon;
 
         createImage();
 
@@ -86,6 +84,8 @@ public abstract class Bouncer extends Weapon {
 
     @Override
     public void draw(Graphics2D g2d) {
+
+        playShotSound();
 
         if(explosionTimer == 0) {
 
@@ -123,14 +123,14 @@ public abstract class Bouncer extends Weapon {
 
         Point2D tCollisionPoint = affineTransform.transform(new Point2D.Double(xPosition,yPosition + weaponsize/2),null);
 
-        if(gameModel.isCollision((int)tCollisionPoint.getX(),(int)tCollisionPoint.getY())){
+        if(gameModel.isCollision((int)tCollisionPoint.getX(),(int)tCollisionPoint.getY()) && wasNoCollision){
 
             xPosition = coords.get(coords.indexOf(coords.getLast())-1)[0];
             yPosition = coords.get(coords.indexOf(coords.getLast())-1)[1];
 
             strength /= reduce;
 
-            System.out.println(drawWinkel);
+
 
             if(rechts) {
                 winkel = 2 * gameModel.getMap().getWinkel(xPosition + weaponsize / 2) - drawWinkel;
@@ -169,6 +169,9 @@ public abstract class Bouncer extends Weapon {
             }
 
 
+            wasNoCollision = false;
+        }else{
+            wasNoCollision = true;
         }
 
         for(Explosion exp : explosions){
@@ -258,9 +261,7 @@ public abstract class Bouncer extends Weapon {
         return 3;
     }
 
-    public int getLevel() {
-        return 0;
-    }
+    public abstract int getLevel();
 
     public double getDownspeed(){
         return gravity;
@@ -295,9 +296,11 @@ public abstract class Bouncer extends Weapon {
             this.size = size;
             this.expColor = color;
             opac = 255;
+            Var.playSound(Var.explosionClip);
         }
 
         public void draw(Graphics2D g2d){
+
             g2d.setColor(new Color(expColor.getRed(),expColor.getGreen(),expColor.getBlue(),opac));
             g2d.fillOval((int) x - size / 2, (int) y - size / 2, size, size);
 

@@ -34,8 +34,6 @@ public class GameModel {
     private int weaponsShowedTime = 0;
     private int spielmode = 0,teamanzahl = 0;
 
-    private boolean isServer,network;
-
 
     private int highId = 0;
 
@@ -94,6 +92,7 @@ public class GameModel {
             player.setOnTurn(true);
             if(player.isLocalHuman()){
                 lastLocalHuman = player;
+
             }
         }
 
@@ -243,9 +242,8 @@ public class GameModel {
     }
 
     public void removeWeapon(Weapon weapon){
-        if(!sandbox) {
-            currentWeapons.remove(weapon);
-        }
+        currentWeapons.remove(weapon);
+
     }
 
     public void changeGui(){
@@ -534,7 +532,6 @@ public class GameModel {
     public void shoot(){
         if(!shot) {
 
-
             for(Player player : currentPlayer) {
 
                 player.shoot(this);
@@ -561,6 +558,7 @@ public class GameModel {
             shot = true;
         }
     }
+
 
 
     public void feuerButtonAction(){
@@ -633,7 +631,6 @@ public class GameModel {
     public boolean isCollision(int x,int y){
         return map.isCollision(x,y);
     }
-
 
     public int getNextId(){
         highId++;

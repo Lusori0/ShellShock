@@ -6,15 +6,17 @@ import Views.GameLoop;
 import Window.*;
 
 
+import javax.sound.sampled.*;
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Panzer {
 
-    private BufferedImage image,imageRed,imageBlue,rohrGreen,rohrRed,rohrBlue;
+    BufferedImage image,imageRed,imageBlue,rohrGreen,rohrRed,rohrBlue;
 
     private double xPosition,yPosition;
 
@@ -30,6 +32,7 @@ public abstract class Panzer {
 
     private int[] xPoints,yPoints,xPointsSmall,yPointsSmall;
     private int tempXPoint = 0,tempYPoint = 0,mouseX = 0,mouseY = 0;
+    private double targetX,targetY;
     private int leben,sprit,maxSprit,maxLeben;
 
     private CopyOnWriteArrayList<Screentext> strings = new CopyOnWriteArrayList<>();
@@ -37,6 +40,11 @@ public abstract class Panzer {
     private String name;
 
     private int xp;
+
+    private int soundTimer = 0;
+
+    private AudioInputStream engineIn;
+    private Clip engineClip;
 
     public Panzer(GameModel model,BufferedImage image,BufferedImage rohr,int leben,int maxSprit,String name){
 
@@ -46,6 +54,22 @@ public abstract class Panzer {
         }else{
             this.name = name;
         }
+
+
+
+        try {
+            engineClip = AudioSystem.getClip();
+            engineIn = AudioSystem.getAudioInputStream(Var.engine);
+            engineClip.open(engineIn);
+
+        } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
+            e.printStackTrace();
+        }
+        Var.inGameVolume = 0f;
+
+        playSound(engineClip);
+
+        Var.inGameVolume = 0.4f;
 
         affineTransform = new AffineTransform();
 
@@ -78,8 +102,8 @@ public abstract class Panzer {
         xPosition = (GameLoop.imgW - 100) * Math.random() + 50;
         yPosition = 30;
         moveNotTurn(model.getMap());
-        double targetX = getCenterX();
-        double targetY = yPosition;
+        targetX = getCenterX();
+        targetY = yPosition;
         width = 60;
         height = 30;
         accuracy = (int) (width/8);
@@ -192,6 +216,19 @@ public abstract class Panzer {
     }
 
     public void move(GameMap map){
+
+        if(moveRight || moveLeft) {
+            if(sprit > 0) {
+
+                if (soundTimer == 12) {
+                    playSound(engineClip);
+                    soundTimer = 0;
+                } else {
+                    soundTimer++;
+                }
+
+            }
+        }
 
         double xDifferece = width/60;
 
@@ -647,5 +684,30 @@ public abstract class Panzer {
 
     public String getName() {
         return name;
+    }
+
+    public void playSound(Clip clip){
+        try{
+
+            FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            float range = volume.getMaximum() - volume.getMinimum();
+            float gain = (float) (range * Math.log10(Var.inGameVolume * 9 + 1) + volume.getMinimum());
+            volume.setValue(gain);
+
+
+
+
+            clip.stop();
+
+            clip.setFramePosition(1);
+
+            clip.start();
+
+
+
+        }
+        catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

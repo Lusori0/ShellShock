@@ -10,7 +10,6 @@ public class HumanPlayer extends Player {
 
     public HumanPlayer(GameModel model, int team,int id,Profil profil) {
         super(model, team,id,profil);
-
     }
 
     @Override
@@ -42,6 +41,7 @@ public class HumanPlayer extends Player {
         }
     }
 
+
     @Override
     public void prepare(GameModel model) {
 
@@ -54,6 +54,7 @@ public class HumanPlayer extends Player {
                 getPanzer().getRohrWinkel(), getPanzer().getShotstrength(), getPanzer().isOrientationRight(),getPanzer());
 
     }
+
 
     @Override
     public void setValues(int x, int y, double drawWinkel, double winkel,double rohrwinkel,boolean right) {}
