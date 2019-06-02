@@ -186,19 +186,19 @@ public abstract class Player {
     }
 
     public int getXP() {
-        return xp;
+        return profil.getXp();
     }
 
     public void addXP() {
-        xp ++;
+        profil.addXp();
     }
 
     public int getLevel(){
-        return level;
+        return profil.getLevel();
     }
 
     public int levelUp() {
-        return 1;
+        return profil.levelUp();
     }
 
     public void setUnlockedWeapon(Weapon unlockedWeapon) {
