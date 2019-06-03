@@ -32,7 +32,7 @@ public class GameLoop extends JPanel implements MouseListener {
     private boolean mouseEntered;
     private Graphics2D graphics;
     private Graphics2D g2d;
-    private Color background;
+    private Color background,foreground;
     private Random rand;
     private VolatileImage bi;
     private BufferStrategy buffer;
@@ -58,11 +58,13 @@ public class GameLoop extends JPanel implements MouseListener {
     public static boolean pauset;
 
 
-    public GameLoop(GameModel gameModel,Color background){
+    public GameLoop(GameModel gameModel,Color background,Color foreground){
         this.gameModel = gameModel;
 
 
         this.background = background;
+
+        this.foreground = foreground;
 
         layout = new FlowLayout();
         layout.setVgap(0);
@@ -197,7 +199,7 @@ public class GameLoop extends JPanel implements MouseListener {
 
 
 
-                    g2d.setColor(new Color(100,200,0));
+                    g2d.setColor(foreground);
                     g2d.fill(gameModel.getMap().getMap());
 
                     //g2d.setClip(gameModel.getMap().getMap());
@@ -356,8 +358,6 @@ public class GameLoop extends JPanel implements MouseListener {
 
         boolean isCounting = true;
 
-        boolean isLevelUp = false;
-
         boolean finished = false;
 
         while(!finished){
@@ -408,8 +408,6 @@ public class GameLoop extends JPanel implements MouseListener {
                 anzahl++;
             }
         }
-
-
 
 
         while(!ended) {
@@ -487,14 +485,16 @@ public class GameLoop extends JPanel implements MouseListener {
                     g2dt.setFont(font1);
                     g2dt.drawString("+ " + player.getPanzer().getXp() + " XP",ws * 10 - xt1,hs * 10);
 
-                    if(player.getXP()/400 == player.getLevel() && !isLevelUp){
+                    if(player.getXP()/400 == player.getLevel() && !player.isLevelUp()){
+
+                        System.out.println(player.getLevel());
 
                         player.setUnlockedWeapon(Weapon.getById(player.levelUp(),gameModel));
                         player.getUnlockedWeapon().createImage();
-                        isLevelUp = true;
+                        player.setLevelUp(true);
                     }
 
-                    if(isLevelUp){
+                    if(player.isLevelUp()){
 
                         g2dt.setColor(Color.WHITE);
                         Font font6 = new Font("Calibri",Font.BOLD, hs);
@@ -575,12 +575,14 @@ public class GameLoop extends JPanel implements MouseListener {
                         isCounting = true;
                     }
 
-                    startTimer++;
+
 
 
 
                 }
             }
+
+            startTimer++;
 
             int tempNr = 1;
             for(BufferedImage img : imges) {

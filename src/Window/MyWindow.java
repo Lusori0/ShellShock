@@ -80,14 +80,6 @@ public class MyWindow{
 
     //getter und setter
 
-    public static String getActiveUser(){
-        return activeUser;
-    }
-
-    public static void setActiveUser(String u){
-        activeUser = u;
-    }
-
     public static void setContent(JPanel panel){
 
         window.setContentPane(panel);

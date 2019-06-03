@@ -53,7 +53,7 @@ public class GameModel {
 
         gameView.addKeyListener(new MyKeys());
 
-        map = new GameMap(this,5);
+
 
         players = new LinkedList<>();
         currentPlayer = new LinkedList<>();
@@ -68,11 +68,15 @@ public class GameModel {
         deadPlayers = new LinkedList<>();
     }
 
-    public void start(LinkedList<Player> players,boolean sandbox,Color background,Color forground){
+    public void start(LinkedList<Player> players,boolean sandbox,Color background,Color foreground,int mapArt,int spielmode){
+
+        map = new GameMap(this,mapArt);
 
         this.sandbox = sandbox;
 
         this.players = players;
+
+        this.spielmode = spielmode;
 
         if(spielmode == 1){
             currentPlayer.add(players.getFirst());
@@ -96,7 +100,7 @@ public class GameModel {
             }
         }
 
-        gameLoop = new GameLoop(this,background);
+        gameLoop = new GameLoop(this,background,foreground);
 
         gameView.add(gameLoop,BorderLayout.CENTER);
         gameUiView = new GameUiView(this);

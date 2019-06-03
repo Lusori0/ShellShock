@@ -1,5 +1,6 @@
 package Window;
 
+import Model.Profil;
 import Views.Sound;
 
 import javax.imageio.ImageIO;
@@ -23,7 +24,7 @@ public class Var {
     public static Sound music;
     public static int soundBarVolume = 0;
     public static int[] difficulty_sliderValue_preGameView = new int[8];
-
+    public static Profil activeUser;
 
 
     public Var() {
@@ -137,4 +138,7 @@ public class Var {
 
     }
 
+    public static void setActiveUser(Profil profilRead) {
+        activeUser = profilRead;
+    }
 }

@@ -40,8 +40,10 @@ public class Profil implements Serializable {
 
     public int levelUp(){
         level++;
+        System.out.println(level - 1);
         switch(level - 1){
             case 1:unlockWeapon(2);return 2;
+            case 2:unlockWeapon(4);return 4;
             default:return 0;
         }
     }

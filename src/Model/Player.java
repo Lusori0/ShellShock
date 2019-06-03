@@ -44,15 +44,13 @@ public abstract class Player {
     private Profil profil;
     private String name;
     protected boolean dead;
-    private int xp,level;
     private Weapon unlockedWeapon;
+    private boolean isLevelUp;
 
     public Player(GameModel model,int team,int id,Profil profil){
         panzer = new StandartPanzer(model,profil.getName());
 
-        xp = 10;
-
-        level = 1;
+        this.profil = profil;
 
         this.id = id;
 
@@ -207,5 +205,13 @@ public abstract class Player {
 
     public Weapon getUnlockedWeapon() {
         return unlockedWeapon;
+    }
+
+    public boolean isLevelUp() {
+        return isLevelUp;
+    }
+
+    public void setLevelUp(boolean levelUp) {
+        isLevelUp = levelUp;
     }
 }

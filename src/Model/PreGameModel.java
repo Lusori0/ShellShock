@@ -1,7 +1,7 @@
 package Model;
 
 import Views.PreGameView;
-import Window.MyWindow;
+import Window.*;
 
 
 import java.io.PrintStream;
@@ -35,16 +35,19 @@ public class PreGameModel {
 
         Profil profil = new Profil("test",1,"test",1,weaponsTest);
 
-        players.add(new HumanPlayer(model,1,1,profil));
+        players.add(new HumanPlayer(model,1,model.getNextId(), Var.activeUser));
+        players.add(new HumanPlayer(model,2,model.getNextId(), profil));
+        players.add(new HumanPlayer(model,2,model.getNextId(), profil));
+        players.add(new HumanPlayer(model,2,model.getNextId(), profil));
         if(amount >0)
         {
             for(int i = 0;i<amount;i++)
             {
-                players.add(new KiPlayer(model,2,i+2, difficutly[i],profil));
+                //players.add(new KiPlayer(model,2,model.getNextId(), difficutly[i],Var.activeUser));
             }
         } else{}
 
-        new Thread(() -> model.start(players, false,Color.WHITE,Color.BLACK)).start();
+        new Thread(() -> model.start(players, false,new Color(0,200,255),Color.GREEN,6,1)).start();
 
 
     }
@@ -55,7 +58,7 @@ public class PreGameModel {
 
     public void startAction(LinkedList<Player> players, Color background, Color foreground){
         GameModel model = new GameModel();
-        new Thread(() -> model.start(players,sandbox, background, foreground)).start();
+        new Thread(() -> model.start(players,sandbox, background, foreground,6,1)).start();
 
     }
 }

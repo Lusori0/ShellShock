@@ -101,7 +101,6 @@ public abstract class Panzer {
 
         xPosition = (GameLoop.imgW - 100) * Math.random() + 50;
         yPosition = 30;
-        moveNotTurn(model.getMap());
         targetX = getCenterX();
         targetY = yPosition;
         width = 60;

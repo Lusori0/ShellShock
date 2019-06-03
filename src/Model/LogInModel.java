@@ -1,7 +1,7 @@
 package Model;
 
 import Views.LogInView;
-import Window.MyWindow;
+import Window.*;
 
 import javax.swing.*;
 import java.io.*;
@@ -36,7 +36,7 @@ public class LogInModel {
             }
             //Passwortabgleich
             if (profilRead.getPassword().equals(password)) {
-                MyWindow.setActiveUser(name);
+                Var.setActiveUser(profilRead);
                 new MainMenuModel();
             } else {
                 JOptionPane.showMessageDialog(logInView, "Wrong Password");
@@ -51,6 +51,7 @@ public class LogInModel {
         File f = new File("data/" + name + ".bin");
         //Überprüfen ob Nutzer schon existiert
         if(!f.exists()) {
+            Profil profil = null;
             try {
                 List<Integer> weaponsListTemp = new ArrayList<>();
                 weaponsListTemp.add(0);
@@ -61,14 +62,16 @@ public class LogInModel {
                 //erstellen der Profil.bin datei
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("data/" + name + ".bin"));
 
-                Profil profil = new Profil(name, 0, password,0,weaponsListTemp);
+
+                profil = new Profil(name, 1, password,0,weaponsListTemp);
+
                 objectOutputStream.writeObject(profil);
                 objectOutputStream.close();
 
             } catch (IOException e) {
                 System.out.println("Write Fehler: " + e);
             }
-            MyWindow.setActiveUser(name);
+            Var.setActiveUser(profil);
             new MainMenuModel();
         }
         else{

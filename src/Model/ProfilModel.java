@@ -3,6 +3,8 @@ package Model;
 
 import Views.ProfilView;
 import Window.MyWindow;
+import Window.Var;
+
 import javax.swing.JOptionPane;
 
 import java.io.*;
@@ -18,7 +20,7 @@ public class ProfilModel {
 
             try {
                 //Laden der Profildatei und setzen der Atribute
-                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("data/" + MyWindow.getActiveUser() + ".bin"));
+                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("data/" + Var.activeUser.getName()+ ".bin"));
                 Profil profilRead = (Profil) objectInputStream.readObject();
                 objectInputStream.close();
 
@@ -48,7 +50,7 @@ public class ProfilModel {
                 "Confirm",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 
         if(response == JOptionPane.YES_OPTION) {
-            File file = new File("data/" + MyWindow.getActiveUser() + ".bin");
+            File file = new File("data/" + Var.activeUser.getName() + ".bin");
             file.delete();
             new MainMenuModel();
         }
