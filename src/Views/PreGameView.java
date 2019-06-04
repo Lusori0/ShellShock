@@ -157,21 +157,21 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
 
 
         //Der neue Scheiß
-        JLabel art = new JLabel("<html><font color = 'red'><font size = +3>Enemys</font></html>");
+        JLabel art = new JLabel("<html><font color = 'red'><font size = +1>Enemys</font></html>");
         art.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         art.setBackground(Color.PINK);
         g.gridx = 0;
         g.gridy = 1;
         this.add(art,g);
 
-        JLabel Icon = new JLabel("<html><font color = 'red'><font size = +3>Difficulty</font></html>");
+        JLabel Icon = new JLabel("<html><font color = 'red'><font size = +1>Difficulty</font></html>");
         Icon.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         Icon.setBackground(Color.RED);
         g.gridx = GridBagConstraints.RELATIVE;
         g.gridy = 1;
         this.add(Icon,g);
 
-        JLabel Team = new JLabel("<html><font color = 'red'><font size = +3>Select Extra Enemy's</font></html>");
+        JLabel Team = new JLabel("<html><font color = 'red'><font size = +1>Select Extra Enemy's</font></html>");
         Team.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         Team.setBackground(Color.RED);
         g.gridx = GridBagConstraints.RELATIVE;
@@ -322,7 +322,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                 this.add(difficulty_slider[i],g);
             //
 
-            aiCheckBox[i] = new JCheckBox("<html><font color = 'blue'><font size = +3>Select the Ai</font></html>",selected_aiCheckbox[i]);
+            aiCheckBox[i] = new JCheckBox("<html><font color = 'blue'><font size = +1>Select the Ai</font></html>",selected_aiCheckbox[i]);
             aiCheckBox[i].addItemListener(this);
             aiCheckBox[i].setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
             aiCheckBox[i].setBackground(MyWindow.backgroundColor);
@@ -375,21 +375,21 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
 
 
         //Der neue Scheiß
-        JLabel art = new JLabel("<html><font color = 'red'><font size = +3>Enemys</font></html>");
+        JLabel art = new JLabel("<html><font color = 'red'><font size = +1>Enemys</font></html>");
         art.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         art.setBackground(Color.PINK);
         g.gridx = 0;
         g.gridy = 1;
         this.add(art,g);
 
-        JLabel Icon = new JLabel("<html><font color = 'red'><font size = +3>Difficulty</font></html>");
+        JLabel Icon = new JLabel("<html><font color = 'red'><font size = +1>Difficulty</font></html>");
         Icon.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         Icon.setBackground(Color.RED);
         g.gridx = GridBagConstraints.RELATIVE;
         g.gridy = 1;
         this.add(Icon,g);
 
-        JLabel Team = new JLabel("<html><font color = 'red'><font size = +3>Select Extra Enemy's</font></html>");
+        JLabel Team = new JLabel("<html><font color = 'red'><font size = +1>Select Extra Enemy's</font></html>");
         Team.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         Team.setBackground(Color.RED);
         g.gridx = GridBagConstraints.RELATIVE;
@@ -494,7 +494,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             this.add(difficulty_slider[i], g);
             //
 
-            aiCheckBox[i] = new JCheckBox("<html><font color = 'blue'><font size = +3>Select as Ai</font></html>", selected_aiCheckbox[i]);
+            aiCheckBox[i] = new JCheckBox("<html><font color = 'blue'><font size = +1>Select as Ai</font></html>", selected_aiCheckbox[i]);
             aiCheckBox[i].addItemListener(this);
             aiCheckBox[i].setPreferredSize(new Dimension(buttonWidth , buttonHeigth ));
             aiCheckBox[i].setBackground(MyWindow.backgroundColor);
@@ -508,7 +508,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         for(int i = 0;i<humanCheckBox.length;i++) {
             if(Var.login_profils[i]!= null) selected_humanCheckbox[i] = true;//Nach dem Login humanCheckbox ausgewählt setzen
 
-            humanCheckBox[i] = new JCheckBox("<html><font color = 'red'><font size = +3>Select as Human</font></html>", selected_humanCheckbox[i]);
+            humanCheckBox[i] = new JCheckBox("<html><font color = 'red'><font size = +1>Select as Human</font></html>", selected_humanCheckbox[i]);
             humanCheckBox[i].addItemListener(this);
             humanCheckBox[i].setPreferredSize(new Dimension(buttonWidth , buttonHeigth ));
             humanCheckBox[i].setBackground(MyWindow.backgroundColor);
