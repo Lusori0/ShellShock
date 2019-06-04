@@ -54,7 +54,6 @@ public class LogInModel {
             Profil profil = null;
             try {
                 List<Integer> weaponsListTemp = new ArrayList<>();
-                weaponsListTemp.add(0);
                 weaponsListTemp.add(1);
                 weaponsListTemp.add(2);
                 weaponsListTemp.add(3);

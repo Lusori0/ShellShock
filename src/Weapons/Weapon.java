@@ -8,8 +8,13 @@ import Weapons.AirStrike.Bombs;
 import Weapons.Bounce.BigBouncer;
 import Weapons.Bounce.MiddleBouncer;
 import Weapons.Bounce.SmallBouncer;
+import Weapons.GhostBomb.GhostBomb;
+import Weapons.Granade.Granade;
+import Weapons.Granade.Trinade;
 import Weapons.GunShots.MG;
 import Weapons.GunShots.ShotGun;
+import Weapons.Laser.BigLaser;
+import Weapons.Laser.SmallLaser;
 import Weapons.MultiShot.MultiShot;
 import Weapons.MultiShot.QuadShot;
 import Weapons.MultiShot.TripleShot;
@@ -263,6 +268,12 @@ public abstract class Weapon {
             case 18:return new Sniper(model);
             case 19:return new HeavySniper(model);
             case 20:return new OneShot(model);
+            case 21:return new Granade(model);
+            case 22:return new Trinade(model);
+            case 23:return new GhostBomb(model);
+            case 24:return new SmallLaser(model);
+            case 25:return new BigLaser(model);
+
             default:return null;
         }
 

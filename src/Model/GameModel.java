@@ -41,6 +41,9 @@ public class GameModel {
     private boolean sandbox;
     private GameUiView gameUiView;
 
+    private LinkedList<Drop> drops = new LinkedList<>();
+    private boolean dropping;
+
 
     public GameModel(){
         //map = Var.map;
@@ -124,14 +127,6 @@ public class GameModel {
         return map;
     }
 
-    public void test(Graphics2D g2d){
-
-    }
-
-    public void setMap(BufferedImage map) {
-        //this.map = map;
-    }
-
     public void drawPanzer(Graphics2D g2d){
         for(Player player : players){
             if(player == lastLocalHuman) {
@@ -148,6 +143,10 @@ public class GameModel {
                     drawRedRect(player, g2d);
                 }
             }
+        }
+
+        for(Player player : deadPlayers){
+            player.getPanzer().draw(g2d,3);
         }
     }
 
@@ -180,6 +179,9 @@ public class GameModel {
             if(allLockedIn()){
                 shoot();
             }
+        }
+        for(Player player : deadPlayers){
+            player.getPanzer().moveNotTurn(map);
         }
     }
 
@@ -255,12 +257,7 @@ public class GameModel {
     }
 
     public void nextTurn(){
-
-
-
-        if(currentWeapons.size() == 0) {
-
-
+        if(currentWeapons.size() == 0){
 
             for (Player player : players) {
 
@@ -273,6 +270,50 @@ public class GameModel {
             }
 
             players.removeAll(deadPlayers);
+
+
+            boolean temp = false;
+            for(Player player : players){
+                if(player.getWeapons().size() <= 2){
+                    temp = true;
+                }
+            }
+
+            if(temp){
+                for(Player player : players){
+                    drops.add(new Drop(player,this));
+                    dropping = true;
+                }
+
+            }else{
+                nextTurnAction();
+            }
+        }
+    }
+
+    public void drawDrops(Graphics2D g2d){
+        if(dropping) {
+            boolean temp = false;
+            for (Drop drop : drops) {
+                if (!drop.isDone()) {
+                    drop.draw(g2d);
+                    temp = true;
+                }
+            }
+            if (!temp) {
+                dropping = false;
+                drops.removeAll(drops);
+                nextTurnAction();
+            }
+        }
+    }
+
+    public void nextTurnAction(){
+
+
+
+        if(currentWeapons.size() == 0) {
+
 
             if (!battleEnd()) {
                 for (Player player : currentPlayer) {
@@ -478,6 +519,7 @@ public class GameModel {
 
                             int index = lastLocalHuman.getWeapons().indexOf(weapon);
                             lastLocalHuman.getWeapons().remove(weapon);
+                            lastLocalHuman.subWaffenanzahl();
                             lastLocalHuman.getWeapons().add(index,weapon1);
 
 
@@ -548,6 +590,7 @@ public class GameModel {
                 if(player.isLocalHuman() || player.isKi()) {
                     if(player.getSelectedWeapon().getAnzahl() == 1) {
                         player.getWeapons().remove(player.getSelectedWeapon());
+                        player.subWaffenanzahl();
                         player.setSelectedWeapon(player.getWeapons().get(0));
                     }else{
                         player.getSelectedWeapon().subAnzahl();
@@ -583,6 +626,10 @@ public class GameModel {
         map.explosion(x,y,size,damage,herkunft);
     }
 
+    public void noImpactExplosion(Shape shape,int damage,Panzer herkunft){
+        map.noImpactExplosion(shape,damage,herkunft);
+    }
+
 
 
     public void movePanzerDown(int x,int y,int size,int damage,Panzer herkunft) {
@@ -602,6 +649,41 @@ public class GameModel {
             player.getPanzer().setPolyPoints(this);
 
             if(new Ellipse2D.Double(x - size/(double)2,y -size/(double)2,size,size).intersects(player.getPanzer().getHitbox().getBounds2D())){
+
+
+
+                if(player.getTeam() != team) {
+
+                    player.getPanzer().schaden(damage, 0,sandbox);
+
+                    herkunft.addXP(damage);
+                }else{
+
+                    player.getPanzer().schaden(damage, 1,sandbox);
+                }
+            }
+
+        }
+    }
+
+    public void movePanzerDown(Shape shape,int damage,Panzer herkunft) {
+
+        int team = 0;
+
+        for(Player player : players){
+            if(player.getPanzer() == herkunft){
+                team = player.getTeam();
+            }
+        }
+
+
+        for(Player player : players){
+
+            player.getPanzer().moveNotTurn(map);
+            player.getPanzer().setPolyPoints(this);
+
+            System.out.println(shape.getBounds());
+            if(shape.intersects(player.getPanzer().getHitbox().getBounds2D())){
 
 
 
@@ -651,5 +733,35 @@ public class GameModel {
 
     public LinkedList<Player> getDeadPlayer() {
         return deadPlayers;
+    }
+
+    private class Drop {
+        private Player player;
+        private int x,y;
+        private boolean done;
+        private GameModel model;
+
+        public Drop(Player player,GameModel model){
+            this.player = player;
+            y = -30;
+            x = (int) player.getPanzer().getBulletspawn().getX();
+            this.model = model;
+        }
+
+        public void draw(Graphics2D g2d){
+            if(!done) {
+                if (y < player.getPanzer().getBulletspawn().getY() - 15) {
+                    y+=3;
+                    g2d.drawImage(Var.shotIcon,x-15,y,30,30,null);
+                } else {
+                    player.restoreWeapons(model);
+                    done = true;
+                }
+            }
+        }
+
+        public boolean isDone() {
+            return done;
+        }
     }
 }

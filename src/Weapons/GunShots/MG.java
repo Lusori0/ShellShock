@@ -22,7 +22,7 @@ public class MG extends GunShotAbs {
             if(bigTimer < 10){
                 played = false;
                 playShotSound();
-                shots.add(new Bullet((int)herkunft.getBulletspawn().getX(), (int) herkunft.getBulletspawn().getY(),winkel,gameModel,rechts));
+                shots.add(new Bullet((int)herkunft.getBulletspawn().getX(), (int) herkunft.getBulletspawn().getY(),winkel,gameModel,rechts,strength));
 
                 bigTimer++;
             }

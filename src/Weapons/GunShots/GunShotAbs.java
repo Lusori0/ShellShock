@@ -19,7 +19,7 @@ public abstract class GunShotAbs extends Weapon {
 
 
     protected int weaponsize;
-    private double speed = 3;
+    private double speed = 4;
     private double gravity = 0.007;
     protected int explosionRadius;
     protected int damage;

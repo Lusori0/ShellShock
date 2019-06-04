@@ -224,6 +224,8 @@ public class GameLoop extends JPanel implements MouseListener {
 
                     gameModel.drawPanzer(g2d);
 
+                    gameModel.drawDrops(g2d);
+
                     gameModel.drawCurrentWeapons(g2d);
 
 

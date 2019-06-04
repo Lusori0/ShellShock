@@ -1,7 +1,8 @@
-package Weapons.GunShots;
+package Weapons.Granade;
 
 import Model.GameModel;
 import Panzer.Panzer;
+import Weapons.Bounce.Bouncer;
 import Window.Var;
 
 import java.awt.*;
@@ -12,8 +13,9 @@ import java.util.LinkedList;
 
 public class Bullet {
 
+    private double strength;
     protected int weaponsize;
-    private double speed = 4;
+    private double speed = 3;
     private double gravity = 0.007;
     private double downspeed = 0;
     private int explosionTimer = 0;
@@ -34,9 +36,11 @@ public class Bullet {
     private boolean hit,done = false;
 
     private AffineTransform affineTransform = new AffineTransform();
-    private double strength;
+    private boolean wasNoCollision = true;
 
-    public Bullet(int x,int y,double winkel,GameModel gameModel,boolean right,double strength) {
+    private int timer;
+
+    public Bullet(int x,int y,double winkel,GameModel gameModel,boolean right,int damage,double strength) {
         this.gameModel = gameModel;
         this.strength = strength;
         this.x = x;
@@ -44,9 +48,14 @@ public class Bullet {
         this.winkel = winkel;
         this.right = right;
         opac = 255;
-        this.damage = 10;
-        weaponsize = 12;
-        this.explosionRadius = 80;
+        this.damage = damage;
+        weaponsize = 20;
+        this.explosionRadius = 100;
+
+        for(int i = 0; i < 40;i++){
+            coords.add(new double[]{(int) x, (int) y});
+        }
+
     }
 
     public void draw(Graphics2D g2d,Panzer herkunft) {
@@ -55,28 +64,7 @@ public class Bullet {
 
         if(this.explosionTimer ==0) {
 
-            AffineTransform t = new AffineTransform();
-            int temp = 0;
-            for (double[] cord : this.coords) {
-
-                g2d.setColor(new Color(0,200,255));
-                double size = (this.weaponsize * 1.2) / 40 * temp;
-
-
-
-                    t.setToRotation(cord[2], cord[0], cord[1]);
-
-                    g2d.setTransform(t);
-
-                    g2d.fill(new Ellipse2D.Double(cord[0] - size / 2, cord[1] - size / 2, size, size));
-
-
-
-
-                temp++;
-            }
-
-            g2d.setColor(Color.WHITE);
+            g2d.setColor(new Color(0,120,0));
             g2d.setTransform(this.affineTransform);
             g2d.fill(new Ellipse2D.Double(this.x - this.weaponsize / 2.0, this.y - this.weaponsize / 2.0, this.weaponsize, this.weaponsize));
             g2d.setTransform(new AffineTransform());
@@ -85,14 +73,41 @@ public class Bullet {
 
         Point2D tCollisionPoint = this.affineTransform.transform(new Point2D.Double(this.x, this.y + this.weaponsize / 2.0), null);
 
-        if(gameModel.isCollisionPanzer((int)tCollisionPoint.getX(),(int)tCollisionPoint.getY(),herkunft)) {
-            hit = true;
+        if(gameModel.isCollision((int)tCollisionPoint.getX(),(int)tCollisionPoint.getY()) && wasNoCollision){
+
+            x = coords.get(coords.indexOf(coords.getLast())-1)[0];
+            y = coords.get(coords.indexOf(coords.getLast())-1)[1];
+
+            strength /= 1.4;
+
+
+
+            if(right) {
+                winkel = 2 * gameModel.getMap().getWinkel(x + weaponsize / 2) - drawWinkel;
+            }else{
+                winkel = (2 * gameModel.getMap().getWinkel(y + weaponsize / 2) - drawWinkel) -  Math.PI;
+            }
+            drawWinkel = winkel;
+
+
+
+
+            downspeed = 0;
+
+
+            wasNoCollision = false;
+        }else{
+            wasNoCollision = true;
         }
 
-        if(hit) {
+        timer++;
+
+        if(timer > 700){
             if (explosionTimer == 0) {
                 Var.playSound(Var.explosionClip);
                 gameModel.explosion((int) x, (int) y, explosionRadius, damage, herkunft);
+
+
 
                 g2d.setColor(Color.WHITE);
                 g2d.setTransform(affineTransform);
@@ -103,11 +118,18 @@ public class Bullet {
                 g2d.setColor(new Color(255, 255, 255, (int) (255 - 255 * explosionTimer / (double) 100)));
                 g2d.fillOval((int) x - explosionRadius / 2, (int) y - explosionRadius / 2, (int) (explosionRadius), (int) (explosionRadius));
                 explosionTimer++;
-            }else{
-                done = true;
+            } else {
+
+
+               done = true;
+
             }
+
         }
-        callculateNewCoords();
+
+        if(strength > 0.01) {
+            callculateNewCoords();
+        }
 
     }
 

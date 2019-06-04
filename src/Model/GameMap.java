@@ -118,6 +118,11 @@ public class GameMap {
         }
     }
 
+    public void noImpactExplosion(Shape shape,int damage,Panzer herkunft){
+        new Thread(() -> gameModel.movePanzerDown(shape,damage,herkunft)).start();
+
+    }
+
     public void explosion(int x, int y, int sizeParat, int damage,Panzer herkunft) {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -154,14 +159,12 @@ public class GameMap {
 
 
 
-                gameModel.movePanzerDown(x,y, (sizePara),damage,herkunft);
+                gameModel.movePanzerDown(x,y,sizePara,damage,herkunft);
 
 
             }
         });
         thread.start();
-
-        //TODO impact
 
     }
 

@@ -20,9 +20,9 @@ public class ShotGun extends GunShotAbs {
             if(bigTimer < 3){
                 played = false;
                 playShotSound();
-                shots.add(new Bullet(startX,startY,winkel-0.05,gameModel,rechts));
-                shots.add(new Bullet(startX,startY,winkel,gameModel,rechts));
-                shots.add(new Bullet(startX,startY,winkel+0.05,gameModel,rechts));
+                shots.add(new Bullet(startX,startY,winkel-0.05,gameModel,rechts,strength));
+                shots.add(new Bullet(startX,startY,winkel,gameModel,rechts,strength));
+                shots.add(new Bullet(startX,startY,winkel+0.05,gameModel,rechts,strength));
 
                 bigTimer++;
             }

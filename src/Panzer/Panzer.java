@@ -16,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Panzer {
 
-    BufferedImage image,imageRed,imageBlue,rohrGreen,rohrRed,rohrBlue;
+    private BufferedImage image,imageRed,imageBlue,rohrGreen,rohrRed,rohrBlue,imageDark;
 
     private double xPosition,yPosition;
 
@@ -82,11 +82,14 @@ public abstract class Panzer {
         imageRed = new BufferedImage(image.getWidth(),image.getHeight(),BufferedImage.TYPE_4BYTE_ABGR);
         imageBlue = new BufferedImage(image.getWidth(),image.getHeight(),BufferedImage.TYPE_4BYTE_ABGR);
 
+        imageDark = new BufferedImage(image.getWidth(),image.getHeight(),BufferedImage.TYPE_4BYTE_ABGR);
+
         for(int x = 0;x < image.getWidth();x++){
             for(int y = 0; y < image.getHeight();y++){
                 Color c = new Color(image.getRGB(x,y),true);
                 imageRed.setRGB(x,y,new Color(c.getGreen(),c.getRed(),c.getBlue(),c.getAlpha()).getRGB());
                 imageBlue.setRGB(x,y,new Color(c.getRed(),c.getBlue(),c.getGreen(),c.getAlpha()).getRGB());
+                imageDark.setRGB(x,y,new Color(50,50,50,c.getAlpha()).getRGB());
             }
         }
 
@@ -176,6 +179,10 @@ public abstract class Panzer {
                 g2d.drawImage(rohrRed, (int) (rohrpoint.getX()), (int) (rohrpoint.getY() - height/20), (int) (width/1.5),(int)(width/10),null);
                 g2d.setTransform(affineTransform);
                 g2d.drawImage(imageRed,(int)xPosition, (int) (yPosition - height/2),(int)width,(int)height,null);
+                break;
+            case 3:
+                g2d.setTransform(affineTransform);
+                g2d.drawImage(imageDark,(int)xPosition, (int) (yPosition - height/2),(int)width,(int)height,null);
                 break;
         }
 
@@ -300,22 +307,19 @@ public abstract class Panzer {
                 double x = getCenterX();
 
                 winkel = map.getWinkel(x);
-                //drawAncle = winkel;
+                drawAncle = winkel;
                 yPosition = map.getHeight(x) - height/2;
 
                 affineTransform.setToRotation(drawAncle,x,getCenterY());
 
-            }
+           }
 
 
         moveRight = false;
         moveLeft = false;
 
-        Shape hit = new Rectangle2D.Double((int)xPosition,(int)yPosition - height/2,(int)width,(int)height);
 
-        hitbox = affineTransform.createTransformedShape(hit);
 
-        //TODO slow anclechange
     }
 
     public void resetSprit(){
@@ -488,6 +492,9 @@ public abstract class Panzer {
     }
 
     public Shape getHitbox() {
+        Shape hit = new Rectangle2D.Double((int)xPosition,(int)yPosition - height/2,(int)width,(int)height);
+
+        hitbox = affineTransform.createTransformedShape(hit);
         return hitbox;
     }
 

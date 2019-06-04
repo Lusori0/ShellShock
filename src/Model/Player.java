@@ -47,6 +47,8 @@ public abstract class Player {
     private Weapon unlockedWeapon;
     private boolean isLevelUp;
 
+    private int waffenanzahl;
+
     public Player(GameModel model,int team,int id,Profil profil){
         panzer = new StandartPanzer(model,profil.getName());
 
@@ -64,33 +66,10 @@ public abstract class Player {
 
         weapons = new CopyOnWriteArrayList<>();
 
+        restoreWeapons(model);
 
-        addWeapon(new MG(model));
-        addWeapon(new ShotGun(model));
-
-
-        addWeapon(new TripleShot(model));
-
-        addWeapon(new Nuke(model));
-        addWeapon(new MegaNuke(model));
-        addWeapon(new AirStrike(model));
-        addWeapon(new BigAirStrike(model));
-        addWeapon(new Bombs(model));
-        addWeapon(new Sniper(model));
-        addWeapon(new HeavySniper(model));
-        addWeapon(new OneShot(model));
-
-        for(int i = 0; i < 10;i++){
-            addWeapon(new NormalShot(model));
-        }
-
-        addWeapon(new MiddleBouncer(model));
-        addWeapon(new SmallBouncer(model));
-        addWeapon(new Fireball(model));
-        addWeapon(new HugeShot(model));
-        addWeapon(new BigShot(model));
-
-
+        addWeapon(Weapon.getById(7,model));
+        addWeapon(Weapon.getById(25,model));
 
         selectedWeapon = weapons.get(0);
 
@@ -101,10 +80,16 @@ public abstract class Player {
         for(Weapon w : weapons){
             if(weapon.getId() == w.getId()){
                 w.addAnzahl();
+                waffenanzahl++;
                 return;
             }
         }
         weapons.add(weapon);
+        waffenanzahl++;
+    }
+
+    public void subWaffenanzahl(){
+        waffenanzahl--;
     }
 
     public Panzer getPanzer(){
@@ -213,5 +198,18 @@ public abstract class Player {
 
     public void setLevelUp(boolean levelUp) {
         isLevelUp = levelUp;
+    }
+
+    public void restoreWeapons(GameModel model) {
+        while(waffenanzahl < 3){
+            addRndWeapon(model);
+        }
+    }
+
+    private void addRndWeapon(GameModel model) {
+        int t = profil.getUnlockedWeapons().size();
+        int rnd = (int) (Math.random() * t);
+        addWeapon(Weapon.getById(profil.getUnlockedWeapons().get(rnd),model));
+
     }
 }
