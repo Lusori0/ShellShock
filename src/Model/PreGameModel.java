@@ -4,6 +4,7 @@ import Views.PreGameView;
 import Window.*;
 
 
+import java.awt.image.BufferedImage;
 import java.io.PrintStream;
 import java.util.LinkedList;
 import java.awt.*;
@@ -12,19 +13,34 @@ public class PreGameModel {
 
     private GameType gametype;
     private final boolean sandbox;
+    PreGameView preGameView;
+    private GameModel model = new GameModel();
 
-    public PreGameModel(GameType gametype, boolean sandbox) {
+    public PreGameModel(GameType gametype, boolean sandbox,boolean multiplayer,Profil profil_Login) {
+         preGameView = new PreGameView(this);
         this.gametype = gametype;
         this.sandbox = sandbox;
-        MyWindow.setContent(new PreGameView(this));
+        if(profil_Login != null)
+        {
+            preGameView.setProfils(profil_Login);
+            System.out.println("Sollte eingeloogt sein!!");
+        }
+        if(multiplayer)
+        {
+            MyWindow.setContent(preGameView);
+            preGameView.erzeugenOverlayMultiplayer();
+        }else {
+            MyWindow.setContent(preGameView);
+            preGameView.erzeugenOverlayTest();
+        }
+
     }
 
-    public void gameSettingsAction(){
-
+    public BufferedImage mapSelectingAction(int art){
+       return model.getMap().getMapSmall(art,model);
     }
 
-    public void startAction(int amount,int[] difficutly){
-        GameModel model = new GameModel();
+    public void startAction(int amount,int[] difficutly,Profil[] profils){
         LinkedList<Player> players = new LinkedList<>();
 
         LinkedList<Integer> weaponsTest = new LinkedList<>();
@@ -36,14 +52,23 @@ public class PreGameModel {
         Profil profil = new Profil("test",1,"test",1,weaponsTest);
 
         players.add(new HumanPlayer(model,1,model.getNextId(), Var.activeUser));
-        players.add(new HumanPlayer(model,2,model.getNextId(), profil));
-        players.add(new HumanPlayer(model,2,model.getNextId(), profil));
-        players.add(new HumanPlayer(model,2,model.getNextId(), profil));
+       for(int p = 0;p<profils.length;p++)
+       {
+
+           if(profils[p] != null){
+               System.out.println("Kein null vorhanden");
+               players.add(new HumanPlayer(model,2,model.getNextId(),profils[p]));
+           }else{
+               p++;
+               System.out.println("Nulls vorhanden");
+           }
+
+       }
         if(amount >0)
         {
             for(int i = 0;i<amount;i++)
             {
-                //players.add(new KiPlayer(model,2,model.getNextId(), difficutly[i],Var.activeUser));
+                players.add(new KiPlayer(model,2,model.getNextId(), difficutly[i],Var.activeUser));
             }
         } else{}
 

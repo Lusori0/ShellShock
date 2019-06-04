@@ -13,11 +13,11 @@ public class MultiPlayerModel {
     }
 
     public void lokalAction(){
-        new PreGameModel(GameType.MULTI_LOCAL,false);
+        new PreGameModel(GameType.MULTI_LOCAL,false,true,null);
     }
 
     public void lanAction(){
-        new PreGameModel(GameType.MULTI_LAN,false);
+        new PreGameModel(GameType.MULTI_LAN,false,true,null);
     }
 
     public void backAction() {new MainMenuModel();}

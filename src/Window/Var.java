@@ -25,6 +25,7 @@ public class Var {
     public static int soundBarVolume = 0;
     public static int[] difficulty_sliderValue_preGameView = new int[8];
     public static Profil activeUser;
+    public static Profil[] login_profils = new Profil[5];
 
 
     public Var() {

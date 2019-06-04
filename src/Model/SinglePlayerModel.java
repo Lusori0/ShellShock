@@ -16,11 +16,11 @@ public class SinglePlayerModel {
     }
 
     public void gegenKiAction(){
-        new PreGameModel(GameType.AGAINST_AI,false);
+        new PreGameModel(GameType.AGAINST_AI,false,false,null);
     }
 
     public void sandboxAction(){
-        new PreGameModel(GameType.SANDBOX,true);
+        new PreGameModel(GameType.SANDBOX,true,false,null);
     }
 
     public void backAction(){

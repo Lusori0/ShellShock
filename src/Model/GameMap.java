@@ -212,6 +212,7 @@ public class GameMap {
         Graphics2D g2d = img.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         g2d.drawImage(getMap(art,gameModel),0,0,560,360,null);
+        //TODO: Vergleiche mit PregameView Die Map bei art = 5 oder 6 sind jedes mal unterschiedlich!!
         return img;
     }
 

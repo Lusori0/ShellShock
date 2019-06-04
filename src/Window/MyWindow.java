@@ -55,7 +55,7 @@ public class MyWindow{
         window.addKeyListener(new MyKeys());
 
 
-        new LogInModel();
+        new LogInModel(false);
 
 
     }
