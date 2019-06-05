@@ -692,9 +692,6 @@ public class GameModel {
                     player.getPanzer().schaden(damage, 0,sandbox);
 
                     herkunft.addXP(damage);
-                }else{
-
-                    player.getPanzer().schaden(damage, 1,sandbox);
                 }
             }
 

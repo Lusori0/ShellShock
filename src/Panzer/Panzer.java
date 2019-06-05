@@ -585,6 +585,10 @@ public abstract class Panzer {
         return image;
     }
 
+    public void setLeben(int i) {
+        leben = i;
+    }
+
     private class Screentext{
         private String text;
         private int x,y;
