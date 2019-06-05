@@ -455,6 +455,34 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         //g.insets = new Insets(10,buttonWidth,0,0);
         this.add(infiniteWeapons,g);
 
+    //Map-Anzeige wird eingefügt
+        map_loocking = new JLabel();
+        map_loocking.setBackground(Color.WHITE);
+        mapImage = preGameModel.mapSelectingAction(1,Color.GREEN,Color.BLUE).getScaledInstance(buttonWidth,buttonHeigth,Image.SCALE_SMOOTH);
+        map_loocking.setIcon(new ImageIcon(mapImage));
+        map_loocking.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
+        g.gridx = 6;
+        g.gridy = GridBagConstraints.RELATIVE;
+        g.fill = GridBagConstraints.BOTH;
+        g.gridwidth = 1;
+        g.gridheight = 1;
+        this.add(map_loocking,g);
+
+        //MapSelecter
+        mapSelectter = new JComboBox();
+        mapSelectter.setBackground(MyWindow.backgroundColor);
+        mapSelectter.setBorder(BorderFactory.createRaisedBevelBorder());
+        mapSelectter.addActionListener(this);
+        mapSelectter.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
+        for(String s : maps)
+        {
+            mapSelectter.addItem(s);
+        }
+        g.gridx = 6;
+        g.gridy = GridBagConstraints.RELATIVE;
+        this.add(mapSelectter,g);
+
+
 
         //Adding the Enemy Amount which can be selected
         for(int i = 0;i<8;i++) {
@@ -566,7 +594,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                 }
             }
 
-            preGameModel.startAction(amount_selected_Players,difficulty_value_Ai,Var.login_profils);
+            preGameModel.startAction(amount_selected_Players,difficulty_value_Ai,Var.login_profils,mapSelectter.getSelectedIndex()+1);
         }
 
         if(e.getSource() == mapSelectter)
@@ -627,9 +655,22 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         {
             if(e.getSource() == humanCheckBox[i])
             {
-                selected_humanCheckbox[i] = true;
-                //TODO: Buttons zum Einloggen einfügen!!
-                new LogInModel(true);
+                if(selected_humanCheckbox[i]) {
+                    humanCheckBox[i].setSelected(false);
+                    Profil[] temp = new Profil[Var.login_profils.length];
+                    for(int a = 0;a<temp.length;a++)
+                    {
+                        temp[a] = Var.login_profils[i+1];
+                    }
+                    //TODO : Rechnen was welches Feld wem geben muss
+                    /*
+                    Var.login_profils[i] = null;
+                    Var.login_profils[] = temp[i];
+                    */
+                } else {
+                    selected_humanCheckbox[i] = true;
+                    new LogInModel(true);
+                }
             }
         }
     }
