@@ -28,6 +28,7 @@ public class Fireball extends Weapon {
 
     private LinkedList<int[]> coords = new LinkedList<>();
     private int starttimer = 0;
+    private int explosions = 0;
 
     public Fireball(GameModel gameModel) {
         super(gameModel,"Fireball",4,new Color(255,150,0));
@@ -67,7 +68,7 @@ public class Fireball extends Weapon {
                 int opac = 255/20 * temp;
                 g2d.setColor(new Color(255,150,0,opac));
                 double size = (weaponsize*1.2)/20 * temp;
-                if(cord[0] != (int)xPosition) {
+                if(cord[0] != (int)xPosition && cord[1] != yPosition) {
                     g2d.fill(new Ellipse2D.Double(cord[0] - size / 2, cord[1] - size / 2, size, size));
                 }
 
@@ -103,8 +104,13 @@ public class Fireball extends Weapon {
                 g2d.fillOval((int) xPosition - explosionRadius / 2, (int) yPosition - explosionRadius / 2, explosionRadius, explosionRadius);
                 explosionTimer++;
             } else {
-                if (coords.getFirst()[0] == (int) xPosition) {
-                    weaponEnd();
+                if(explosions < 3){
+                    explosionTimer = 0;
+                    explosions++;
+                }else {
+                    if (coords.getFirst()[0] == (int) xPosition) {
+                        weaponEnd();
+                    }
                 }
             }
         }

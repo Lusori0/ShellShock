@@ -268,6 +268,10 @@ public class KiPlayer extends Player {
 
     public void shoot(GameModel model){
 
+        if(getSelectedWeapon().getId() == 24 || getSelectedWeapon().getId() == 25){
+            finalWinkel = Math.atan2(targety-myY,x);
+        }
+
         finalWinkel += (-0.1 + Math.random() * 0.2)*difficoulty;
 
 
