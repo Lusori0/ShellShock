@@ -274,7 +274,7 @@ public class GameModel {
 
             boolean temp = false;
             for(Player player : players){
-                if(player.getWeapons().size() <= 2){
+                if(player.getWeaponCount() <= 2){
                     temp = true;
                 }
             }

@@ -66,10 +66,12 @@ public abstract class Player {
 
         weapons = new CopyOnWriteArrayList<>();
 
-        restoreWeapons(model);
 
-        addWeapon(Weapon.getById(7,model));
-        addWeapon(Weapon.getById(4,model));
+
+        addWeapon(Weapon.getById(25,model));
+        addWeapon(Weapon.getById(25,model));
+
+        restoreWeapons(model);
 
         selectedWeapon = weapons.get(0);
 
@@ -211,5 +213,9 @@ public abstract class Player {
         int rnd = (int) (Math.random() * t);
         addWeapon(Weapon.getById(profil.getUnlockedWeapons().get(rnd),model));
 
+    }
+
+    public int getWeaponCount() {
+        return waffenanzahl;
     }
 }

@@ -46,6 +46,7 @@ public class Fireball extends Weapon {
         downspeed = 0;
         hit = false;
         affineTransform = new AffineTransform();
+        explosions = 0;
     }
 
     @Override
