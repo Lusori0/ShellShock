@@ -48,7 +48,7 @@ public class MyWindow{
         HEIGHT = (int) getHeight();
 
        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
-       
+
 
 
 

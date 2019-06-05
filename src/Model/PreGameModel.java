@@ -68,6 +68,7 @@ public class PreGameModel {
         {
             for(int i = 0;i<amount;i++)
             {
+                System.out.println(Var.activeUser);
                 players.add(new KiPlayer(model,2,model.getNextId(), difficutly[i],Var.activeUser));
             }
         } else{}
