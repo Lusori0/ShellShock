@@ -61,11 +61,11 @@ public class GameMap {
                     mapY[i] = (int) (gameModel.getHeight()/(double)2 + Math.pow(Math.sin(i * 0.03),3) * gameModel.getHeight()/4);
                     break;
                 case 6:
-                    mapY[i] = (int)  (gameModel.getHeight()/2.0);// + gameModel.getHeight()*0.4);;
-                    mapY[i] += Math.sin(i * (rnd[0])) * rnd[4] * gameModel.getHeight()*0.2;
-                    mapY[i] += Math.sin(i * (rnd[1])) * rnd[5] * gameModel.getHeight()*0.2;
-                    mapY[i] += Math.sin(i * (rnd[2])) * rnd[6] * gameModel.getHeight()*0.2;
-                    mapY[i] += Math.sin(i * (rnd[3])) * rnd[7] * gameModel.getHeight()*0.2;
+                    mapY[i] = (int)  (gameModel.getHeight()/2.0);
+                    mapY[i] += Math.sin(i * (rnd[0])) * rnd[4] * gameModel.getHeight()*0.1;
+                    mapY[i] += Math.sin(i * (rnd[1])) * rnd[5] * gameModel.getHeight()*0.1;
+                    mapY[i] += Math.sin(i * (rnd[2])) * rnd[6] * gameModel.getHeight()*0.1;
+                    mapY[i] += Math.sin(i * (rnd[3])) * rnd[7] * gameModel.getHeight()*0.1;
 
 
             }
@@ -210,16 +210,16 @@ public class GameMap {
         return returnValues;
     }
 
-    public static BufferedImage getMapSmall(int art,GameModel gameModel){
+    public static BufferedImage getMapSmall(int art,GameModel gameModel,Color mapC,Color skyC){
         BufferedImage img = new BufferedImage(560,360,BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D g2d = img.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g2d.drawImage(getMap(art,gameModel),0,0,560,360,null);
+        g2d.drawImage(getMap(art,gameModel,mapC,skyC),0,0,560,360,null);
         //TODO: Vergleiche mit PregameView Die Map bei art = 5 oder 6 sind jedes mal unterschiedlich!!
         return img;
     }
 
-    public static BufferedImage getMap(int art,GameModel gameModel){
+    public static BufferedImage getMap(int art,GameModel gameModel,Color mapC,Color skyC){
         BufferedImage image = new BufferedImage(2800,1800,BufferedImage.TYPE_4BYTE_ABGR);
 
         int genauigkeit = 400;
@@ -258,12 +258,13 @@ public class GameMap {
                     break;
                 case 5:
                     mapY[i] = (int) (gameModel.getHeight()/(double)2 + Math.pow(Math.sin(i * 0.03),3) * gameModel.getHeight()/4);
+                    break;
                 case 6:
-                    mapY[i] = (int)  (gameModel.getHeight()/2.0);// + gameModel.getHeight()*0.4);;
-                    mapY[i] += Math.sin(i * (rnd[0])) * rnd[4] * gameModel.getHeight()*0.2;
-                    mapY[i] += Math.sin(i * (rnd[1])) * rnd[5] * gameModel.getHeight()*0.2;
-                    mapY[i] += Math.sin(i * (rnd[2])) * rnd[6] * gameModel.getHeight()*0.2;
-                    mapY[i] += Math.sin(i * (rnd[3])) * rnd[7] * gameModel.getHeight()*0.2;
+                    mapY[i] = (int)  (gameModel.getHeight()/2.0);
+                    mapY[i] += Math.sin(i * (rnd[0])) * rnd[4] * gameModel.getHeight()*0.1;
+                    mapY[i] += Math.sin(i * (rnd[1])) * rnd[5] * gameModel.getHeight()*0.1;
+                    mapY[i] += Math.sin(i * (rnd[2])) * rnd[6] * gameModel.getHeight()*0.1;
+                    mapY[i] += Math.sin(i * (rnd[3])) * rnd[7] * gameModel.getHeight()*0.1;
 
 
 
@@ -277,9 +278,15 @@ public class GameMap {
 
         Graphics2D g2d = image.createGraphics();
 
+        g2d.setColor(skyC);
+
+        g2d.fillRect(0,0,2800,1800);
+
+        g2d.setColor(mapC);
+
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
-        g2d.drawPolygon(map);
+        g2d.fillPolygon(map);
 
         return image;
     }

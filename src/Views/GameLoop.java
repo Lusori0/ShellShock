@@ -1,5 +1,6 @@
 package Views;
 
+import Model.GameMap;
 import Model.GameModel;
 
 import Model.Player;
@@ -227,6 +228,8 @@ public class GameLoop extends JPanel implements MouseListener {
                     gameModel.drawDrops(g2d);
 
                     gameModel.drawCurrentWeapons(g2d);
+
+
 
 
 

@@ -47,7 +47,11 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
 
     String[] maps = {"Map1","Map2","Map3","Map4","Map5","Map6"};
 
-    ImageIcon gameSettingsImg,startImg,backImg,gameOptionsImg,mapImage;
+    ImageIcon gameSettingsImg;
+    ImageIcon startImg;
+    ImageIcon backImg;
+    ImageIcon gameOptionsImg;
+    Image mapImage;
 
 
     public PreGameView (PreGameModel preGameModel)
@@ -237,8 +241,8 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
 
             map_loocking = new JLabel();
             map_loocking.setBackground(Color.WHITE);
-            mapImage = new ImageIcon(preGameModel.mapSelectingAction(1));
-            map_loocking.setIcon(mapImage);
+            mapImage = preGameModel.mapSelectingAction(1,Color.GREEN,Color.BLUE).getScaledInstance(buttonWidth,buttonHeigth,Image.SCALE_SMOOTH);
+            map_loocking.setIcon(new ImageIcon(mapImage));
             map_loocking.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
             g.gridx = 6;
             g.gridy = GridBagConstraints.RELATIVE;
@@ -568,8 +572,8 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         if(e.getSource() == mapSelectter)
         {
             System.out.println("Die wird ausgelöst");
-            mapImage = new ImageIcon(preGameModel.mapSelectingAction(mapSelectter.getSelectedIndex()+1));
-            map_loocking.setIcon(mapImage);
+            mapImage = preGameModel.mapSelectingAction(mapSelectter.getSelectedIndex()+1,Color.GREEN,Color.BLUE).getScaledInstance(map_loocking.getWidth(),map_loocking.getHeight(),Image.SCALE_SMOOTH);
+            map_loocking.setIcon(new ImageIcon(mapImage));
         }
 
         if (e.getSource() == back) {
