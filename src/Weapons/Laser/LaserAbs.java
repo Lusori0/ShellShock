@@ -68,7 +68,7 @@ public abstract class LaserAbs extends Weapon {
 
         playShotSound();
 
-        if(explosionTimer == 100){
+        if(explosionTimer == 0){
 
 
             RoundRectangle2D rect2 = new RoundRectangle2D.Double(startX + 40 - weaponsize/2.0,startY - weaponsize,2800,weaponsize * 2,10,10);

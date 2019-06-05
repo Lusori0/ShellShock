@@ -17,7 +17,7 @@ public abstract class MultiShotAbs extends Weapon {
 
 
     protected int weaponsize;
-    private double speed = 3;
+    private double speed = 2;
     private double gravity = 0.007;
     protected int explosionRadius;
     protected int damage;

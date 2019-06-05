@@ -27,17 +27,19 @@ public class PreGameModel {
         }
         if(multiplayer)
         {
-            MyWindow.setContent(preGameView);
+
             preGameView.erzeugenOverlayMultiplayer();
-        }else {
             MyWindow.setContent(preGameView);
+        }else {
+
             preGameView.erzeugenOverlayTest();
+            MyWindow.setContent(preGameView);
         }
 
     }
 
-    public BufferedImage mapSelectingAction(int art){
-       return model.getMap().getMapSmall(art,model);
+    public BufferedImage mapSelectingAction(int art,Color mapC,Color skyC){
+       return model.getMap().getMapSmall(art,model,mapC,skyC);
     }
 
     public void startAction(int amount,int[] difficutly,Profil[] profils){
