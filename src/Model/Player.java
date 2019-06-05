@@ -69,7 +69,7 @@ public abstract class Player {
         restoreWeapons(model);
 
         addWeapon(Weapon.getById(7,model));
-        addWeapon(Weapon.getById(25,model));
+        addWeapon(Weapon.getById(4,model));
 
         selectedWeapon = weapons.get(0);
 

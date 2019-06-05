@@ -80,9 +80,11 @@ public class Fireball extends Weapon {
 
             if(explosionTimer == 0) {
                 g2d.fill(new Ellipse2D.Double(xPosition - weaponsize / (double) 2, yPosition - weaponsize / (double) 2, weaponsize, weaponsize));
+
             }
 
-            callculateNewCoords();
+        callculateNewCoords();
+
 
         if(gameModel.isCollisionPanzer((int)xPosition + weaponsize/2,(int)yPosition + weaponsize/2,herkunft) && explosionTimer == 0){
             hit = true;
@@ -124,7 +126,7 @@ public class Fireball extends Weapon {
             downspeed += gravity;
 
 
-            if (explosionTimer == 0) {
+            if (explosionTimer == 0 && explosions == 0) {
 
                 if (rechts) {
                     xPosition += Math.cos(winkel) * ht;

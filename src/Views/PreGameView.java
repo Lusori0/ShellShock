@@ -572,7 +572,9 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         if(e.getSource() == mapSelectter)
         {
             System.out.println("Die wird ausgelöst");
-            mapImage = preGameModel.mapSelectingAction(mapSelectter.getSelectedIndex()+1,Color.GREEN,Color.BLUE).getScaledInstance(map_loocking.getWidth(),map_loocking.getHeight(),Image.SCALE_SMOOTH);
+            int buttonWidth = MyWindow.WIDTH/8;
+            int buttonHeigth = buttonWidth*2/5;
+            mapImage = preGameModel.mapSelectingAction(mapSelectter.getSelectedIndex()+1,Color.GREEN,Color.BLUE).getScaledInstance(buttonWidth,buttonHeigth,Image.SCALE_SMOOTH);
             map_loocking.setIcon(new ImageIcon(mapImage));
         }
 
