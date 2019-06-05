@@ -24,6 +24,9 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
 
     MyButton gameSettings,start,back;
 
+    int buttonWidth = MyWindow.WIDTH/8;
+    int buttonHeigth = buttonWidth*2/5;
+
     JLabel tankName,gameOptions,map_loocking;
     //Slider mit Difficulty
         JSlider[] difficulty_slider = new JSlider[8];
@@ -130,9 +133,6 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
 
     public void erzeugenOverlayTest()
     {
-        //Equal Height and Width for all Buttons
-            int buttonWidth = MyWindow.WIDTH/8;
-            int buttonHeigth = buttonWidth*2/5;
         //TODO: Also den Ganzen Scheiß umwerfen und Umkräppeln nach Niels Design!!!
 
         this.setLayout(new GridBagLayout());
@@ -348,9 +348,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
 
     public void erzeugenOverlayMultiplayer()
     {
-        //Equal Height and Width for all Buttons
-        int buttonWidth = MyWindow.WIDTH/8;
-        int buttonHeigth = buttonWidth*2/5;
+
         //TODO: Also den Ganzen Scheiß umwerfen und Umkräppeln nach Niels Design!!!
 
         this.setLayout(new GridBagLayout());
@@ -547,6 +545,8 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        int buttonWidth = MyWindow.WIDTH/8;
+        int buttonHeigth = buttonWidth*2/5;
         if (e.getSource() == gameSettings) {
 
          if("UltraGG".equals(gameSettingsTest.getSelectedItem() ) )
@@ -572,8 +572,6 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         if(e.getSource() == mapSelectter)
         {
             System.out.println("Die wird ausgelöst");
-            int buttonWidth = MyWindow.WIDTH/8;
-            int buttonHeigth = buttonWidth*2/5;
             mapImage = preGameModel.mapSelectingAction(mapSelectter.getSelectedIndex()+1,Color.GREEN,Color.BLUE).getScaledInstance(buttonWidth,buttonHeigth,Image.SCALE_SMOOTH);
             map_loocking.setIcon(new ImageIcon(mapImage));
         }
