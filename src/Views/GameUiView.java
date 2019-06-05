@@ -64,7 +64,8 @@ public class GameUiView extends JPanel implements ActionListener {
         }
         if ((e.getSource() == back))
         {
-            new MainMenuModel();
+            gameModel.getLastLocalHuman().getPanzer().setLeben(0);
+            gameModel.nextTurn();
         }
         if ((e.getSource() == muteMusik))
         {

@@ -269,11 +269,40 @@ public class KiPlayer extends Player {
     public void shoot(GameModel model){
 
         if(getSelectedWeapon().getId() == 24 || getSelectedWeapon().getId() == 25){
-            finalWinkel = Math.atan2(targety-myY,x);
+            targety = getPanzer().getBulletspawn().getY()-ziel.getPanzer().getBulletspawn().getY();
+            x = (ziel.getPanzer().getBulletspawn().getX() - getPanzer().getBulletspawn().getX());
+            myY = getPanzer().getBulletspawn().getY();
+            double ytemp = ziel.getPanzer().getBulletspawn().getY() - getPanzer().getBulletspawn().getY();
+
+            if(x < 0){
+                finalWinkel = Math.atan2(ytemp, x) + Math.PI;
+            }else {
+                finalWinkel = Math.atan2(ytemp, x);
+            }
+            System.out.println(finalWinkel);
+
         }
 
         finalWinkel += (-0.1 + Math.random() * 0.2)*difficoulty;
 
+        double xtempRohr;
+        double ytempRohr;
+
+
+        if(x<0) {
+            xtempRohr = -Math.sin(Math.PI / 2 + finalWinkel) * 100 + getPanzer().getCenterX();
+            ytempRohr = -Math.cos(-Math.PI / 2 + finalWinkel) * 100 + getPanzer().getCenter().getY();
+        }else{
+
+            xtempRohr = -Math.sin(-Math.PI / 2 + finalWinkel) * 100 + getPanzer().getCenterX();
+            ytempRohr = -Math.cos(Math.PI / 2 + finalWinkel) * 100 + getPanzer().getCenter().getY();
+        }
+
+
+
+        getPanzer().setTemps();
+
+        getPanzer().changeRohr((int) xtempRohr,(int)ytempRohr,model);
 
         if (x > 0) {
             getSelectedWeapon().create((int) (getPanzer().getBulletspawn().getX()), (int) getPanzer().getBulletspawn().getY(),

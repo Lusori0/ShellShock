@@ -274,7 +274,7 @@ public class GameModel {
 
             boolean temp = false;
             for(Player player : players){
-                if(player.getWeapons().size() <= 2){
+                if(player.getWeaponCount() <= 2){
                     temp = true;
                 }
             }
@@ -692,9 +692,6 @@ public class GameModel {
                     player.getPanzer().schaden(damage, 0,sandbox);
 
                     herkunft.addXP(damage);
-                }else{
-
-                    player.getPanzer().schaden(damage, 1,sandbox);
                 }
             }
 
