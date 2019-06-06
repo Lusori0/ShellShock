@@ -20,7 +20,7 @@ public class Fireball extends Weapon {
     private double downspeed = 0;
     private int explosionTimer = 0;
     private int explosionRadius = 100;
-    private int damage = 20;
+    private int damage = 3;
     private boolean hit = false;
     private int steps = 3;
 
@@ -47,6 +47,7 @@ public class Fireball extends Weapon {
         hit = false;
         affineTransform = new AffineTransform();
         explosions = 0;
+        played = false;
     }
 
     @Override
@@ -54,7 +55,7 @@ public class Fireball extends Weapon {
         super.create(startX, startY, winkel, strength, rechts,herkunft);
 
         for(int i = 0; i < 20;i++){
-            coords.add(new int[]{(int) xPosition, (int) yPosition});
+            coords.add(new int[]{ startX,startY});
         }
     }
 
@@ -69,7 +70,7 @@ public class Fireball extends Weapon {
                 int opac = 255/20 * temp;
                 g2d.setColor(new Color(255,150,0,opac));
                 double size = (weaponsize*1.2)/20 * temp;
-                if(cord[0] != (int)xPosition && cord[1] != yPosition) {
+                if(cord[0] != (int)xPosition && cord[1] != (int)yPosition) {
                     g2d.fill(new Ellipse2D.Double(cord[0] - size / 2, cord[1] - size / 2, size, size));
                 }
 
@@ -172,7 +173,7 @@ public class Fireball extends Weapon {
 
     @Override
     public int getLevel() {
-        return 0;
+        return 1;
     }
 
     @Override

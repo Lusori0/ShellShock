@@ -8,7 +8,7 @@ public class HeavySniper extends SniperAbs {
 
     public HeavySniper(GameModel model) {
         super(model,"Heavy Sniper",2,19,Var.heavysniper);
-        damage = 70;
+        damage = 30;
     }
 
     @Override

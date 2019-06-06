@@ -86,17 +86,21 @@ public class GameMap {
     }
 
     public double getHeight(double xCoord){
-        if(xCoord%xDifference == 0){
-            return mapY[(int) (xCoord/xDifference)];
-        }else {
-            double x1 = mapX[(int) (xCoord / xDifference)];
-            double x2 = mapX[(int) (xCoord / xDifference + 1)];
+        if(xCoord > 0 && xCoord < 2800) {
+            if (xCoord % xDifference == 0) {
+                return mapY[(int) (xCoord / xDifference)];
+            } else {
+                double x1 = mapX[(int) (xCoord / xDifference)];
+                double x2 = mapX[(int) (xCoord / xDifference + 1)];
 
-            double y1 = mapY[(int) (xCoord / xDifference)];
-            double y2 = mapY[(int) (xCoord / xDifference + 1)];
+                double y1 = mapY[(int) (xCoord / xDifference)];
+                double y2 = mapY[(int) (xCoord / xDifference + 1)];
 
-            return (y1 + (y1-y2)/(x1-x2) * (xCoord - x1));
+                return (y1 + (y1 - y2) / (x1 - x2) * (xCoord - x1));
 
+            }
+        }else{
+            return gameModel.getHeight()/2.0;
         }
     }
 
@@ -159,7 +163,7 @@ public class GameMap {
 
 
 
-                gameModel.movePanzerDown(x,y,sizePara,damage,herkunft);
+                gameModel.movePanzerDown(x,y,sizeParat,damage,herkunft);
 
 
             }

@@ -44,9 +44,9 @@ public class Bullet {
         this.winkel = winkel;
         this.right = right;
         opac = 255;
-        this.damage = 10;
+        this.damage = 3;
         weaponsize = 12;
-        this.explosionRadius = 80;
+        this.explosionRadius = 30;
     }
 
     public void draw(Graphics2D g2d,Panzer herkunft) {
@@ -59,9 +59,11 @@ public class Bullet {
             int temp = 0;
             for (double[] cord : this.coords) {
 
-                g2d.setColor(new Color(0,200,255));
-                double size = (this.weaponsize * 1.2) / 40 * temp;
+                if(cord[0] != (int)x && cord[1] != (int)y) {
 
+
+                    g2d.setColor(new Color(0, 200, 255));
+                    double size = (this.weaponsize * 1.2) / 40 * temp;
 
 
                     t.setToRotation(cord[2], cord[0], cord[1]);
@@ -69,6 +71,8 @@ public class Bullet {
                     g2d.setTransform(t);
 
                     g2d.fill(new Ellipse2D.Double(cord[0] - size / 2, cord[1] - size / 2, size, size));
+
+                }
 
 
 

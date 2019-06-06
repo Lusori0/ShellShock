@@ -13,7 +13,7 @@ public class KiPlayer extends Player {
 
     private int movementMode = 0;
 
-    private int difficoulty = 0;
+    private int difficoulty;
 
     public KiPlayer(GameModel model, int team,int id,int difficoulty,Profil profil) {
         super(model, team,id,new Profil("KI",profil.getLevel(),"leer",profil.getXp(),profil.getUnlockedWeapons()));

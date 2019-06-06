@@ -18,7 +18,7 @@ public class HugeShot extends Shot {
 
         explosionRadius = 100;
 
-        damage = 50;
+        damage = 12;
 
     }
 

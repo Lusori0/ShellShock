@@ -7,7 +7,7 @@ import Window.Var;
 
 public class BigAirStrike extends AirStrikeAbs {
     public BigAirStrike(GameModel model) {
-        super(model,"Big Air Strike",2,12,50,20,5,10,Var.bigairstrike);
+        super(model,"Big Air Strike",2,12,50,5,5,10,Var.bigairstrike);
 
 
     }

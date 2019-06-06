@@ -71,6 +71,7 @@ public abstract class Bouncer extends Weapon {
         drawWinkel = 0;
         starttimer = 0;
         affineTransform = new AffineTransform();
+        played = false;
     }
 
 
@@ -78,7 +79,7 @@ public abstract class Bouncer extends Weapon {
     public void create(int startX, int startY, double winkel, double strength, boolean rechts, Panzer herkunft) {
         super.create(startX, startY, winkel, strength, rechts,herkunft);
         for(int i = 0; i < 40;i++){
-            coords.add(new double[]{(int) xPosition, (int) yPosition,0});
+            coords.add(new double[]{(int) startX, (int) startY,0});
         }
     }
 
@@ -95,7 +96,7 @@ public abstract class Bouncer extends Weapon {
 
                 g2d.setColor(new Color(200,0,250,255));
                 double size = (weaponsize*1.2)/40 * temp;
-                if(cord[0] != (int)xPosition) {
+                if(cord[0] != (int)xPosition && cord[1] != (int)yPosition) {
 
 
                     t.setToRotation(cord[2],cord[0],cord[1]);

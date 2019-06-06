@@ -46,6 +46,7 @@ public abstract class GunShotAbs extends Weapon {
     public void reset(){
         affineTransform = new AffineTransform();
         shots.removeAll(shots);
+        played = false;
     }
 
     @Override
@@ -65,15 +66,15 @@ public abstract class GunShotAbs extends Weapon {
     @Override
     public Weapon getLevelWeapon(int level,GameModel model){
         switch (level){
-            case 1:return new MG(model);
-            case 2:return new ShotGun(model);
+            case 1:return new ShotGun(model);
+            case 2:return new MG(model);
             default:return null;
         }
     }
 
     @Override
     public int getLevelAnzhal() {
-        return 3;
+        return 2;
     }
 
     public abstract int getLevel();

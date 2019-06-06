@@ -17,7 +17,7 @@ public class BigShot extends Shot {
 
         explosionRadius = 60;
 
-        damage = 30;
+        damage = 8;
 
     }
 

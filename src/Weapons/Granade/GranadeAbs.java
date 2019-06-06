@@ -52,6 +52,7 @@ public abstract class GranadeAbs extends Weapon {
         downspeed = 0;
         starttimer = 0;
         affineTransform = new AffineTransform();
+        played = false;
     }
 
     @Override

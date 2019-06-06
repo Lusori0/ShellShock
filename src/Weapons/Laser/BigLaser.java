@@ -9,7 +9,7 @@ public class BigLaser extends LaserAbs {
     public BigLaser(GameModel gameModel) {
         super(gameModel, "Big Laser", 2, 25, Var.shotIcon, Color.RED,20);
 
-        damage = 40;
+        damage = 25;
     }
 
     @Override

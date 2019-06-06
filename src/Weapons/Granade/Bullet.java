@@ -85,7 +85,7 @@ public class Bullet {
             if(right) {
                 winkel = 2 * gameModel.getMap().getWinkel(x + weaponsize / 2) - drawWinkel;
             }else{
-                winkel = (2 * gameModel.getMap().getWinkel(y + weaponsize / 2) - drawWinkel) -  Math.PI;
+                winkel = (2 * gameModel.getMap().getWinkel(x + weaponsize / 2) - drawWinkel) -Math.PI;
             }
             drawWinkel = winkel;
 
@@ -96,13 +96,13 @@ public class Bullet {
 
 
             wasNoCollision = false;
-        }else{
+        }else if(!gameModel.isCollision((int)tCollisionPoint.getX(),(int)tCollisionPoint.getY())){
             wasNoCollision = true;
         }
 
         timer++;
 
-        if(timer > 700){
+        if(timer > 500){
             if (explosionTimer == 0) {
                 Var.playSound(Var.explosionClip);
                 gameModel.explosion((int) x, (int) y, explosionRadius, damage, herkunft);
@@ -127,7 +127,7 @@ public class Bullet {
 
         }
 
-        if(strength > 0.01) {
+        if(strength > 0.01 && timer < 500) {
             callculateNewCoords();
         }
 

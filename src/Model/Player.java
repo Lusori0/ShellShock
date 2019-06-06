@@ -68,13 +68,6 @@ public abstract class Player {
 
 
 
-        addWeapon(Weapon.getById(25,model));
-        addWeapon(Weapon.getById(25,model));
-
-        restoreWeapons(model);
-
-        selectedWeapon = weapons.get(0);
-
 
     }
 
@@ -203,9 +196,24 @@ public abstract class Player {
     }
 
     public void restoreWeapons(GameModel model) {
-        while(waffenanzahl < 3){
+        while(waffenanzahl < 10){
             addRndWeapon(model);
         }
+    }
+
+    public void setSandboxWeapons(GameModel model){
+        addWeapon(Weapon.getById(1,model));
+        addWeapon(Weapon.getById(4,model));
+        addWeapon(Weapon.getById(5,model));
+        addWeapon(Weapon.getById(8,model));
+        addWeapon(Weapon.getById(12,model));
+        addWeapon(Weapon.getById(13,model));
+        addWeapon(Weapon.getById(16,model));
+        addWeapon(Weapon.getById(18,model));
+        addWeapon(Weapon.getById(21,model));
+        addWeapon(Weapon.getById(23,model));
+        addWeapon(Weapon.getById(24,model));
+
     }
 
     private void addRndWeapon(GameModel model) {

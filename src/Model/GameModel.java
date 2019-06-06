@@ -103,6 +103,16 @@ public class GameModel {
             }
         }
 
+        for(Player player : players){
+            if(sandbox){
+                player.setSandboxWeapons(this);
+                player.setSelectedWeapon(player.getWeapons().get(0));
+            }else{
+                player.restoreWeapons(this);
+                player.setSelectedWeapon(player.getWeapons().get(0));
+            }
+        }
+
         gameLoop = new GameLoop(this,background,foreground);
 
         gameView.add(gameLoop,BorderLayout.CENTER);
@@ -118,6 +128,13 @@ public class GameModel {
 
         for(Player player : players){
             player.getPanzer().moveNotTurn(map);
+            if(sandbox){
+                player.setSandboxWeapons(this);
+                player.setSelectedWeapon(player.getWeapons().get(0));
+            }else{
+                player.restoreWeapons(this);
+                player.setSelectedWeapon(player.getWeapons().get(0));
+            }
         }
     }
 
@@ -511,6 +528,7 @@ public class GameModel {
 
                             Weapon weapon1 = weapon.getLevelWeapon((int)((mousex - ((xtemp) * 0.1) - (int) (t % 5 * xtemp - xtemp * 0.1))/((xtemp) * (1.2/5.6))) + 1,this);
                             int anzahl = weapon.getAnzahl();
+                            System.out.println(weapon1.getName());
                             weapon1.setAnzahl(anzahl);
                             weapon1.createImage();
 
@@ -587,17 +605,17 @@ public class GameModel {
 
 
 
-                if(player.isLocalHuman() || player.isKi()) {
-                    if(player.getSelectedWeapon().getAnzahl() == 1) {
-                        player.getWeapons().remove(player.getSelectedWeapon());
-                        player.subWaffenanzahl();
-                        player.setSelectedWeapon(player.getWeapons().get(0));
-                    }else{
-                        player.getSelectedWeapon().subAnzahl();
-                        player.getSelectedWeapon().reset();
+                if(!sandbox) {
+                    if (player.isLocalHuman() || player.isKi()) {
+                        if (player.getSelectedWeapon().getAnzahl() == 1) {
+                            player.getWeapons().remove(player.getSelectedWeapon());
+                            player.subWaffenanzahl();
+                            player.setSelectedWeapon(player.getWeapons().get(0));
+                        } else {
+                            player.getSelectedWeapon().subAnzahl();
+                            player.getSelectedWeapon().reset();
+                        }
                     }
-
-
                 }
 
             }
@@ -645,10 +663,14 @@ public class GameModel {
 
         for(Player player : players){
 
+            player.getPanzer().createHitbox();
+
             player.getPanzer().moveNotTurn(map);
             player.getPanzer().setPolyPoints(this);
 
-            if(new Ellipse2D.Double(x - size/(double)2,y -size/(double)2,size,size).intersects(player.getPanzer().getHitbox().getBounds2D())){
+
+
+            if(new Ellipse2D.Double(x - size/(double)2,y -size/(double)2,size,size).intersects(player.getPanzer().getHitbox().getBounds2D()) || new Ellipse2D.Double(x - size/(double)2,y -size/(double)2,size,size).contains(player.getPanzer().getBulletspawn())){
 
 
 
@@ -679,11 +701,13 @@ public class GameModel {
 
         for(Player player : players){
 
+            player.getPanzer().createHitbox();
+
             player.getPanzer().moveNotTurn(map);
             player.getPanzer().setPolyPoints(this);
 
             System.out.println(shape.getBounds());
-            if(shape.intersects(player.getPanzer().getHitbox().getBounds2D())){
+            if(shape.intersects(player.getPanzer().getHitbox().getBounds2D()) ||shape.contains(player.getPanzer().getBulletspawn())){
 
 
 

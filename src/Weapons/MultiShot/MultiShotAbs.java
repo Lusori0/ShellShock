@@ -46,6 +46,7 @@ public abstract class MultiShotAbs extends Weapon {
     public void reset(){
         affineTransform = new AffineTransform();
         shots.removeAll(shots);
+        played = false;
     }
 
     @Override

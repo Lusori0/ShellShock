@@ -39,7 +39,7 @@ public class GhostBomb extends Weapon {
 
         effecttime = 2;
 
-        damage = 50;
+        damage = 17;
 
         this.icon = Var.bombs;
 
@@ -57,13 +57,14 @@ public class GhostBomb extends Weapon {
         downspeed = 0;
         starttimer = 0;
         affineTransform = new AffineTransform();
+        played = false;
     }
 
     @Override
     public void create(int startX, int startY, double winkel, double strength, boolean rechts,Panzer herkunft) {
         super.create(startX, startY, winkel, strength, rechts,herkunft);
         for(int i = 0; i < 40;i++){
-            coords.add(new int[]{(int) xPosition, (int) yPosition});
+            coords.add(new int[]{ startX, startY});
         }
     }
 
@@ -80,7 +81,7 @@ public class GhostBomb extends Weapon {
         int temp = 0;
         for(int[] cord : coords){
 
-            if(cord[0] == xPosition && cord[1] == yPosition) {
+            if(cord[0] != (int)xPosition && cord[1] != (int)yPosition) {
                 g2d.setColor(new Color(255, 255, 255, 150));
                 double size = (weaponsize * 1.2) / 40 * temp;
                 g2d.fill(new Ellipse2D.Double(cord[0] - size / 2, cord[1] - size / 2, size, size));

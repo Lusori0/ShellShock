@@ -248,31 +248,31 @@ public abstract class Weapon {
     public static Weapon getById(int id, GameModel model){
 
         switch (id){
-            case 1:return new NormalShot(model);
-            case 2:return new BigShot(model);
-            case 3:return new HugeShot(model);
-            case 4:return new Fireball(model);
-            case 5:return new SmallBouncer(model);
-            case 6:return new MiddleBouncer(model);
-            case 7:return new BigBouncer(model);
-            case 8:return new Nuke(model);
-            case 9:return new MegaNuke(model);
-            case 10:return new BigAirStrike(model);
-            case 11:return new Bombs(model);
-            case 12:return new AirStrike(model);
-            case 13:return new TripleShot(model);
-            case 14:return new QuadShot(model);
-            case 15:return new MultiShot(model);
-            case 16:return new ShotGun(model);
-            case 17:return new MG(model);
-            case 18:return new Sniper(model);
-            case 19:return new HeavySniper(model);
-            case 20:return new OneShot(model);
-            case 21:return new Granade(model);
-            case 22:return new Trinade(model);
-            case 23:return new GhostBomb(model);
-            case 24:return new SmallLaser(model);
-            case 25:return new BigLaser(model);
+            case 1:return new NormalShot(model);//default
+            case 2:return new BigShot(model);//level 2
+            case 3:return new HugeShot(model);//level 12
+            case 4:return new Fireball(model);//level 3
+            case 5:return new SmallBouncer(model);//default
+            case 6:return new MiddleBouncer(model);//level 8
+            case 7:return new BigBouncer(model);//level 15
+            case 8:return new Nuke(model);//level 19
+            case 9:return new MegaNuke(model);//level 21
+            case 10:return new BigAirStrike(model);//level 11
+            case 11:return new Bombs(model);//level 17
+            case 12:return new AirStrike(model);//default
+            case 13:return new TripleShot(model);//level 5
+            case 14:return new QuadShot(model);//level 9
+            case 15:return new MultiShot(model);//level 13
+            case 16:return new ShotGun(model);//level 6
+            case 17:return new MG(model);//level 16
+            case 18:return new Sniper(model);//default
+            case 19:return new HeavySniper(model);// level 7
+            case 20:return new OneShot(model);//level 18
+            case 21:return new Granade(model);//default
+            case 22:return new Trinade(model);//level 10
+            case 23:return new GhostBomb(model);//level 14
+            case 24:return new SmallLaser(model);//level 4
+            case 25:return new BigLaser(model);//level 20
 
             default:return null;
         }

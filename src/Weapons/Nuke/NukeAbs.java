@@ -52,13 +52,14 @@ public abstract class NukeAbs extends Weapon {
         downspeed = 0;
         starttimer = 0;
         affineTransform = new AffineTransform();
+        played = false;
     }
 
     @Override
     public void create(int startX, int startY, double winkel, double strength, boolean rechts,Panzer herkunft) {
         super.create(startX, startY, winkel, strength, rechts,herkunft);
         for(int i = 0; i < 40;i++){
-            coords.add(new int[]{(int) xPosition, (int) yPosition});
+            coords.add(new int[]{ startX, startY});
         }
     }
 
@@ -77,7 +78,7 @@ public abstract class NukeAbs extends Weapon {
             int[] xPos = new int []{};
             g2d.setColor(new Color(255,255,0,255));
             double size = (weaponsize*1.2)/40 * temp;
-            if(cord[0] != (int)xPosition) {
+            if(cord[0] != (int)xPosition && cord[1] != (int)yPosition) {
                 g2d.fill(new Ellipse2D.Double(cord[0] - size / 2, cord[1] - size / 2, size, size));
             }
 
@@ -108,7 +109,6 @@ public abstract class NukeAbs extends Weapon {
                 g2d.setTransform(new AffineTransform());
                 explosionTimer++;
             } else if (explosionTimer <= 100) {
-
 
 
                 g2d.setColor(new Color(255, 255, 255, (int) (255 - 255 * explosionTimer / (double) 100)));
@@ -187,7 +187,7 @@ public abstract class NukeAbs extends Weapon {
 
     @Override
     public int getLevelAnzhal() {
-        return 3;
+        return 2;
     }
 
     public abstract int getLevel();

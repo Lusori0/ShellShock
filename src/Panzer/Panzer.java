@@ -491,10 +491,14 @@ public abstract class Panzer {
         return shotstrength;
     }
 
-    public Shape getHitbox() {
+    public void createHitbox(){
         Shape hit = new Rectangle2D.Double((int)xPosition,(int)yPosition - height/2,(int)width,(int)height);
 
         hitbox = affineTransform.createTransformedShape(hit);
+    }
+
+    public Shape getHitbox() {
+
         return hitbox;
     }
 

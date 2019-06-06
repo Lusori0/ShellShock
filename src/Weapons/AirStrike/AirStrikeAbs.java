@@ -69,6 +69,7 @@ public abstract class AirStrikeAbs extends Weapon {
         starttimer = 0;
         affineTransform = new AffineTransform();
         shots.removeAll(shots);
+        played = false;
     }
 
 
@@ -76,7 +77,7 @@ public abstract class AirStrikeAbs extends Weapon {
     public void create(int startX, int startY, double winkel, double strength, boolean rechts, Panzer herkunft) {
         super.create(startX, startY, winkel, strength, rechts,herkunft);
         for(int i = 0; i < 40;i++){
-            coords.add(new double[]{(int) xPosition, (int) yPosition,0});
+            coords.add(new double[]{(int) startX, (int) startY,0});
         }
     }
 

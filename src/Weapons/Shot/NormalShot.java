@@ -19,7 +19,7 @@ public class NormalShot extends Shot {
 
         explosionRadius = 80;
 
-        damage = 20;
+        damage = 5;
 
     }
 

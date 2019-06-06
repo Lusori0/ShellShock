@@ -10,7 +10,7 @@ public class SmallLaser extends LaserAbs {
     public SmallLaser(GameModel gameModel) {
         super(gameModel, "Small Laser", 1, 24, Var.shotIcon, Color.YELLOW,10);
 
-        damage = 30;
+        damage = 10;
     }
 
     @Override

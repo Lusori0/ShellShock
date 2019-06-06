@@ -52,6 +52,7 @@ public abstract class LaserAbs extends Weapon {
         downspeed = 0;
         starttimer = 0;
         affineTransform = new AffineTransform();
+        played = false;
     }
 
     @Override
@@ -129,6 +130,8 @@ public abstract class LaserAbs extends Weapon {
     @Override
     public Weapon getLevelWeapon(int level,GameModel model){
         switch (level){
+            case 1:return new SmallLaser(model);
+            case 2:return new BigLaser(model);
             default:return null;
         }
     }

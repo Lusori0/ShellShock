@@ -14,7 +14,7 @@ public class MegaNuke extends NukeAbs {
 
         explosionRadius = 500;
 
-        damage = 70;
+        damage = 40;
     }
 
     @Override

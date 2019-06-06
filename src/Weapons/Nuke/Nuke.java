@@ -14,7 +14,7 @@ public class Nuke extends NukeAbs {
 
         explosionRadius = 300;
 
-        damage = 500;
+        damage = 30;
     }
 
     @Override

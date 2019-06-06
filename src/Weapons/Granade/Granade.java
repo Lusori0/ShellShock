@@ -13,7 +13,7 @@ public class Granade extends GranadeAbs {
 
     @Override
     public void create(int startX, int startY, double winkel, double strength, boolean rechts, Panzer herkunft) {
-        bullets.add(new Bullet(startX,startY,winkel,gameModel,rechts,50,strength));
+        bullets.add(new Bullet(startX,startY,winkel,gameModel,rechts,15,strength));
         this.herkunft = herkunft;
     }
 
