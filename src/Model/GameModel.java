@@ -117,6 +117,7 @@ public class GameModel {
 
         gameView.add(gameLoop,BorderLayout.CENTER);
         gameUiView = new GameUiView(this);
+        gameUiView.erzeugenOverlay();
         gameView.add(gameUiView,BorderLayout.PAGE_END);
         MyWindow.setContent(gameView);
         gameLoop.createStrategy();
@@ -403,9 +404,17 @@ public class GameModel {
         String text;
         if(art == 1){
             text = "DRAW";
+            gameUiView.removeAll();
+            gameUiView.revalidate();
+            gameUiView.repaint();
+            gameUiView.erzeugenOverlay_End();
             gameLoop.drawEndScreen(text,-1);
         }else{
             text = "TEAM " + players.getFirst().getTeam() + " WINS";
+            gameUiView.removeAll();
+            gameUiView.revalidate();
+            gameUiView.repaint();
+            gameUiView.erzeugenOverlay_End();
             gameLoop.drawEndScreen(text,players.getFirst().getTeam());
         }
 

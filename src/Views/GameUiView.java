@@ -14,18 +14,18 @@ import java.awt.event.ActionListener;
 
 public class GameUiView extends JPanel implements ActionListener {
     ImageIcon fireImg,backImg,muteMusikImg,weapojChoosingImg;
-    MyButton fire,back,muteMusik,weaponChoosing;
+    MyButton fire,back,muteMusik,weaponChoosing,back_end_game;
 
     GameModel gameModel;
 
     public  GameUiView(GameModel gameModel)
     {
         this.gameModel = gameModel;
-        erzeugenOverlay();
+
     }
 
 
-    private void erzeugenOverlay()
+    public void erzeugenOverlay()
     {
         fire = new MyButton("KnopfFeuerMetallic1.png","Fire Button",fireImg);
         fire.addActionListener(this);
@@ -48,6 +48,14 @@ public class GameUiView extends JPanel implements ActionListener {
         back = new MyButton("KnopfKampfVerlassenMetallic1.png","Back to Pregame",backImg);
         back.addActionListener(this);
         this.add(back);
+
+    }
+
+    public void erzeugenOverlay_End()
+    {
+        back_end_game = new MyButton("KnopfKampfVerlassenMetallic1.png","Back to Pregame",backImg);
+        back_end_game.addActionListener(this);
+        this.add(back_end_game);
 
     }
 
@@ -87,6 +95,14 @@ public class GameUiView extends JPanel implements ActionListener {
         if(e.getSource() == weaponChoosing)
         {
             MyKeys.weapon = true;
+        }
+        if(e.getSource() == back_end_game)
+        {
+            for(int i =0;i<Var.login_profils.length;i++)
+            {
+                Var.login_profils[i] = null;
+            }
+            new MainMenuModel();
         }
     }
 }

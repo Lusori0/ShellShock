@@ -58,14 +58,13 @@ public class PreGameModel {
        {
 
            if(profils[p] != null){
-               System.out.println("Kein null vorhanden");
                players.add(new HumanPlayer(model,2,model.getNextId(),profils[p]));
            }else{
                p++;
-               System.out.println("Nulls vorhanden");
            }
 
        }
+
         if(amount >0)
         {
             for(int i = 0;i<amount;i++)
@@ -74,8 +73,7 @@ public class PreGameModel {
                 players.add(new KiPlayer(model,2,model.getNextId(), difficutly[i],Var.activeUser));
             }
         } else{}
-
-        new Thread(() -> model.start(players, sandbox,new Color(0,200,255),Color.GREEN,6,1)).start();
+        new Thread(() -> model.start(players, sandbox,new Color(0,200,255),Color.GREEN,2,1)).start();
 
 
     }

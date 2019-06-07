@@ -215,9 +215,9 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             g.insets = new Insets(10,buttonWidth,0,0);
             this.add(infiniteAmmo,g);
 
-            infiniteGas = new JCheckBox("Infinite Ammo",false);
+            infiniteGas = new JCheckBox("Infinite Gas",false);
             infiniteGas.setBackground(Color.black);
-        infiniteGas.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
+            infiniteGas.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
             infiniteGas.addItemListener(this);
             g.gridx = 6;
             g.gridy = GridBagConstraints.RELATIVE;
@@ -227,7 +227,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             //g.insets = new Insets(10,buttonWidth,0,0);
             this.add(infiniteGas,g);
 
-            infiniteWeapons = new JCheckBox("Infinite Ammo",false);
+            infiniteWeapons = new JCheckBox("Infinite Weapons",false);
             infiniteWeapons.setBackground(Color.black);
             infiniteWeapons.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
             infiniteWeapons.addItemListener(this);
@@ -431,7 +431,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         g.insets = new Insets(10,buttonWidth,0,0);
         this.add(infiniteAmmo,g);
 
-        infiniteGas = new JCheckBox("Infinite Ammo",false);
+        infiniteGas = new JCheckBox("Infinite Gas",false);
         infiniteGas.setBackground(Color.black);
         infiniteGas.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         infiniteGas.addItemListener(this);
@@ -443,7 +443,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         //g.insets = new Insets(10,buttonWidth,0,0);
         this.add(infiniteGas,g);
 
-        infiniteWeapons = new JCheckBox("Infinite Ammo",false);
+        infiniteWeapons = new JCheckBox("Infinite Weapons",false);
         infiniteWeapons.setBackground(Color.black);
         infiniteWeapons.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         infiniteWeapons.addItemListener(this);
@@ -657,16 +657,12 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             {
                 if(selected_humanCheckbox[i]) {
                     humanCheckBox[i].setSelected(false);
-                    Profil[] temp = new Profil[Var.login_profils.length];
-                    for(int a = 0;a<temp.length;a++)
+                    for(int a = i;a<Var.login_profils.length-1;a++)
                     {
-                        temp[a] = Var.login_profils[i+1];
+                        Var.login_profils[a] = Var.login_profils[i+1];
                     }
+                    Var.login_profils[Var.login_profils.length-1] = null;
                     //TODO : Rechnen was welches Feld wem geben muss
-                    /*
-                    Var.login_profils[i] = null;
-                    Var.login_profils[] = temp[i];
-                    */
                 } else {
                     selected_humanCheckbox[i] = true;
                     new LogInModel(true);
