@@ -594,7 +594,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                 }
             }
 
-            preGameModel.startAction(amount_selected_Players,difficulty_value_Ai,Var.login_profils,mapSelectter.getSelectedIndex()+1);
+            preGameModel.startAction(amount_selected_Players,difficulty_value_Ai,Var.login_profils);
         }
 
         if(e.getSource() == mapSelectter)
