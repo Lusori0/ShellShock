@@ -116,7 +116,6 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
             this.add(muteMusik,g);
         } else
         {
-            System.out.println("Position 124");
             muteMusik = new MyButton("KnopfSoundMetallic1.png", "Press or use Slidebar to mute", muteMusikImg);
             //muteMusik = new MyButton("KnopfSoundMetallic1.png","muteMusik",muteMusikImg);
             muteMusik.addActionListener(this);
@@ -161,14 +160,12 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
                 muteMusik.setIcon(mute);
 
                 musicbarValue = musicbar.getValue();
-                System.out.println(musicbarValue);
 
 
             } else {
                 ImageIcon mute = new ImageIcon("res/buttons/KnopfSoundMetallic1.png");
                 mute.setImage(mute.getImage().getScaledInstance(muteMusik.getWidth() + 2, muteMusik.getHeight() + 2, Image.SCALE_SMOOTH));
                 muteMusik.setIcon(mute);
-                System.out.println(musicbarValue);
                 musicbar.setValue(musicbarValue);
             }
         }
@@ -181,7 +178,6 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
         {
            //System.out.println ((float) musicbar.getValue()/100);
             //Abfrage von Muted Music
-            System.out.println(musicbar.getValue());
             if(musicbar.getValue() == 0) {
                 ImageIcon mute = new ImageIcon("res/buttons/Mute1.png");
                 mute.setImage(mute.getImage().getScaledInstance(muteMusik.getWidth() + 2, muteMusik.getHeight() + 2, Image.SCALE_SMOOTH));
@@ -195,7 +191,6 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
             //
            settingsModel.changeMusicVolume((float) musicbar.getValue()/100);
             musicbarValue = musicbar.getValue();
-            System.out.println("Ende der stateChanged" + musicbarValue);
         }
 
 

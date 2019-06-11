@@ -32,7 +32,7 @@ public class PreGameModel {
             MyWindow.setContent(preGameView);
         }else {
 
-            preGameView.erzeugenOverlayTest();
+            preGameView.erzeugenOverlaySinglePlayer();
             MyWindow.setContent(preGameView);
         }
 
@@ -42,7 +42,7 @@ public class PreGameModel {
        return model.getMap().getMapSmall(art,model,mapC,skyC);
     }
 
-    public void startAction(int amount,int[] difficutly,Profil[] profils){
+    public void startAction(int amount,int[] difficutly,Profil[] profils,int gamemode){
         LinkedList<Player> players = new LinkedList<>();
 
         LinkedList<Integer> weaponsTest = new LinkedList<>();
@@ -73,7 +73,8 @@ public class PreGameModel {
                 players.add(new KiPlayer(model,2,model.getNextId(), difficutly[i],Var.activeUser));
             }
         } else{}
-        new Thread(() -> model.start(players, sandbox,new Color(0,200,255),Color.GREEN,2,1)).start();
+
+        new Thread(() -> model.start(players, sandbox,new Color(0,200,255),Color.GREEN,2,gamemode)).start();
 
 
     }
