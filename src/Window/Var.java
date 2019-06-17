@@ -99,7 +99,7 @@ public class Var {
             fireClip.open(fireIn);
 
 
-            inGameVolume = 0f;
+            inGameVolume = 0;
 
 
             playSound(explosionClip);
@@ -154,6 +154,10 @@ public class Var {
     }
 
     public static void setActiveUser(Profil profilRead) {
+        System.out.println("active user set");
         activeUser = profilRead;
+        inGameVolume = activeUser.getInGameVolume();
+        music.setVolume(activeUser.getMusicVolume());
+        soundBarVolume = (int)(100*activeUser.getMusicVolume());
     }
 }

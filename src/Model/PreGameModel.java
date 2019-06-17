@@ -51,7 +51,7 @@ public class PreGameModel {
         weaponsTest.add(4);
         weaponsTest.add(5);
 
-        Profil profil = new Profil("test",1,"test",1,weaponsTest);
+        Profil profil = new Profil("test",1,"test",1,weaponsTest,0.5f,0.5f);
 
         players.add(new HumanPlayer(model,1,model.getNextId(), Var.activeUser));
        for(int p = 0;p<profils.length;p++)

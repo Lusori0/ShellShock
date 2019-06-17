@@ -16,7 +16,7 @@ public class KiPlayer extends Player {
     private int difficoulty;
 
     public KiPlayer(GameModel model, int team,int id,int difficoulty,Profil profil) {
-        super(model, team,id,new Profil("KI",profil.getLevel(),"leer",profil.getXp(),profil.getUnlockedWeapons()));
+        super(model, team,id,new Profil("KI",profil.getLevel(),"leer",profil.getXp(),profil.getUnlockedWeapons(),0.5f,0.5f));
         this.difficoulty = difficoulty;
     }
 

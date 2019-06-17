@@ -12,6 +12,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class GameUiView extends JPanel implements ActionListener {
     ImageIcon fireImg,backImg,muteMusikImg,weapojChoosingImg;
@@ -105,13 +109,29 @@ public class GameUiView extends JPanel implements ActionListener {
         {
             MyKeys.weapon = true;
         }
+
         if(e.getSource() == back_end_game)
         {
+            new File("data/").mkdirs();
+
             for(int i =0;i<Var.login_profils.length;i++)
             {
+                if(Var.login_profils[i] != null) {
+                    try {
+                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("data/" + Var.login_profils[i].getName() + ".bin"));
+                        objectOutputStream.writeObject(Var.login_profils[i]);
+                        objectOutputStream.close();
+
+                    } catch (IOException d) {
+                        System.out.println("Write Fehler while saving connected players progress: " + d);
+                    }
+                }
+
                 Var.login_profils[i] = null;
             }
+
             new MainMenuModel();
         }
+
     }
 }
