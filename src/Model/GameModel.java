@@ -383,14 +383,16 @@ public class GameModel {
         if(players.size() == 0){
             endingScreen(1);
         }else {
-            int t = players.getFirst().getTeam();
-            for (Player player : players) {
-                player.getPanzer().addXP(50);
-            }
+            if(!sandbox) {
+                int t = players.getFirst().getTeam();
+                for (Player player : players) {
+                    player.getPanzer().addXP(50);
+                }
 
-            for (Player player : deadPlayers) {
-                if (player.getTeam() == t) {
-                    player.getPanzer().addXP(25);
+                for (Player player : deadPlayers) {
+                    if (player.getTeam() == t) {
+                        player.getPanzer().addXP(25);
+                    }
                 }
             }
 
@@ -408,6 +410,7 @@ public class GameModel {
             gameUiView.revalidate();
             gameUiView.repaint();
             gameUiView.erzeugenOverlay_End();
+            gameUiView.repaint();
             gameLoop.drawEndScreen(text,-1);
         }else{
             text = "TEAM " + players.getFirst().getTeam() + " WINS";
@@ -415,6 +418,7 @@ public class GameModel {
             gameUiView.revalidate();
             gameUiView.repaint();
             gameUiView.erzeugenOverlay_End();
+            gameUiView.repaint();
             gameLoop.drawEndScreen(text,players.getFirst().getTeam());
         }
 
@@ -623,6 +627,7 @@ public class GameModel {
                         } else {
                             player.getSelectedWeapon().subAnzahl();
                             player.getSelectedWeapon().reset();
+                            player.subWaffenanzahl();
                         }
                     }
                 }
@@ -724,7 +729,9 @@ public class GameModel {
 
                     player.getPanzer().schaden(damage, 0,sandbox);
 
-                    herkunft.addXP(damage);
+                    if(!sandbox) {
+                        herkunft.addXP(damage);
+                    }
                 }
             }
 
@@ -765,6 +772,14 @@ public class GameModel {
         return deadPlayers;
     }
 
+    public void setUiView() {
+        gameUiView.removeAll();
+        gameUiView.revalidate();
+        gameUiView.repaint();
+        gameUiView.erzeugenOverlay_End();
+
+    }
+
     private class Drop {
         private Player player;
         private int x,y;
@@ -773,16 +788,16 @@ public class GameModel {
 
         public Drop(Player player,GameModel model){
             this.player = player;
-            y = -30;
+            y = -70;
             x = (int) player.getPanzer().getBulletspawn().getX();
             this.model = model;
         }
 
         public void draw(Graphics2D g2d){
             if(!done) {
-                if (y < player.getPanzer().getBulletspawn().getY() - 15) {
+                if (y < player.getPanzer().getBulletspawn().getY() - 50) {
                     y+=3;
-                    g2d.drawImage(Var.shotIcon,x-15,y,30,30,null);
+                    g2d.drawImage(Var.drop,x-25,y,50,100,null);
                 } else {
                     player.restoreWeapons(model);
                     done = true;

@@ -7,7 +7,7 @@ import Window.Var;
 public class Sniper extends SniperAbs {
     public Sniper(GameModel model) {
         super(model,"Sniper",1,18,Var.sniper);
-        damage = 25;
+        damage = 250;
 
     }
 

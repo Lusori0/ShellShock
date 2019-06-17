@@ -11,9 +11,11 @@ import java.io.IOException;
 
 public class Var {
 
-    public static BufferedImage map,panzer,shotIcon,whiteBar,unselected,selected,shotIconDig,panzerRohr,background;
+    public static BufferedImage map,panzer,shotIcon,whiteBar,unselected,selected,shotIconDig,panzerRohr,drop;
 
-    public static BufferedImage shot,bigshot,hughshot,smallbounce,middlebounce,bigbounce,sniper,heavysniper,oneshot,fireball,nuke,meganuke,airstrike,bigairstrike,bombs,laser ,biglaser,granade,trinade,trishot,quadshot,multishot,shotgun,mg;
+    public static BufferedImage shot,bigshot,hughshot,smallbounce,middlebounce,bigbounce,sniper,heavysniper,oneshot,fireball,nuke,meganuke,airstrike,bigairstrike,bombs,laser ,biglaser,granade,trinade,trishot,quadshot,multishot,shotgun,mg,ghostbomb;
+
+
 
 
 
@@ -73,6 +75,10 @@ public class Var {
             trishot = ImageIO.read(new File("res/Icons/tripleshot.png"));
             quadshot = ImageIO.read(new File("res/Icons/quadshot.png"));
             multishot = ImageIO.read(new File("res/Icons/multishot.png"));
+
+            ghostbomb = ImageIO.read(new File("res/Icons/ghostbomb.png"));
+
+            drop = ImageIO.read(new File("res/Icons/supply.png"));
 
             map = ImageIO.read(new File("res/map3.png"));
             panzer = ImageIO.read(new File("res/panzer.png"));

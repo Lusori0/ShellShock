@@ -119,7 +119,7 @@ public abstract class AirStrikeAbs extends Weapon {
 
 
 
-        Point2D tCollisionPoint = affineTransform.transform(new Point2D.Double(xPosition,yPosition + weaponsize/2),null);
+        Point2D tCollisionPoint = affineTransform.transform(new Point2D.Double(xPosition,yPosition),null);
 
         if(gameModel.isCollision((int)tCollisionPoint.getX(),(int)tCollisionPoint.getY()) && wasNoCollision){
 

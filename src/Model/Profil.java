@@ -40,7 +40,7 @@ public class Profil implements Serializable {
 
     public int levelUp(){
         level++;
-        System.out.println(level - 1);
+
         switch(level - 1){
             case 1:
                 for(int i = 0;i < 5;i++) {

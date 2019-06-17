@@ -419,6 +419,7 @@ public class GameLoop extends JPanel implements MouseListener {
 
             for (Player player : gameModel.getDeadPlayer()) {
                 if (player.isLocalHuman()) {
+                    System.out.println("testLoop");
                     temp = new BufferedImage(500, 1300, BufferedImage.TYPE_4BYTE_ABGR);
 
                     int ws = 500/20;
@@ -494,8 +495,11 @@ public class GameLoop extends JPanel implements MouseListener {
 
                         System.out.println(player.getLevel());
 
-                        player.setUnlockedWeapon(Weapon.getById(player.levelUp(),gameModel));
-                        player.getUnlockedWeapon().createImage();
+                        if(player.getLevel() < 21) {
+
+                            player.setUnlockedWeapon(Weapon.getById(player.levelUp(), gameModel));
+                            player.getUnlockedWeapon().createImage();
+                        }
                         player.setLevelUp(true);
                     }
 
@@ -520,7 +524,7 @@ public class GameLoop extends JPanel implements MouseListener {
                             isCounting = true;
                         }
 
-                        if(timer > time && timer <= time * 2) {
+                        if(timer > time && timer <= time * 2 && player.getLevel() < 21) {
 
 
                             g2dt.setColor(new Color(100,100,100,(250/time) * (timer -time)));
@@ -563,6 +567,7 @@ public class GameLoop extends JPanel implements MouseListener {
                             g2dt.setColor(player.getUnlockedWeapon().getColor());
                             g2dt.fillRoundRect(ws * 6, hs * 19, ws * 8, hs * 5,ws*2,hs*2);
                             g2dt.drawImage(player.getUnlockedWeapon().getIcon(), ws * 6, hs * 19, ws * 8, hs * 5,null);
+                            isCounting = false;
                         }
 
                         timer ++;
@@ -589,6 +594,8 @@ public class GameLoop extends JPanel implements MouseListener {
 
             startTimer++;
 
+            g2d = bi.createGraphics();
+
             int tempNr = 1;
             for(BufferedImage img : imges) {
                 g2d.drawImage(img, 2800/(anzahl+1) * tempNr - 250, 400, null);
@@ -601,12 +608,15 @@ public class GameLoop extends JPanel implements MouseListener {
             graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             graphics.drawImage(bi,0,0,MyWindow.WIDTH, (int) (MyWindow.HEIGHT * 0.7),null);
             if (!buffer.contentsLost()) {
+
                 buffer.show();
             }
 
             if(isCounting){
                 isCounting = false;
             }else{
+                gameModel.setUiView();
+                MyWindow.getFrame().setVisible(true);
                 ended = true;
             }
         }

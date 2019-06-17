@@ -31,7 +31,7 @@ public class GhostBomb extends Weapon {
     protected int effecttime;
 
     public GhostBomb(GameModel gameModel) {
-        super(gameModel,"Ghost Bomb",23,Color.WHITE);
+        super(gameModel,"Ghost Bomb",23,new Color(200,200,200));
 
         weaponsize = 30;
 
@@ -41,7 +41,7 @@ public class GhostBomb extends Weapon {
 
         damage = 17;
 
-        this.icon = Var.bombs;
+        this.icon = Var.ghostbomb;
 
         createImage();
 
@@ -58,6 +58,7 @@ public class GhostBomb extends Weapon {
         starttimer = 0;
         affineTransform = new AffineTransform();
         played = false;
+        coords = new LinkedList<>();
     }
 
     @Override

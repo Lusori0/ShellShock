@@ -56,6 +56,7 @@ public class GameUiView extends JPanel implements ActionListener {
         back_end_game = new MyButton("KnopfKampfVerlassenMetallic1.png","Back to Pregame",backImg);
         back_end_game.addActionListener(this);
         this.add(back_end_game);
+        this.setVisible(true);
 
     }
 

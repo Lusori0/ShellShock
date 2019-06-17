@@ -52,6 +52,7 @@ public abstract class SniperAbs extends Weapon {
         starttimer = 0;
         affineTransform = new AffineTransform();
         played = false;
+        coords = new LinkedList<>();
     }
 
     @Override
