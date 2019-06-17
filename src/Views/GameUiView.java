@@ -106,14 +106,17 @@ public class GameUiView extends JPanel implements ActionListener {
 
             for(int i =0;i<Var.login_profils.length;i++)
             {
-                try {
-                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("data/" + Var.login_profils[i].getName() + ".bin"));
-                    objectOutputStream.writeObject(Var.login_profils[i]);
-                    objectOutputStream.close();
+                if(Var.login_profils[i] != null) {
+                    try {
+                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("data/" + Var.login_profils[i].getName() + ".bin"));
+                        objectOutputStream.writeObject(Var.login_profils[i]);
+                        objectOutputStream.close();
 
-                } catch (IOException d) {
-                    System.out.println("Write Fehler while saving connected players progress: " + d);
+                    } catch (IOException d) {
+                        System.out.println("Write Fehler while saving connected players progress: " + d);
+                    }
                 }
+
                 Var.login_profils[i] = null;
             }
 
