@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 public class SmallLaser extends LaserAbs {
     public SmallLaser(GameModel gameModel) {
-        super(gameModel, "Small Laser", 1, 24, Var.shotIcon, Color.YELLOW,10);
+        super(gameModel, "Small Laser", 1, 24, Var.laser, Color.YELLOW,10);
 
         damage = 10;
     }

@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 public class Trinade extends GranadeAbs {
     public Trinade(GameModel gameModel) {
-        super(gameModel, "Trinade", 2, 22, Var.shotIcon);
+        super(gameModel, "Trinade", 2, 22, Var.trinade);
     }
 
     @Override

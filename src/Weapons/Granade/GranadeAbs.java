@@ -32,7 +32,7 @@ public abstract class GranadeAbs extends Weapon {
     protected int effecttime;
 
     public GranadeAbs(GameModel gameModel, String name, int level,int id,BufferedImage icon) {
-        super(gameModel,name,id,Color.WHITE);
+        super(gameModel,name,id,new Color(0,150,0));
 
         this.icon = icon;
 

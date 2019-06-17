@@ -48,6 +48,7 @@ public class Fireball extends Weapon {
         affineTransform = new AffineTransform();
         explosions = 0;
         played = false;
+        coords = new LinkedList<>();
     }
 
     @Override

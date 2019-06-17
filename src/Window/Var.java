@@ -13,7 +13,7 @@ public class Var {
 
     public static BufferedImage map,panzer,shotIcon,whiteBar,unselected,selected,shotIconDig,panzerRohr,background;
 
-    public static BufferedImage shot,bigshot,hughshot,smallbounce,middlebounce,bigbounce,sniper,heavysniper,oneshot,fireball,nuke,meganuke,airstrike,bigairstrike,bombs;
+    public static BufferedImage shot,bigshot,hughshot,smallbounce,middlebounce,bigbounce,sniper,heavysniper,oneshot,fireball,nuke,meganuke,airstrike,bigairstrike,bombs,laser ,biglaser,granade,trinade,trishot,quadshot,multishot,shotgun,mg;
 
 
 
@@ -60,6 +60,20 @@ public class Var {
             meganuke = ImageIO.read(new File("res/Icons/meganuke.png"));
 
             fireball = ImageIO.read(new File("res/Icons/fireball.png"));
+
+            laser = ImageIO.read(new File("res/Icons/laser.png"));
+            biglaser = ImageIO.read(new File("res/Icons/biglaser.png"));
+
+            granade = ImageIO.read(new File("res/Icons/grenade.png"));
+            trinade = ImageIO.read(new File("res/Icons/trinade.png"));
+
+            shotgun = ImageIO.read(new File("res/Icons/shotgun.png"));
+            mg = ImageIO.read(new File("res/Icons/mg.png"));
+
+            trishot = ImageIO.read(new File("res/Icons/tripleshot.png"));
+            quadshot = ImageIO.read(new File("res/Icons/quadshot.png"));
+            multishot = ImageIO.read(new File("res/Icons/multishot.png"));
+
             map = ImageIO.read(new File("res/map3.png"));
             panzer = ImageIO.read(new File("res/panzer.png"));
             shotIcon = ImageIO.read(new File("res/shotIcon.png"));

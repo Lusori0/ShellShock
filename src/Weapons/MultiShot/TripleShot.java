@@ -7,7 +7,7 @@ public class TripleShot extends MultiShotAbs {
 
 
     public TripleShot(GameModel gameModel) {
-        super(gameModel, "Triple Shot", 1, 13, 3, Var.shotIcon);
+        super(gameModel, "Triple Shot", 1, 13, 3, Var.trishot);
     }
 
     @Override
