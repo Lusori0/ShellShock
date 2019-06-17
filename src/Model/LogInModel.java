@@ -58,6 +58,7 @@ public class LogInModel {
 
     public void makeNewProfileAction(String name,String password){
         File f = new File("data/" + name + ".bin");
+        new File("data/").mkdirs();
         //Überprüfen ob Nutzer schon existiert
         if(!f.exists()) {
             Profil profil = null;
@@ -122,10 +123,10 @@ public class LogInModel {
 
     public void makeNewProfileAction_Game(String name,String password){
         File f = new File("data/" + name + ".bin");
+        new File("data/").mkdirs();
         Profil profil = null;
         //Überprüfen ob Nutzer schon existiert
         if(!f.exists()) {
-
             try {
                 List<Integer> weaponsListTemp = new ArrayList<>();
                 weaponsListTemp.add(0);
