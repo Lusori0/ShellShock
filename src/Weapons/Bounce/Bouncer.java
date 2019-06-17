@@ -72,6 +72,8 @@ public abstract class Bouncer extends Weapon {
         starttimer = 0;
         affineTransform = new AffineTransform();
         played = false;
+        coords = new LinkedList<>();
+        speed = 2;
     }
 
 

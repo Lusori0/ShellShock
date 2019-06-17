@@ -70,6 +70,8 @@ public abstract class AirStrikeAbs extends Weapon {
         affineTransform = new AffineTransform();
         shots.removeAll(shots);
         played = false;
+        coords = new LinkedList<>();
+        called = false;
     }
 
 
