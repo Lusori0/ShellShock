@@ -21,11 +21,14 @@ import java.util.LinkedList;
 
 public class PreGameView extends JPanel implements ActionListener, ItemListener, ChangeListener {
     PreGameModel preGameModel;
-
+    //Add a new JPanel
+        JPanel optionen;
+        JPanel buttons;
+    //
     MyButton gameSettings,start,back;
     //Amount of human / ai player
         int ai_amount = 8;
-        int human_amount = 5;
+        int human_amount = 5; //ACHTUNG! In der Var Klassen ist der seleceted_humanCheckbox_speicher hardgecodet auf !5!
     //
     int buttonWidth = MyWindow.WIDTH/8;
     int buttonHeigth = buttonWidth*2/5;
@@ -62,60 +65,69 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
     ImageIcon backImg;
     ImageIcon gameOptionsImg;
     Image mapImage;
-
+    GridBagConstraints g;
+    BorderLayout b;
 
     public PreGameView (PreGameModel preGameModel)
     {
         this.preGameModel = preGameModel;
         this.setBackground(MyWindow.backgroundColor);
+        optionen = new JPanel();
+        buttons = new JPanel();
+        optionen.setBackground(MyWindow.backgroundColor);
+        buttons.setBackground(MyWindow.backgroundColor);
+        g = new GridBagConstraints();
+        b = new BorderLayout();
 
-
+        //Bollean
+        for(int i =0;i<human_amount;i++)
+        {
+            selected_humanCheckbox[i] = Var.selected_humanCheckbox_speicher[i];
+        }
     }
 
+//TODO: GridBagLAyout in den BorderLayout
 
     public void erzeugenOverlaySinglePlayer()
     {
-        //TODO: Also den Ganzen Scheiß umwerfen und Umkräppeln nach Niels Design!!!
-
-        this.setLayout(new GridBagLayout());
-        GridBagConstraints g = new GridBagConstraints();
-
+        this.setLayout(b);
+        optionen.setLayout(new GridBagLayout());
         //Altes Layout mit den Buttons
             //Initialisierung/Erzeugen des Inhalts
             start = new MyButton("KnopfSpielStartenMetallic1.png","START",startImg);
             start.addActionListener(this);
-            //Einstellen von der Anordnung
+            /*//Einstellen von der Anordnung
             g.gridx = 10;
-            g.gridy = 10;
+            g.gridy = 10;*/
             //Einfügen der Inhalte in Abhängigkeit der GridBag
-            this.add(start,g);
+            buttons.add(start);
 
             //Initialisierung/Erzeugen des Inhalts
             back = new MyButton ("KnopfZurückMetallic1.png","BACK", backImg);
             back.addActionListener(this);
-            //Einstellen von der Anordnung
+            back.setSize(buttonWidth,buttonHeigth);
+            /*//Einstellen von der Anordnung
             g.anchor = GridBagConstraints.SOUTH;
             g.gridx = 9;
-            g.gridy = 10;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
+            g.gridy = 10;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid*/
 
             //Einfügen der Inhalte in Abhängigkeit der GridBag
-            this.add(back,g);
-
-
+            buttons.add(back);
+        //
         //Der neue Scheiß
         art = new JLabel("<html><font color = 'red'><font size = +1>Enemy Image</font></html>");
         art.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         art.setBackground(Color.PINK);
         g.gridx = 0;
         g.gridy = 1;
-        this.add(art,g);
+        optionen.add(art,g);
 
         icon = new JLabel("<html><font color = 'red'><font size = +1>Difficulty</font></html>");
         icon.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         icon.setBackground(Color.RED);
         g.gridx = GridBagConstraints.RELATIVE;
         g.gridy = 1;
-        this.add(icon,g);
+        optionen.add(icon,g);
 
         enemy = new JLabel("<html><font color = 'red'><font size = +1>Select Enemies</font></html>");
         enemy.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
@@ -125,7 +137,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         g.gridwidth =3;
         g.gridheight = 1;
         g.fill = GridBagConstraints.HORIZONTAL;
-        this.add(enemy,g);
+        optionen.add(enemy,g);
 
         team = new JLabel("<html><font color = 'red'><font size = +1>Select Teams</font></html>");
         team.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
@@ -135,7 +147,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         g.gridwidth =1;
         g.gridheight = 1;
         g.fill = GridBagConstraints.HORIZONTAL;
-        this.add(team,g);
+        optionen.add(team,g);
 
         gameOptions = new JLabel();
         //Create Images for Visual Shit
@@ -151,7 +163,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         g.gridheight = 1;
         g.insets = new Insets(0,buttonWidth,0,0);
         g.fill = GridBagConstraints.HORIZONTAL;
-        this.add(gameOptions,g);
+        optionen.add(gameOptions,g);
 
         //CheckBoxes Added to the JPanel
             infiniteAmmo = new JCheckBox("Infinite Ammo",false);
@@ -160,11 +172,10 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             infiniteAmmo.addItemListener(this);
             g.gridx = 6;
             g.gridy = 2;
-            g.fill = GridBagConstraints.BOTH;
             g.gridwidth = 2;
             g.gridheight = 1;
             g.insets = new Insets(10,buttonWidth,0,0);
-            this.add(infiniteAmmo,g);
+        optionen.add(infiniteAmmo,g);
 
             infiniteGas = new JCheckBox("Infinite Gas",false);
             infiniteGas.setBackground(Color.black);
@@ -176,7 +187,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             g.gridwidth = 2;
             g.gridheight = 1;
             //g.insets = new Insets(10,buttonWidth,0,0);
-            this.add(infiniteGas,g);
+        optionen.add(infiniteGas,g);
 
             infiniteWeapons = new JCheckBox("Infinite Weapons",false);
             infiniteWeapons.setBackground(Color.black);
@@ -188,7 +199,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             g.gridwidth = 2;
             g.gridheight = 1;
             //g.insets = new Insets(10,buttonWidth,0,0);
-            this.add(infiniteWeapons,g);
+        optionen.add(infiniteWeapons,g);
         //
             map_loocking = new JLabel();
             map_loocking.setBackground(Color.WHITE);
@@ -200,7 +211,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             g.fill = GridBagConstraints.BOTH;
             g.gridwidth = 1;
             g.gridheight = 1;
-            this.add(map_loocking,g);
+        optionen.add(map_loocking,g);
 
             //MapSelecter
             mapSelectter = new JComboBox();
@@ -214,7 +225,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             }
             g.gridx = 6;
             g.gridy = GridBagConstraints.RELATIVE;
-            this.add(mapSelectter,g);
+        optionen.add(mapSelectter,g);
 
             //Gamemode-Selecter
             modeSelecter = new JComboBox();
@@ -228,7 +239,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             }
             g.gridx = 6;
             g.gridy = GridBagConstraints.RELATIVE;
-            this.add(modeSelecter,g);
+        optionen.add(modeSelecter,g);
 
         //Adding the Enemy Amount which can be selected
         for(int i = 0;i<ai_amount;i++)
@@ -246,7 +257,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             g.gridheight = 1;
             g.weightx = 0;
             g.insets = new Insets(10,0,0,0);
-            this.add(tankName,g);
+            optionen.add(tankName,g);
 
             //Difficulty Slider
                 difficulty_slider[i] = new JSlider(SwingConstants.HORIZONTAL,0,100,Var.difficulty_sliderValue_preGameView[i]);
@@ -269,7 +280,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                 g.gridheight = 1;
                 g.weightx = 0;
                 g.insets = new Insets(10,0,0,0);
-                this.add(difficulty_slider[i],g);
+            optionen.add(difficulty_slider[i],g);
             //
 
             aiCheckBox[i] = new JCheckBox("<html><font color = 'blue'><font size = +1>Select the Ai</font></html>",selected_aiCheckbox[i]);
@@ -278,7 +289,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             aiCheckBox[i].setBackground(MyWindow.backgroundColor);
                 g.gridx = 4;
                 g.gridy = 2+i;
-            this.add(aiCheckBox[i],g);
+            optionen.add(aiCheckBox[i],g);
 
             //Team Selecter
             ai_teamSelecter[i] = new JComboBox();
@@ -292,10 +303,11 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             }
                 g.gridx = 5;
                 g.gridy = 2+i;
-            this.add(ai_teamSelecter[i],g);
+            optionen.add(ai_teamSelecter[i],g);
 
         }
-
+        this.add(optionen,BorderLayout.CENTER);
+        this.add(buttons,BorderLayout.PAGE_END);
     }
 
 
@@ -307,29 +319,19 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
 
         //TODO: Also den Ganzen Scheiß umwerfen und Umkräppeln nach Niels Design!!!
 
-        this.setLayout(new GridBagLayout());
-        GridBagConstraints g = new GridBagConstraints();
+        this.setLayout(b);
+        optionen.setLayout(new GridBagLayout());
 
         //Altes Layout mit den Buttons
         //Initialisierung/Erzeugen des Inhalts
         start = new MyButton("KnopfSpielStartenMetallic1.png","START",startImg);
         start.addActionListener(this);
-        //Einstellen von der Anordnung
-        g.gridx = 25;
-        g.gridy = 25;
-        //Einfügen der Inhalte in Abhängigkeit der GridBag
-        this.add(start,g);
+        buttons.add(start,g);
 
         //Initialisierung/Erzeugen des Inhalts
         back = new MyButton ("KnopfZurückMetallic1.png","BACK", backImg);
         back.addActionListener(this);
-        //Einstellen von der Anordnung
-        g.anchor = GridBagConstraints.SOUTH;
-        g.gridx = 24;
-        g.gridy = 25;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
-
-        //Einfügen der Inhalte in Abhängigkeit der GridBag
-        this.add(back,g);
+        buttons.add(back);
 
 
         //Der neue Scheiß
@@ -338,14 +340,14 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         art.setBackground(Color.PINK);
         g.gridx = 0;
         g.gridy = 1;
-        this.add(art,g);
+        optionen.add(art,g);
 
         icon = new JLabel("<html><font color = 'red'><font size = +1>Difficulty</font></html>");
         icon.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         icon.setBackground(Color.RED);
         g.gridx = GridBagConstraints.RELATIVE;
         g.gridy = 1;
-        this.add(icon,g);
+        optionen.add(icon,g);
 
         enemy = new JLabel("<html><font color = 'red'><font size = +1>Select Enemies</font></html>");
         enemy.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
@@ -355,7 +357,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         g.gridwidth =3;
         g.gridheight = 1;
         g.fill = GridBagConstraints.HORIZONTAL;
-        this.add(enemy,g);
+        optionen.add(enemy,g);
 
         team = new JLabel("<html><font color = 'red'><font size = +1>Select Teams</font></html>");
         team.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
@@ -365,7 +367,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         g.gridwidth =1;
         g.gridheight = 1;
         g.fill = GridBagConstraints.HORIZONTAL;
-        this.add(team,g);
+        optionen.add(team,g);
 
         gameOptions = new JLabel();
         //Create Images for Visual Shit
@@ -381,7 +383,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         g.gridheight = 1;
         g.insets = new Insets(0,buttonWidth,0,0);
         g.fill = GridBagConstraints.HORIZONTAL;
-        this.add(gameOptions,g);
+        optionen.add(gameOptions,g);
 
         //CheckBoxes Added to the JPanel
         infiniteAmmo = new JCheckBox("Infinite Ammo",false);
@@ -394,7 +396,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         g.gridwidth = 1;
         g.gridheight = 1;
         g.insets = new Insets(10,buttonWidth,0,0);
-        this.add(infiniteAmmo,g);
+        optionen.add(infiniteAmmo,g);
 
         infiniteGas = new JCheckBox("Infinite Gas",false);
         infiniteGas.setBackground(Color.black);
@@ -406,7 +408,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         g.gridwidth = 1;
         g.gridheight = 1;
         //g.insets = new Insets(10,buttonWidth,0,0);
-        this.add(infiniteGas,g);
+        optionen.add(infiniteGas,g);
 
         infiniteWeapons = new JCheckBox("Infinite Weapons",false);
         infiniteWeapons.setBackground(Color.black);
@@ -418,7 +420,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         g.gridwidth = 1;
         g.gridheight = 1;
         //g.insets = new Insets(10,buttonWidth,0,0);
-        this.add(infiniteWeapons,g);
+        optionen.add(infiniteWeapons,g);
 
     //Map-Anzeige wird eingefügt
         map_loocking = new JLabel();
@@ -431,7 +433,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         g.fill = GridBagConstraints.BOTH;
         g.gridwidth = 1;
         g.gridheight = 1;
-        this.add(map_loocking,g);
+        optionen.add(map_loocking,g);
 
         //MapSelector
             mapSelectter = new JComboBox();
@@ -445,7 +447,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             }
             g.gridx = 6;
             g.gridy = GridBagConstraints.RELATIVE;
-            this.add(mapSelectter,g);
+        optionen.add(mapSelectter,g);
         //ModeSelect0r
             modeSelecter = new JComboBox();
             modeSelecter.setBackground(MyWindow.backgroundColor);
@@ -458,7 +460,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             }
             g.gridx = 6;
             g.gridy = GridBagConstraints.RELATIVE;
-            this.add(modeSelecter,g);
+        optionen.add(modeSelecter,g);
 
         //Test for 2 Elements in oen Grid
         JPanel[] test = new JPanel[ai_amount];
@@ -496,7 +498,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             g.gridheight = 1;
             g.weightx = 0;
             g.insets = new Insets(10, 0, 0, 0);
-            this.add(tankName, g);
+            optionen.add(tankName, g);
 
             //Difficulty Slider
             difficulty_slider[i] = new JSlider(SwingConstants.HORIZONTAL, 0, 100, Var.difficulty_sliderValue_preGameView[i]);
@@ -519,7 +521,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             g.gridheight = 1;
             g.weightx = 0;
             g.insets = new Insets(10, 0, 0, 0);
-            this.add(difficulty_slider[i], g);
+            optionen.add(difficulty_slider[i], g);
             //
             //Team Selecter
                 ai_teamSelecter[i] = new JComboBox();
@@ -533,35 +535,18 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                 }
                 g.gridx = 5;
                 g.gridy = 2+i;
-                this.add(ai_teamSelecter[i],g);
-        /*
-            aiCheckBox[i] = new JCheckBox("<html><font color = 'blue'><font size = +1>Select as Ai</font></html>", selected_aiCheckbox[i]);
-            aiCheckBox[i].addItemListener(this);
-            aiCheckBox[i].setPreferredSize(new Dimension(buttonWidth, buttonHeigth));
-            aiCheckBox[i].setBackground(MyWindow.backgroundColor);*/
+            optionen.add(ai_teamSelecter[i],g);
+
             g.gridx = 4;
             g.gridy = 2 + i;
             g.gridwidth = 1;
             g.gridheight = 1;
             g.insets = new Insets(10, 0, 0, 0);
-            this.add(test[i], g);
+            optionen.add(test[i], g);
         }
 
-        for(int i = 0;i<human_amount;i++) {
-            if(Var.login_profils[i]!= null) selected_humanCheckbox[i] = true;//Nach dem Login humanCheckbox ausgewählt setzen
-
-            /*humanCheckBox[i] = new JCheckBox("<html><font color = 'red'><font size = +1>Select as Human</font></html>", selected_humanCheckbox[i]);
-            humanCheckBox[i].addItemListener(this);
-            humanCheckBox[i].setPreferredSize(new Dimension(buttonWidth , buttonHeigth ));
-            humanCheckBox[i].setBackground(MyWindow.backgroundColor);
-            g.gridx = 5;
-            g.gridy = 2 + i;
-            g.gridwidth = 1;
-            g.gridheight = 1;
-            g.insets = new Insets(10, 0, 0, 0);
-            this.add(humanCheckBox[i], g);*/
-
-        }
+        this.add(optionen,BorderLayout.CENTER);
+        this.add(buttons, BorderLayout.PAGE_END);
     }
 
     //Setzen des Profils nach dem Login
@@ -715,7 +700,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                     }
                     Var.login_profils[Var.login_profils.length-1] = null;
                 } else {
-                    selected_humanCheckbox[i] = true;
+                    Var.selected_humanCheckbox_speicher[i] = true;
                     new LogInModel(true);
                 }
             }

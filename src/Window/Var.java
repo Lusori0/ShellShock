@@ -26,7 +26,7 @@ public class Var {
     public static int[] difficulty_sliderValue_preGameView = new int[8];
     public static Profil activeUser;
     public static Profil[] login_profils = new Profil[5];
-
+    public static  boolean [] selected_humanCheckbox_speicher = new boolean[5];
 
     public Var() {
 
