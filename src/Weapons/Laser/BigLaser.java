@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class BigLaser extends LaserAbs {
     public BigLaser(GameModel gameModel) {
-        super(gameModel, "Big Laser", 2, 25, Var.shotIcon, Color.RED,20);
+        super(gameModel, "Big Laser", 2, 25, Var.biglaser, Color.RED,20);
 
         damage = 25;
     }

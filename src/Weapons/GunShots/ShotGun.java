@@ -9,7 +9,7 @@ public class ShotGun extends GunShotAbs {
     int timer = 20;
     int bigTimer = 0;
     public ShotGun(GameModel gameModel) {
-        super(gameModel, "Shot Gun", 1, 16,Var.shotIcon);
+        super(gameModel, "Shot Gun", 1, 16,Var.shotgun);
     }
 
     @Override

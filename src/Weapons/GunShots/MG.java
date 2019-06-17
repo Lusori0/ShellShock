@@ -11,7 +11,7 @@ public class MG extends GunShotAbs {
     int timer = 10;
     int bigTimer = 0;
     public MG(GameModel gameModel) {
-        super(gameModel, "Machine Gun", 2, 17, Var.shotIcon);
+        super(gameModel, "Machine Gun", 2, 17, Var.mg);
 
     }
 
