@@ -2,7 +2,6 @@ package Model;
 
 import Panzer.Panzer;
 import Views.GameLoop;
-import Window.MyWindow;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -17,10 +16,11 @@ public class GameMap {
     private double xDifference;
     private double winkelgenauigkeit;
 
-    private double[] rnd;
-
 
     public GameMap(GameModel gameModel,int art){
+
+        //erstellen der Map
+
         genauigkeit = 400;
         this.gameModel = gameModel;
 
@@ -34,12 +34,14 @@ public class GameMap {
         mapY[genauigkeit + 1] = GameLoop.imgH;
 
 
-        rnd = new double[8];
+        double[] rnd = new double[8];
 
         for(int i = 0;i < 4;i++){
             rnd[i] = Math.random() * 0.1;
             rnd[i+4] = Math.random();
         }
+
+        //verschiedene Map-Arten
 
         for(int i = 0;i <= genauigkeit;i++){
             mapX[i] = (int) (GameLoop.imgW/(double)genauigkeit * (i));
@@ -73,6 +75,7 @@ public class GameMap {
         }
 
 
+        //Die Map ist eine Polygon
 
         map = new Polygon(mapX,mapY,genauigkeit+3);
 
@@ -86,6 +89,7 @@ public class GameMap {
     }
 
     public double getHeight(double xCoord){
+        //berechnet die höhe der Map an einem bestimmten Punkt
         if(xCoord > 0 && xCoord < 2800) {
             if (xCoord % xDifference == 0) {
                 return mapY[(int) (xCoord / xDifference)];
@@ -106,6 +110,8 @@ public class GameMap {
 
     public double getWinkel(double xCoord){
 
+        //gibt den Winkel der Map an einem Punkt zurück
+
         double yDiff = (getHeight((xCoord + winkelgenauigkeit)) - getHeight((xCoord - winkelgenauigkeit)));
         double xDiff = (xCoord + winkelgenauigkeit - (xCoord - winkelgenauigkeit));
 
@@ -113,87 +119,79 @@ public class GameMap {
     }
 
     public boolean isCollision(int x, int y) {
+
+        //Map collision detection
+
         if(x > -GameLoop.imgW/10 && x < GameLoop.imgW * 1.1 && y > 0) {
             return map.contains(new Point2D.Double(x, y));
-        }else if(y > 0){
-            return true;
-        }else{
-            return false;
-        }
+        }else return y > 0;
     }
 
     public void noImpactExplosion(Shape shape,int damage,Panzer herkunft){
+
+        //explosion ohne Zerstötung der Map
+
         new Thread(() -> gameModel.movePanzerDown(shape,damage,herkunft)).start();
 
     }
 
     public void explosion(int x, int y, int sizeParat, int damage,Panzer herkunft) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
 
-                int sizePara = sizeParat/2;
+        //explosion mit Zerstörung der Map
 
-                int size = (int) (sizePara/xDifference) * 2;
+        Thread thread = new Thread(() -> {
 
+            int sizePara = sizeParat/2;
 
-                for(int i = 0;i < size;i++){
-                    int xCoord = (int)((x - size/2 * xDifference)/xDifference)  +  1 + i;
+            int size = (int) (sizePara/xDifference) * 2;
 
 
-                    if(xCoord > 0 && xCoord < genauigkeit-2) {
+            for(int i = 0;i < size;i++){
+                int xCoord = (int)((x - size/2 * xDifference)/xDifference)  +  1 + i;
 
-                        double diffrence = Math.sqrt(Math.pow(sizePara, 2) - Math.pow(Math.abs(x - mapX[xCoord]), 2));
 
-                        if (mapY[xCoord] < y - diffrence) {
-                            mapY[xCoord] += diffrence * 2;
-                        } else if (mapY[xCoord] < y + diffrence) {
-                            mapY[xCoord] = (int) (y + diffrence);
-                        }
-                        if (mapY[xCoord] > GameLoop.imgH * 0.99) {
-                            mapY[xCoord] = (int) (GameLoop.imgH*0.99);
-                        }
+                if(xCoord > 0 && xCoord < genauigkeit-2) {
 
+                    double diffrence = Math.sqrt(Math.pow(sizePara, 2) - Math.pow(Math.abs(x - mapX[xCoord]), 2));
+
+                    if (mapY[xCoord] < y - diffrence) {
+                        mapY[xCoord] += diffrence * 2;
+                    } else if (mapY[xCoord] < y + diffrence) {
+                        mapY[xCoord] = (int) (y + diffrence);
                     }
-
+                    if (mapY[xCoord] > GameLoop.imgH * 0.99) {
+                        mapY[xCoord] = (int) (GameLoop.imgH*0.99);
+                    }
 
                 }
 
-                map = new Polygon(mapX,mapY,genauigkeit+3);
-
-
-
-                gameModel.movePanzerDown(x,y,sizeParat,damage,herkunft);
-
 
             }
+
+            map = new Polygon(mapX,mapY,genauigkeit+3);
+
+
+
+            gameModel.movePanzerDown(x,y,sizeParat,damage,herkunft);
+
+
         });
         thread.start();
 
     }
 
-    public Point2D getHeighestPoint(int startX,int endX){
-
-        Point2D returnValue = new Point2D.Double(0,gameModel.getHeight());
-
-        for(int i = (int) (startX/xDifference); i < endX/xDifference; i++){
-            if(mapY[i] < returnValue.getY()){
-                returnValue = new Point2D.Double(mapX[i],mapY[i]);
-            }
-        }
-
-        return returnValue;
-    }
-
     public int[] getX(int start, int end) {
+
+        // gibt die x-Koordinaten der Ecken des Map-Polygons zwischen zwei Punkten zurück
+
         int[] returnValues = new int[(int) ((end - start)/xDifference)+2];
         int temp = 0;
-        for(int i = 0;i < mapX.length;i++){
+        for (int aMapX : mapX) {
 
-                if (mapX[i] >= start && mapX[i] <= end) {
-                    returnValues[temp] = mapX[i];
-                    temp++;
-                }
+            if (aMapX >= start && aMapX <= end) {
+                returnValues[temp] = aMapX;
+                temp++;
+            }
 
         }
 
@@ -201,6 +199,9 @@ public class GameMap {
     }
 
     public int[] getY(int start, int end) {
+
+        // gibt die y-Koordinaten der Ecken des Map-Polygons zwischen zwei Punkten zurück
+
         int[] returnValues = new int[(int) ((end - start)/xDifference)+2];
         int temp = 0;
         for(int i = 0;i < mapX.length;i++){
@@ -215,6 +216,9 @@ public class GameMap {
     }
 
     public static BufferedImage getMapSmall(int art,GameModel gameModel,Color mapC,Color skyC){
+
+        //gibt ein kleinskaliertes Bild der Map zurück
+
         BufferedImage img = new BufferedImage(560,360,BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D g2d = img.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
@@ -223,7 +227,10 @@ public class GameMap {
         return img;
     }
 
-    public static BufferedImage getMap(int art,GameModel gameModel,Color mapC,Color skyC){
+    private static BufferedImage getMap(int art, GameModel gameModel, Color mapC, Color skyC){
+
+        //erzeugt das Bild der Map
+
         BufferedImage image = new BufferedImage(2800,1800,BufferedImage.TYPE_4BYTE_ABGR);
 
         int genauigkeit = 400;

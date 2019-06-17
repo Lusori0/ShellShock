@@ -3,15 +3,16 @@ package Panzer;
 import Model.GameMap;
 import Model.GameModel;
 import Views.GameLoop;
-import Window.*;
-
+import Window.Var;
 
 import javax.sound.sampled.*;
 import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Panzer {
@@ -26,13 +27,10 @@ public abstract class Panzer {
 
     private Shape hitbox;
 
-    private int accuracy;
-
     private boolean selected,shootready,orientationRight,moveRight,moveLeft;
 
     private int[] xPoints,yPoints,xPointsSmall,yPointsSmall;
     private int tempXPoint = 0,tempYPoint = 0,mouseX = 0,mouseY = 0;
-    private double targetX,targetY;
     private int leben,sprit,maxSprit,maxLeben;
 
     private CopyOnWriteArrayList<Screentext> strings = new CopyOnWriteArrayList<>();
@@ -43,10 +41,11 @@ public abstract class Panzer {
 
     private int soundTimer = 0;
 
-    private AudioInputStream engineIn;
     private Clip engineClip;
 
-    public Panzer(GameModel model,BufferedImage image,BufferedImage rohr,int leben,int maxSprit,String name){
+    public Panzer(BufferedImage image, BufferedImage rohr, int leben, int maxSprit, String name){
+
+        //erzeugen des Panzers (der verschiedenfarbigen Bilder)
 
         if(name.length() > 10) {
             this.name = name.substring(0, 8);
@@ -59,7 +58,7 @@ public abstract class Panzer {
 
         try {
             engineClip = AudioSystem.getClip();
-            engineIn = AudioSystem.getAudioInputStream(Var.engine);
+            AudioInputStream engineIn = AudioSystem.getAudioInputStream(Var.engine);
             engineClip.open(engineIn);
 
         } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
@@ -104,11 +103,8 @@ public abstract class Panzer {
 
         xPosition = (GameLoop.imgW - 100) * Math.random() + 50;
         yPosition = 30;
-        targetX = getCenterX();
-        targetY = yPosition;
         width = 60;
         height = 30;
-        accuracy = (int) (width/8);
 
         this.leben = leben;
         maxLeben = leben;
@@ -129,6 +125,216 @@ public abstract class Panzer {
         hitbox = affineTransform.createTransformedShape(hit);
 
         strings.add(new Screentext(this.name,(int)getBulletspawn().getX() - 30, (int) (getBulletspawn().getY() - 100),2));
+    }
+
+
+
+    public void resetSprit(){
+        sprit = maxSprit;
+    }
+
+    public void changeRohr(int x, int y, GameModel model){
+
+        //verädern der Position des Rohrs/des weißen Dreiecks
+
+        try {
+            mouseX = (int) affineTransform.createInverse().transform(new Point2D.Double(x,y),null).getX();
+            mouseY = (int) affineTransform.createInverse().transform(new Point2D.Double(x,y),null).getY();
+        } catch (NoninvertibleTransformException e) {
+            e.printStackTrace();
+        }
+
+        setPolyPoints(model);
+    }
+
+    public void createHitbox(){
+        Shape hit = new Rectangle2D.Double((int)xPosition,(int)yPosition - height/2,(int)width,(int)height);
+
+        hitbox = affineTransform.createTransformedShape(hit);
+    }
+
+    public void schaden(int damage, int art,boolean sandbox) {
+        if(!sandbox) {
+            leben -= damage;
+        }
+        int x = (int) (xPosition - width + Math.random() * width * 3);
+        int y = (int) (yPosition + height - Math.random() * 2 * height);
+
+        if(art == 0) {
+            strings.add(new Screentext(String.valueOf(damage), x, y, 0));
+        }else{
+            strings.add(new Screentext(String.valueOf(damage), x, y, 1));
+        }
+    }
+
+    public void addXP(int damage) {
+        xp += damage;
+        if(xp>400){
+            xp=400;
+        }
+    }
+
+    public void playSound(Clip clip){
+        try{
+
+            FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            float range = volume.getMaximum() - volume.getMinimum();
+            float gain = (float) (range * Math.log10(Var.inGameVolume * 9 + 1) + volume.getMinimum());
+            volume.setValue(gain);
+
+
+
+
+            clip.stop();
+
+            clip.setFramePosition(1);
+
+            clip.start();
+
+
+
+        }
+        catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    //MOVE
+
+    public void moveNotTurn(GameMap map){
+        if(map.getHeight((int) getCenterX()) != getCenterY()) {
+
+            double x = getCenterX();
+
+            winkel = map.getWinkel(x);
+            drawAncle = winkel;
+            yPosition = map.getHeight(x) - height/2;
+
+            affineTransform.setToRotation(drawAncle,x,getCenterY());
+
+
+        }
+    }
+
+    public void move(GameMap map){
+
+        if(moveRight || moveLeft) {
+            if(sprit > 0) {
+
+                if (soundTimer == 12) {
+                    playSound(engineClip);
+                    soundTimer = 0;
+                } else {
+                    soundTimer++;
+                }
+
+            }
+        }
+
+        double xDifferece = width/60;
+
+        double ancleDiffrence = xDifferece/10;
+
+        if(moveRight && xPosition < GameLoop.imgW-width*1.5 && sprit > 0){
+
+            winkel = map.getWinkel(getCenterX()+5);
+
+
+
+
+            xPosition += Math.cos(winkel) * xDifferece * (1 - (Math.abs(drawAncle - winkel)));
+
+
+
+
+            //yPosition += Math.sin(winkel) * xDifferece;
+
+            if(Math.abs(drawAncle - winkel)<ancleDiffrence){
+                drawAncle = winkel;
+
+            }else{
+                if(drawAncle > winkel){
+                    drawAncle -= ancleDiffrence;
+                }else{
+                    drawAncle +=  ancleDiffrence;
+                }
+            }
+
+
+            affineTransform.setToRotation(drawAncle,getCenterX(),getCenterY());
+
+
+
+            sprit--;
+
+        }else if(moveLeft && xPosition > 0 && sprit > 0){
+
+            winkel = map.getWinkel( getCenterX()-5);
+
+
+
+            xPosition -=  Math.cos(winkel) * xDifferece * (1 - (Math.abs(drawAncle - winkel)));
+
+            if(Math.abs(drawAncle - winkel)<ancleDiffrence){
+                drawAncle = winkel;
+
+            }else{
+                if(drawAncle > winkel){
+                    drawAncle -= ancleDiffrence;
+                }else{
+                    drawAncle +=  ancleDiffrence;
+                }
+            }
+
+
+            affineTransform.setToRotation(drawAncle,getCenterX(),getCenterY());
+
+            sprit--;
+
+
+        }
+
+
+        if(map.getHeight((int) getCenterX()) != getCenterY()) {
+
+            double x = getCenterX();
+
+            winkel = map.getWinkel(x);
+            drawAncle = winkel;
+            yPosition = map.getHeight(x) - height/2;
+
+            affineTransform.setToRotation(drawAncle,x,getCenterY());
+
+        }
+
+
+        moveRight = false;
+        moveLeft = false;
+
+
+
+    }
+
+    //DRAW
+
+    public void drawUi(Graphics2D g2d,GameModel model) {
+        setPolyPoints(model);
+
+        if(isSelected()) {
+            g2d.setColor(new Color(255, 255, 255, 125));
+
+            g2d.setTransform(getAffineTransform());
+
+            g2d.fillOval((int) getCenter().getX() - model.getHeight() / 8, (int) ((int) getCenter().getY() - model.getHeight() / (double) 8 - height / 2), model.getHeight() / 4, model.getHeight() / 4);
+
+            if (isShootready()) {
+
+
+
+                g2d.fillPolygon(getPolyXPoints(), getPolyYPoints(), 3);
+                g2d.fillPolygon(getxPointsSmall(), getyPointsSmall(), 3);
+            }
+        }
     }
 
     public void draw(Graphics2D g2d, int art){
@@ -221,130 +427,94 @@ public abstract class Panzer {
 
     }
 
-    public void move(GameMap map){
+    //GETTTER
 
-        if(moveRight || moveLeft) {
-            if(sprit > 0) {
-
-                if (soundTimer == 12) {
-                    playSound(engineClip);
-                    soundTimer = 0;
-                } else {
-                    soundTimer++;
-                }
-
-            }
-        }
-
-        double xDifferece = width/60;
-
-        double ancleDiffrence = xDifferece/20;
-
-        accuracy = (int)(1 + (width/8) - (drawAncle/(Math.PI/2) * (width/8)));
-
-        if(moveRight && xPosition < GameLoop.imgW-width*1.5 && sprit > 0){
-
-            winkel = map.getWinkel(getCenterX()+5);
+    public boolean isHit(int xt, int yt){
+        Shape hit = new Rectangle2D.Double((int)xPosition,(int)yPosition - height/2,(int)width,(int)height);
 
 
 
+        hitbox = affineTransform.createTransformedShape(hit);
 
-            xPosition += Math.cos(winkel) * xDifferece * (1 - (Math.abs(drawAncle - winkel)));
-
-
-
-
-            //yPosition += Math.sin(winkel) * xDifferece;
-
-            if(Math.abs(drawAncle - winkel)<ancleDiffrence){
-                drawAncle = winkel;
-
-            }else{
-                if(drawAncle > winkel){
-                    drawAncle -= ancleDiffrence;
-                }else{
-                    drawAncle +=  ancleDiffrence;
-                }
-            }
-
-
-            affineTransform.setToRotation(drawAncle,getCenterX(),getCenterY());
-
-
-
-            sprit--;
-
-        }else if(moveLeft && xPosition > 0 && sprit > 0){
-
-            winkel = map.getWinkel( getCenterX()-5);
-
-
-
-            xPosition -=  Math.cos(winkel) * xDifferece * (1 - (Math.abs(drawAncle - winkel)));
-
-            if(Math.abs(drawAncle - winkel)<ancleDiffrence){
-                drawAncle = winkel;
-
-            }else{
-                if(drawAncle > winkel){
-                    drawAncle -= ancleDiffrence;
-                }else{
-                    drawAncle +=  ancleDiffrence;
-                }
-            }
-
-
-            affineTransform.setToRotation(drawAncle,getCenterX(),getCenterY());
-
-            sprit--;
-
-
-        }
-
-
-           if(map.getHeight((int) getCenterX()) != getCenterY()) {
-
-                double x = getCenterX();
-
-                winkel = map.getWinkel(x);
-                drawAncle = winkel;
-                yPosition = map.getHeight(x) - height/2;
-
-                affineTransform.setToRotation(drawAncle,x,getCenterY());
-
-           }
-
-
-        moveRight = false;
-        moveLeft = false;
-
-
-
+        return hitbox.contains(new Point2D.Double(xt, yt));
     }
 
-    public void resetSprit(){
-        sprit = maxSprit;
+    public boolean isSelected() {
+        return selected;
     }
 
-    public int getSprit() {
-        return sprit;
+    private boolean isShootready() {
+        return shootready;
     }
 
-    public void moveNotTurn(GameMap map){
-        if(map.getHeight((int) getCenterX()) != getCenterY()) {
-
-            double x = getCenterX();
-
-            winkel = map.getWinkel(x);
-            drawAncle = winkel;
-            yPosition = map.getHeight(x) - height/2;
-
-            affineTransform.setToRotation(drawAncle,x,getCenterY());
-
-
-        }
+    public boolean isOrientationRight(){
+        return orientationRight;
     }
 
+    public Point2D getBulletspawn(){
+        return affineTransform.transform(new Point2D.Double(getCenterX(),yPosition + height/4 - height/2),null);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getMaxSprit() {
+        return maxSprit;
+    }
+
+    public double getyPosition() {
+        return yPosition;
+    }
+
+    public double getxPosition() {
+        return xPosition;
+    }
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public double getWinkel() {
+        return winkel;
+    }
+
+    public int getLeben() {
+        return leben;
+    }
+
+    public Shape getHitbox() {
+
+        return hitbox;
+    }
+
+    public double getRohrWinkel() {
+        return rohrwinkel;
+    }
+
+    public double getShotstrength() {
+        return shotstrength;
+    }
+
+    private int[] getPolyXPoints(){
+        return xPoints;
+    }
+
+    private int[] getPolyYPoints(){
+        return yPoints;
+    }
+
+    private int[] getxPointsSmall() {
+        return xPointsSmall;
+    }
+
+    private int[] getyPointsSmall() {
+        return yPointsSmall;
+    }
 
     public double getCenterX(){
         return xPosition + width/2;
@@ -354,55 +524,55 @@ public abstract class Panzer {
         return yPosition + height/2;
     }
 
-    private Point2D getCenterXExact(){
-        return affineTransform.transform(new Point2D.Double(xPosition+width/2,yPosition + height),null);
-    }
-
     public Point2D getCenter(){
         double x = xPosition + width/2;
         double y = yPosition + height/2;
         return affineTransform.transform(new Point2D.Double(x,y),null);
     }
 
-
-    public boolean isHit(int xt, int yt){
-        Shape hit = new Rectangle2D.Double((int)xPosition,(int)yPosition - height/2,(int)width,(int)height);
-
-
-
-        hitbox = affineTransform.createTransformedShape(hit);
-
-        if(hitbox.contains(new Point2D.Double(xt,yt))){
-
-            return true;
-        }else{
-            return false;
-        }
+    public int getSprit() {
+        return sprit;
     }
 
     public AffineTransform getAffineTransform() {
         return affineTransform;
     }
 
-    public void changeRohr(int x, int y, GameModel model){
-        try {
-            mouseX = (int) affineTransform.createInverse().transform(new Point2D.Double(x,y),null).getX();
-            mouseY = (int) affineTransform.createInverse().transform(new Point2D.Double(x,y),null).getY();
-        } catch (NoninvertibleTransformException e) {
-            e.printStackTrace();
-        }
+    //SETTER
 
-        setPolyPoints(model);
+    public void setLeben(int i) {
+        leben = i;
     }
 
+    public void setxPosition(double xPosition) {
+        this.xPosition = xPosition;
+    }
 
-    public Point2D getBulletspawn(){
-        return affineTransform.transform(new Point2D.Double(getCenterX(),yPosition + height/4 - height/2),null);
+    public void setyPosition(double yPosition) {
+        this.yPosition = yPosition;
+    }
+
+    public void setMoveRight(boolean moveRight) {
+        this.moveRight = moveRight;
+    }
+
+    public void setMoveLeft(boolean moveLeft) {
+        this.moveLeft = moveLeft;
+    }
+
+    public void setShootready(boolean shootready) {
+        this.shootready = shootready;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     public void setPolyPoints(GameModel model){
 
-        int x = (int) (mouseX );
+        //erzeugen der weißen Dreiecke
+
+        int x = (mouseX );
         int y = (int) (mouseY + height/2);
 
 
@@ -443,157 +613,12 @@ public abstract class Panzer {
         tempXPoint = (int)getCenter().getX();
     }
 
-    public boolean isOrientationRight(){
-        return orientationRight;
-    }
-
-    public void setOrientationRight(boolean orientationRight) {
-        this.orientationRight = orientationRight;
-    }
-
-    public int[] getPolyXPoints(){
-        return xPoints;
-    }
-
-    public int[] getPolyYPoints(){
-        return yPoints;
-    }
-
-    public int[] getxPointsSmall() {
-        return xPointsSmall;
-    }
-
-    public int[] getyPointsSmall() {
-        return yPointsSmall;
-    }
-
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
-
-    public boolean isShootready() {
-        return shootready;
-    }
-
-    public void setShootready(boolean shootready) {
-        this.shootready = shootready;
-    }
-
-    public double getRohrWinkel() {
-        return rohrwinkel;
-    }
-
-    public double getShotstrength() {
-        return shotstrength;
-    }
-
-    public void createHitbox(){
-        Shape hit = new Rectangle2D.Double((int)xPosition,(int)yPosition - height/2,(int)width,(int)height);
-
-        hitbox = affineTransform.createTransformedShape(hit);
-    }
-
-    public Shape getHitbox() {
-
-        return hitbox;
-    }
-
-    public void schaden(int damage, int art,boolean sandbox) {
-        if(!sandbox) {
-            leben -= damage;
-        }
-        int x = (int) (xPosition - width + Math.random() * width * 3);
-        int y = (int) (yPosition + height - Math.random() * 2 * height);
-
-        if(art == 0) {
-            strings.add(new Screentext(String.valueOf(damage), x, y, 0));
-        }else{
-            strings.add(new Screentext(String.valueOf(damage), x, y, 1));
-        }
-
-
-
-    }
-
-    public int getLeben() {
-        return leben;
-    }
-
-    public void drawUi(Graphics2D g2d, int x, int y,GameModel model) {
-        setPolyPoints(model);
-
-        if(isSelected()) {
-            g2d.setColor(new Color(255, 255, 255, 125));
-
-            g2d.setTransform(getAffineTransform());
-
-            g2d.fillOval((int) getCenter().getX() - model.getHeight() / 8, (int) ((int) getCenter().getY() - model.getHeight() / (double) 8 - height / 2), model.getHeight() / 4, model.getHeight() / 4);
-
-            if (isShootready()) {
-
-
-
-                g2d.fillPolygon(getPolyXPoints(), getPolyYPoints(), 3);
-                g2d.fillPolygon(getxPointsSmall(), getyPointsSmall(), 3);
-            }
-        }
-    }
-
-    public boolean isMoveRight() {
-        return moveRight;
-    }
-
-    public void setMoveRight(boolean moveRight) {
-        this.moveRight = moveRight;
-    }
-
-    public boolean isMoveLeft() {
-        return moveLeft;
-    }
-
-    public void setMoveLeft(boolean moveLeft) {
-        this.moveLeft = moveLeft;
-    }
-
-    public double getDrawWinkel() {
-        return drawAncle;
-    }
-
-    public void setDrawWinkel(double drawWinkel,double winkel,double rohrwinkel){
-        this.winkel = winkel;
-        drawAncle = drawWinkel;
-        this.rohrwinkel = rohrwinkel;
-        affineTransform.setToRotation(drawAncle,getCenterX(),getCenterY());
-    }
-
-    public double getWinkel() {
-        return winkel;
-    }
-
-    public void addXP(int damage) {
-        xp += damage;
-        if(xp>400){
-            xp=400;
-        }
-    }
-
-    public int getXp() {
-        return xp;
-    }
-
-    public BufferedImage getImage() {
-        return image;
-    }
-
-    public void setLeben(int i) {
-        leben = i;
-    }
+    //SCREENTEXT
 
     private class Screentext{
+
+        //Text on screen
+
         private String text;
         private int x,y;
         private int time,art;
@@ -673,55 +698,6 @@ public abstract class Panzer {
 
         public int getTime() {
             return time;
-        }
-    }
-
-    public double getxPosition() {
-        return xPosition;
-    }
-
-    public void setxPosition(double xPosition) {
-        this.xPosition = xPosition;
-    }
-
-    public double getyPosition() {
-        return yPosition;
-    }
-
-    public void setyPosition(double yPosition) {
-        this.yPosition = yPosition;
-    }
-
-    public int getMaxSprit() {
-        return maxSprit;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void playSound(Clip clip){
-        try{
-
-            FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            float range = volume.getMaximum() - volume.getMinimum();
-            float gain = (float) (range * Math.log10(Var.inGameVolume * 9 + 1) + volume.getMinimum());
-            volume.setValue(gain);
-
-
-
-
-            clip.stop();
-
-            clip.setFramePosition(1);
-
-            clip.start();
-
-
-
-        }
-        catch(Exception ex) {
-            ex.printStackTrace();
         }
     }
 }

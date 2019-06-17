@@ -1,11 +1,10 @@
 package Model;
 
-import java.awt.geom.Point2D;
 import java.util.LinkedList;
 
 public class KiPlayer extends Player {
 
-    Player ziel;
+    private Player ziel;
     private boolean movementFinished = false;
     private double targety,x,myY;
 
@@ -21,6 +20,9 @@ public class KiPlayer extends Player {
     }
 
     public void prepare(GameModel model){
+
+        //Vorbereitung (Zielauswahl)
+
         if(changeTarget(model)){
             targety = getPanzer().getBulletspawn().getY()-ziel.getPanzer().getBulletspawn().getY();
             x = (ziel.getPanzer().getBulletspawn().getX() - getPanzer().getBulletspawn().getX());
@@ -37,6 +39,7 @@ public class KiPlayer extends Player {
     public void move(GameModel model,GameMap map){
 
 
+        //Bewegen des Panzers (bei zu großer oder kleiner Entfernung des Ziels)
 
 
         if(isOnTurn()) {
@@ -88,9 +91,6 @@ public class KiPlayer extends Player {
                 lockIn();
             }
 
-
-            //TODO movement
-
         }else{
             getPanzer().moveNotTurn(map);
         }
@@ -99,11 +99,7 @@ public class KiPlayer extends Player {
     public int action(GameModel model){
 
 
-        //winkel = atan((targety + down * (targetx-myx) - myy)/(targetx - myx)
-
-
-
-
+        //Berechnen des Schusswinkels und der Stärke
 
         double down = getSelectedWeapon().getDownspeed();
         double speed = getSelectedWeapon().getSpeed();
@@ -111,17 +107,8 @@ public class KiPlayer extends Player {
         finalWinkel = 999;
         finalSpeed = 1;
 
-        Point2D highest;
-
-
-
-
-
-
-
         double wink = -Math.atan((Math.pow(speed,2) - Math.sqrt(Math.pow(speed,4) - down * (down * (x * x) + 2 * targety * (speed * speed))))/(down * x));
         double wink2 = -Math.atan((Math.pow(speed,2) + Math.sqrt(Math.pow(speed,4) - down * (down * (x * x) + 2 * targety * (speed * speed))))/(down * x));
-        double wink3 = -Math.atan((Math.pow(speed/2,2) + Math.sqrt(Math.pow(speed/2,4) - down * (down * (x * x) + 2 * targety * ((speed/2) * (speed/2)))))/(down * x));
 
         if(x>0) {
 
@@ -164,8 +151,6 @@ public class KiPlayer extends Player {
             }
         }else{
 
-
-            finalSpeed = 1;
 
             double xtempRohr;
             double ytempRohr;
@@ -224,13 +209,6 @@ public class KiPlayer extends Player {
             return 2;
         }
 
-
-
-
-
-
-        //TODO improve
-
         double xtempRohr;
         double ytempRohr;
 
@@ -250,16 +228,10 @@ public class KiPlayer extends Player {
 
         getPanzer().changeRohr((int) xtempRohr,(int)ytempRohr,model);
 
-
-
-
-
-
-
         return 0;
     }
 
-    public void lockIn(){
+    private void lockIn(){
         setLockedIn(true);
 
 
@@ -269,6 +241,9 @@ public class KiPlayer extends Player {
     public void shoot(GameModel model){
 
         if(getSelectedWeapon().getId() == 24 || getSelectedWeapon().getId() == 25){
+
+            //anderer Winkel für Laser
+
             targety = getPanzer().getBulletspawn().getY()-ziel.getPanzer().getBulletspawn().getY();
             x = (ziel.getPanzer().getBulletspawn().getX() - getPanzer().getBulletspawn().getX());
             myY = getPanzer().getBulletspawn().getY();
@@ -279,11 +254,9 @@ public class KiPlayer extends Player {
             }else {
                 finalWinkel = Math.atan2(ytemp, x);
             }
-            System.out.println(finalWinkel);
-
         }
 
-        finalWinkel += (-0.1 + Math.random() * 0.2)*difficoulty;
+        finalWinkel += (-0.1 + Math.random() * 0.2)*difficoulty;//Verändern nach Schwierigkeit
 
         double xtempRohr;
         double ytempRohr;
@@ -313,7 +286,9 @@ public class KiPlayer extends Player {
         }
     }
 
-    public boolean isPossible(int start,int end,double winkel,double speed,double down,GameModel model){
+    private boolean isPossible(int start, int end, double winkel, double speed, double down, GameModel model){
+
+        //überprüfen ob der schuss mit der Map kollidiert
 
         int[] temp,xtemp;
 
@@ -329,13 +304,7 @@ public class KiPlayer extends Player {
                 if (xtemp[i] > 0) {
                     double t = xtemp[i] - getPanzer().getBulletspawn().getX();
 
-                    //double yBullet = (t/(Math.cos(winkel) * speed) * Math.sin(winkel) * speed - t/(Math.cos(winkel) * speed)*down);
-
                     double yBullet = (t / (Math.cos(winkel) * speed) * Math.sin(winkel) * speed + (t / (Math.cos(winkel) * speed) * t / (Math.cos(winkel) * speed)) * (down / 2));
-
-
-
-
 
                     if (Double.isNaN(yBullet)) {
                         return false;
@@ -360,14 +329,7 @@ public class KiPlayer extends Player {
                     if (xtemp[i] > 0) {
                         double t = xtemp[i] - getPanzer().getCenterX();
 
-                        //double yBullet = (t/(Math.cos(winkel) * speed) * Math.sin(winkel) * speed - t/(Math.cos(winkel) * speed)*down);
-
                         double yBullet = (t / (Math.cos(winkel) * speed) * Math.sin(winkel) * speed + (t / (Math.cos(winkel) * speed) * t / (Math.cos(winkel) * speed)) * (down / 2));
-
-
-
-
-
 
                         if (Double.isNaN(yBullet)) {
                             return false;
@@ -384,7 +346,10 @@ public class KiPlayer extends Player {
         }
     }
 
-    public boolean changeTarget(GameModel model){
+    private boolean changeTarget(GameModel model){
+
+        //auswählen des Ziels
+
         LinkedList<Player> player = model.getPlayer();
         for(Player player1 : player){
             if(player1.getTeam() != getTeam()) {

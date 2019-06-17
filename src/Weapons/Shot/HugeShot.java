@@ -1,15 +1,12 @@
 package Weapons.Shot;
 
 import Model.GameModel;
-import Weapons.Shot.Shot;
 import Window.Var;
-
-import java.awt.image.BufferedImage;
 
 public class HugeShot extends Shot {
 
     public HugeShot(GameModel gameModel) {
-        super(gameModel,"Huge Shot", 3,3,Var.hughshot);
+        super(gameModel,"Huge Shot", 3,Var.hughshot);
 
 
         effecttime = 2;

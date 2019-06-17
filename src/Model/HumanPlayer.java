@@ -6,8 +6,6 @@ import Window.*;
 
 public class HumanPlayer extends Player {
 
-
-
     public HumanPlayer(GameModel model, int team,int id,Profil profil) {
         super(model, team,id,profil);
     }
@@ -41,7 +39,6 @@ public class HumanPlayer extends Player {
         }
     }
 
-
     @Override
     public void prepare(GameModel model) {
 
@@ -55,7 +52,4 @@ public class HumanPlayer extends Player {
 
     }
 
-
-    @Override
-    public void setValues(int x, int y, double drawWinkel, double winkel,double rohrwinkel,boolean right) {}
 }

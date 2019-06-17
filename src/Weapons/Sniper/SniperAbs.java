@@ -31,7 +31,7 @@ public abstract class SniperAbs extends Weapon {
     protected int effecttime;
 
     public SniperAbs(GameModel gameModel, String name, int level,int id,BufferedImage icon) {
-        super(gameModel,name,id,Color.WHITE);
+        super(gameModel,name,id,new Color(150,80,50));
 
         this.icon = icon;
 
@@ -86,7 +86,7 @@ public abstract class SniperAbs extends Weapon {
             temp++;
         }
 
-        g2d.setColor(Color.WHITE);
+        g2d.setColor(new Color(150,80,50));
 
         if(explosionTimer == 0) {
             g2d.fill(new Ellipse2D.Double(xPosition - weaponsize / (double) 2, yPosition - weaponsize / (double) 2, weaponsize, weaponsize));

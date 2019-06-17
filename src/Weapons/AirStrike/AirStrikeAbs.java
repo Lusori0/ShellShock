@@ -144,7 +144,7 @@ public abstract class AirStrikeAbs extends Weapon {
 
                 for(int i = 0; i < count;i++){
                     int dis = (count-1) * 30;
-                    shots.add(new Bullet((int) (xPosition - dis/2 + i * 30),20,gameModel,explosionRadius));
+                    shots.add(new Bullet((int) (xPosition - dis/2 + i * 30),damage,gameModel,explosionRadius));
                 }
             }
 
