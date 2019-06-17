@@ -11,13 +11,17 @@ public class Profil implements Serializable {
     private int xp;
     private String password;
     private List<Integer> unlockedWeapons = new ArrayList<>();
+    private float musicVolume;
+    private float inGameVolume;
 
-    public Profil(String name, int level, String password, int xp, List<Integer> unlockedWeapons){
+    public Profil(String name, int level, String password, int xp, List<Integer> unlockedWeapons, float musicVolume, float inGameVolume){
         this.name = name;
         this.level = level;
         this.password = password;
         this.xp = xp;
         this.unlockedWeapons = unlockedWeapons;
+        this.musicVolume = musicVolume;
+        this.inGameVolume = inGameVolume;
     }
 
     public String getName(){
@@ -25,6 +29,10 @@ public class Profil implements Serializable {
     }
     public int getLevel(){return level;}
     public String getPassword(){return password;}
+    public float getMusicVolume(){return musicVolume;}
+    public float getInGameVolume(){return inGameVolume;}
+    public void setMusicVolume(float v){musicVolume = v;}
+    public void setInGameVolume(float v){inGameVolume = v;}
     public List<Integer> getUnlockedWeapons(){
         return unlockedWeapons;
     }
