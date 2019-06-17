@@ -24,6 +24,7 @@ public class SettingsModel {
 
     public void changeMusicVolume(Float f){
         Var.music.setVolume(f);
+        Var.activeUser.setMusicVolume(f);
     }
 
 

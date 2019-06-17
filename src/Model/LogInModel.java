@@ -75,7 +75,7 @@ public class LogInModel {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("data/" + name + ".bin"));
 
 
-                profil = new Profil(name, 1, password,0,weaponsListTemp);
+                profil = new Profil(name, 1, password,0,weaponsListTemp,0.5f,0.5f);
 
                 objectOutputStream.writeObject(profil);
                 objectOutputStream.close();
@@ -140,7 +140,7 @@ public class LogInModel {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("data/" + name + ".bin"));
 
 
-                profil = new Profil(name, 1, password,0,weaponsListTemp);
+                profil = new Profil(name, 1, password,0,weaponsListTemp,0.5f,0.5f);
 
                 objectOutputStream.writeObject(profil);
                 objectOutputStream.close();
