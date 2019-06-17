@@ -219,7 +219,9 @@ public abstract class Player {
     private void addRndWeapon(GameModel model) {
         int t = profil.getUnlockedWeapons().size();
         int rnd = (int) (Math.random() * t);
+        System.out.println(profil.getUnlockedWeapons().get(rnd));
         addWeapon(Weapon.getById(profil.getUnlockedWeapons().get(rnd),model));
+
 
     }
 

@@ -54,7 +54,7 @@ public class Bullet {
             AffineTransform t = new AffineTransform();
             int temp = 0;
             for (double[] cord : this.coords) {
-                if(cord[0] != (int)x && cord[1] != (int)y) {
+                if(cord[1] != (int)y) {
                     g2d.setColor(new Color(255, 0, 0, 255));
                     double size = (this.weaponsize * 1.2) / 40 * temp;
 

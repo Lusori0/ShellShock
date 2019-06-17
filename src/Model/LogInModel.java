@@ -128,11 +128,13 @@ public class LogInModel {
 
             try {
                 List<Integer> weaponsListTemp = new ArrayList<>();
-                weaponsListTemp.add(0);
-                weaponsListTemp.add(1);
-                weaponsListTemp.add(2);
-                weaponsListTemp.add(3);
-                weaponsListTemp.add(4);
+                for(int i =0;i < 5;i++) {
+                    weaponsListTemp.add(1);
+                    weaponsListTemp.add(5);
+                    weaponsListTemp.add(18);
+                    weaponsListTemp.add(12);
+                    weaponsListTemp.add(21);
+                }
                 //erstellen der Profil.bin datei
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("data/" + name + ".bin"));
 
