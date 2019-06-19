@@ -414,8 +414,9 @@ public class GameModel {
             gameUiView.removeAll();
             gameUiView.revalidate();
             gameUiView.repaint();
-            gameUiView.erzeugenOverlay_End();
             gameLoop.drawEndScreen(text,players.getFirst().getTeam());
+            gameUiView.erzeugenOverlay_End();
+
         }
 
 

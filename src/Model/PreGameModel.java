@@ -42,7 +42,7 @@ public class PreGameModel {
        return model.getMap().getMapSmall(art,model,mapC,skyC);
     }
 
-    public void startAction(int amount,int[] difficutly,Profil[] profils,int gamemode){
+    public void startAction(int amount,int[] difficutly,Profil[] profils,int mapId,int gamemode){
         LinkedList<Player> players = new LinkedList<>();
 
         LinkedList<Integer> weaponsTest = new LinkedList<>();
@@ -74,7 +74,7 @@ public class PreGameModel {
             }
         } else{}
 
-        new Thread(() -> model.start(players, sandbox,new Color(0,200,255),Color.GREEN,2,gamemode)).start();
+        new Thread(() -> model.start(players, sandbox,new Color(0,200,255),Color.GREEN,mapId,gamemode)).start();
 
 
     }

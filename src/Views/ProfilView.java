@@ -24,9 +24,8 @@ public class ProfilView extends JPanel implements ActionListener {
 
     JLabel panzer;
 
-    JSlider musicbar;
 
-    ImageIcon backImg,deleProfilImg,panzerImg;
+    ImageIcon panzerImg;
 
     JLabel nameDisplay,levelDisplay;
 
@@ -85,7 +84,7 @@ public class ProfilView extends JPanel implements ActionListener {
             this.add(panzer,g);
 
         //Initialisierung/Erzeugen des Inhalts
-            deleteProfil = new MyButton("KnopfProfilLöschenMetallic1.png","Profil löschen",deleProfilImg);
+            deleteProfil = new MyButton("KnopfProfilLöschenMetallic1.png","Profil löschen");
             deleteProfil.addActionListener(this);
             //Erstellen der Anordnung
 
@@ -96,7 +95,7 @@ public class ProfilView extends JPanel implements ActionListener {
 
 
         //Initialisierung/Erzeugen des Inhalts
-            back = new MyButton("KnopfZurückMetallic1.png","back",backImg);
+            back = new MyButton("KnopfZurückMetallic1.png","back");
             back.addActionListener(this);
             //Erstellen der Anordnung
                 g.weightx = 0.5;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer

@@ -85,7 +85,7 @@ public class LogInView extends JPanel implements ActionListener {
         //Initialisierung/Erzeugen des Inhalts
         ImageIcon singleplayerImg = new ImageIcon();
 
-        submit = new MyButton("KnopfProfilLoginMetallic1.png", "LogIn", singleplayerImg);
+        submit = new MyButton("KnopfProfilLoginMetallic1.png", "LogIn");
         submit.addActionListener(this);
         //Einstellen von der Anordnung
 
@@ -96,7 +96,7 @@ public class LogInView extends JPanel implements ActionListener {
         this.add(submit, g);
 
         //Initialisierung/Erzeugen des Inhalts
-        createProfil = new MyButton("KnopfProfilErstellenMetallic1.png", "CreateNewAccount", singleplayerImg);
+        createProfil = new MyButton("KnopfProfilErstellenMetallic1.png", "CreateNewAccount");
         createProfil.addActionListener(this);
         //Einstellen von der Anordnung
 
@@ -168,7 +168,7 @@ public class LogInView extends JPanel implements ActionListener {
         //Initialisierung/Erzeugen des Inhalts
         ImageIcon singleplayerImg = new ImageIcon();
 
-        submit_game = new MyButton("KnopfProfilLoginMetallic1.png", "LogIn", singleplayerImg);
+        submit_game = new MyButton("KnopfProfilLoginMetallic1.png", "LogIn");
         submit_game.addActionListener(this);
         //Einstellen von der Anordnung
 
@@ -179,7 +179,7 @@ public class LogInView extends JPanel implements ActionListener {
         this.add(submit_game, g);
 
         //Initialisierung/Erzeugen des Inhalts
-        createProfil_game = new MyButton("KnopfProfilErstellenMetallic1.png", "CreateNewAccount", singleplayerImg);
+        createProfil_game = new MyButton("KnopfProfilErstellenMetallic1.png", "CreateNewAccount");
         createProfil_game.addActionListener(this);
         //Einstellen von der Anordnung
 

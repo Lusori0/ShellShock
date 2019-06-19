@@ -40,7 +40,6 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         int[] team_from_ai = new int[ai_amount];
         int[] team_from_human = new int[human_amount];
     //
-    JCheckBox infiniteAmmo,infiniteGas,infiniteWeapons;
     //Jeckboxes for more Players
         JCheckBox[] aiCheckBox = new JCheckBox[ai_amount];
         JCheckBox[] humanCheckBox = new JCheckBox[human_amount];
@@ -60,9 +59,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
     String[] maps = {"Map1","Map2","Map3","Map4","Map5","Map6"};
 
 
-    ImageIcon gameSettingsImg;
-    ImageIcon startImg;
-    ImageIcon backImg;
+
     ImageIcon gameOptionsImg;
     Image mapImage;
     GridBagConstraints g;
@@ -94,7 +91,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         optionen.setLayout(new GridBagLayout());
         //Altes Layout mit den Buttons
             //Initialisierung/Erzeugen des Inhalts
-            start = new MyButton("KnopfSpielStartenMetallic1.png","START",startImg);
+            start = new MyButton("KnopfSpielStartenMetallic1.png","START");
             start.addActionListener(this);
             /*//Einstellen von der Anordnung
             g.gridx = 10;
@@ -103,7 +100,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             buttons.add(start);
 
             //Initialisierung/Erzeugen des Inhalts
-            back = new MyButton ("KnopfZurückMetallic1.png","BACK", backImg);
+            back = new MyButton ("KnopfZurückMetallic1.png","BACK");
             back.addActionListener(this);
             back.setSize(buttonWidth,buttonHeigth);
             /*//Einstellen von der Anordnung
@@ -165,41 +162,6 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         g.fill = GridBagConstraints.HORIZONTAL;
         optionen.add(gameOptions,g);
 
-        //CheckBoxes Added to the JPanel
-            infiniteAmmo = new JCheckBox("Infinite Ammo",false);
-            infiniteAmmo.setBackground(Color.black);
-            infiniteAmmo.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
-            infiniteAmmo.addItemListener(this);
-            g.gridx = 6;
-            g.gridy = 2;
-            g.gridwidth = 2;
-            g.gridheight = 1;
-            g.insets = new Insets(10,buttonWidth,0,0);
-        optionen.add(infiniteAmmo,g);
-
-            infiniteGas = new JCheckBox("Infinite Gas",false);
-            infiniteGas.setBackground(Color.black);
-            infiniteGas.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
-            infiniteGas.addItemListener(this);
-            g.gridx = 6;
-            g.gridy = GridBagConstraints.RELATIVE;
-            g.fill = GridBagConstraints.BOTH;
-            g.gridwidth = 2;
-            g.gridheight = 1;
-            //g.insets = new Insets(10,buttonWidth,0,0);
-        optionen.add(infiniteGas,g);
-
-            infiniteWeapons = new JCheckBox("Infinite Weapons",false);
-            infiniteWeapons.setBackground(Color.black);
-            infiniteWeapons.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
-            infiniteWeapons.addItemListener(this);
-            g.gridx = 6;
-            g.gridy = GridBagConstraints.RELATIVE;
-            g.fill = GridBagConstraints.BOTH;
-            g.gridwidth = 2;
-            g.gridheight = 1;
-            //g.insets = new Insets(10,buttonWidth,0,0);
-        optionen.add(infiniteWeapons,g);
         //
             map_loocking = new JLabel();
             map_loocking.setBackground(Color.WHITE);
@@ -324,12 +286,12 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
 
         //Altes Layout mit den Buttons
         //Initialisierung/Erzeugen des Inhalts
-        start = new MyButton("KnopfSpielStartenMetallic1.png","START",startImg);
+        start = new MyButton("KnopfSpielStartenMetallic1.png","START");
         start.addActionListener(this);
         buttons.add(start,g);
 
         //Initialisierung/Erzeugen des Inhalts
-        back = new MyButton ("KnopfZurückMetallic1.png","BACK", backImg);
+        back = new MyButton ("KnopfZurückMetallic1.png","BACK");
         back.addActionListener(this);
         buttons.add(back);
 
@@ -385,42 +347,6 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         g.fill = GridBagConstraints.HORIZONTAL;
         optionen.add(gameOptions,g);
 
-        //CheckBoxes Added to the JPanel
-        infiniteAmmo = new JCheckBox("Infinite Ammo",false);
-        infiniteAmmo.setBackground(Color.black);
-        infiniteAmmo.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
-        infiniteAmmo.addItemListener(this);
-        g.gridx = 6;
-        g.gridy = 2;
-        g.fill = GridBagConstraints.BOTH;
-        g.gridwidth = 1;
-        g.gridheight = 1;
-        g.insets = new Insets(10,buttonWidth,0,0);
-        optionen.add(infiniteAmmo,g);
-
-        infiniteGas = new JCheckBox("Infinite Gas",false);
-        infiniteGas.setBackground(Color.black);
-        infiniteGas.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
-        infiniteGas.addItemListener(this);
-        g.gridx = 6;
-        g.gridy = GridBagConstraints.RELATIVE;
-        g.fill = GridBagConstraints.BOTH;
-        g.gridwidth = 1;
-        g.gridheight = 1;
-        //g.insets = new Insets(10,buttonWidth,0,0);
-        optionen.add(infiniteGas,g);
-
-        infiniteWeapons = new JCheckBox("Infinite Weapons",false);
-        infiniteWeapons.setBackground(Color.black);
-        infiniteWeapons.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
-        infiniteWeapons.addItemListener(this);
-        g.gridx = 6;
-        g.gridy = GridBagConstraints.RELATIVE;
-        g.fill = GridBagConstraints.BOTH;
-        g.gridwidth = 1;
-        g.gridheight = 1;
-        //g.insets = new Insets(10,buttonWidth,0,0);
-        optionen.add(infiniteWeapons,g);
 
     //Map-Anzeige wird eingefügt
         map_loocking = new JLabel();
@@ -585,8 +511,8 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                 }
             }
             //TODO : Übergeben von Teams, Gamemode, map
-            if(gamemode == 0) gamemode =1;
-            preGameModel.startAction(amount_selected_Players,difficulty_value_Ai,Var.login_profils,gamemode);
+            if(gamemode == 0) gamemode = 2;
+            preGameModel.startAction(amount_selected_Players,difficulty_value_Ai,Var.login_profils,mapSelectter.getSelectedIndex()+1,gamemode);
         }
 
         if(e.getSource() == mapSelectter)
@@ -643,31 +569,6 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-
-        if(e.getSource() == infiniteAmmo)
-        {
-            if(e.getStateChange() == ItemEvent.SELECTED)
-            {
-                System.out.println("InfiniteAmmo was selected");
-            }
-        }
-
-        if(e.getSource() == infiniteGas)
-        {
-            if(e.getStateChange() == ItemEvent.SELECTED)
-            {
-                System.out.println("InfiniteGas was selected");
-            }
-        }
-
-        if(e.getSource() == infiniteWeapons)
-        {
-            if(e.getStateChange() == ItemEvent.SELECTED)
-            {
-                System.out.println("InfiniteWaepons was selected");
-            }
-        }
-
 
         for(int i = 0;i<aiCheckBox.length;i++)
         {
