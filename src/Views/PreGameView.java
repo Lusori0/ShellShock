@@ -27,13 +27,13 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
     //
     MyButton gameSettings,start,back;
     //Amount of human / ai player
-        int ai_amount = 8;
+        int ai_amount = 7;
         int human_amount = 5; //ACHTUNG! In der Var Klassen ist der seleceted_humanCheckbox_speicher hardgecodet auf !5!
     //
     int buttonWidth = MyWindow.WIDTH/8;
     int buttonHeigth = buttonWidth*2/5;
     int gamemode  = 0;
-    JLabel tankName,gameOptions,map_loocking,art,icon,enemy,team;
+    JLabel tankName,gameOptions,map_loocking,art,icon,enemy,team,currentPlayer_tank,firingOptions;
     //Slider mit Difficulty
         JSlider[] difficulty_slider = new JSlider[ai_amount];
         int[] difficulty_value_Ai = new int[ai_amount];
@@ -53,12 +53,51 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
     JComboBox[] human_teamSelecter = new JComboBox[human_amount];
 
     JComboBox mapSelectter,modeSelecter;
+    //RGB Slider + Button
+        JButton change_fb; // Button to change between foreground and backgorund
+        JSlider red ;
+        JSlider green;
+        JSlider blue ;
+        Color foreground = new Color(100,100,100);
+        Color background = Color.BLUE;
 
-    String [] gamemodes = {"Gamemodes","Free for all","Team matches", "Instant Fight"};
-    String [] team_String = {"Select Team", "Team 1", "Team 2", "Team 3"};
-    String[] maps = {"Map1","Map2","Map3","Map4","Map5","Map6"};
+    String [] firingmode = {
+            "<html><font color = 'green'><font size = +1>Single Fire</font></html>",
+            "<html><font color = 'green'><font size = +1>Team wise</font></html>",
+            "<html><font color = 'green'><font size = +1>All at once</font></html>"
+    };
+    String [] team_String = {
+            "<html><font color = 'green'><font size = +1>Team 1</font></html>",
+            "<html><font color = 'green'><font size = +1>Team 2</font></html>",
+            "<html><font color = 'green'><font size = +1>Team 3</font></html>",
+            "<html><font color = 'green'><font size = +1>Team 4</font></html>"
+    };
+    String[] maps = {
+            "<html><font color = 'green'><font size = +1>Map1</font></html>",
+            "<html><font color = 'green'><font size = +1>Map2</font></html>",
+            "<html><font color = 'green'><font size = +1>Map3</font></html>",
+            "<html><font color = 'green'><font size = +1>Map4</font></html>",
+            "<html><font color = 'green'><font size = +1>Map5</font></html>",
+            "<html><font color = 'green'><font size = +1>Random Map</font></html>"
+    };
+    /*String[] available_foreground_color = {
+            "<html><font color = 'green'><font size = +1>RED</font></html>",
+            "<html><font color = 'green'><font size = +1>GREEN</font></html>",
+            "<html><font color = 'green'><font size = +1>BLUE</font></html>",
+            "<html><font color = 'green'><font size = +1>YELLOW</font></html>",
+            "<html><font color = 'green'><font size = +1>CYAN</font></html>",
+            "<html><font color = 'green'><font size = +1>MAGENTA</font></html>",
+            "<html><font color = 'green'><font size = +1>WHITE</font></html>",
+            "<html><font color = 'green'><font size = +1>RED</font></html>",
+            "<html><font color = 'green'><font size = +1>RED</font></html>",
+            "<html><font color = 'green'><font size = +1>RED</font></html>",
+            "<html><font color = 'green'><font size = +1>RED</font></html>",
+            "<html><font color = 'green'><font size = +1>RED</font></html>",
+            "<html><font color = 'green'><font size = +1>RED</font></html>",
+    };
+    String[] available_background_color = {};*/
 
-
+    //TODO:  Ingamevolume ändern //(ProfilView mit mehnren Panzern)!!!
 
     ImageIcon gameOptionsImg;
     Image mapImage;
@@ -111,26 +150,46 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             //Einfügen der Inhalte in Abhängigkeit der GridBag
             buttons.add(back);
         //
-        //Der neue Scheiß
+
+        //Adding currentProfile in Top Row
+            currentPlayer_tank = new JLabel();
+            ImageIcon tank = new ImageIcon("res/buttons/PanzerDefaultMetallic1.png"); //Falls man mit mehreren Panzer einfach getPanzer bei Var.aktiveUser
+            tank.setImage(tank.getImage().getScaledInstance(buttonWidth + 2,buttonHeigth + 2,Image.SCALE_SMOOTH));
+            currentPlayer_tank.setIcon(tank);
+            //GridbagLayout
+            g.gridx = 0;
+            g.gridy = 1;
+
+            g.weightx = 0;
+            optionen.add(currentPlayer_tank,g);
+            JLabel description = new JLabel("<html><font color = 'red'><font size = +1>Current aktive User Tank</font></html>");
+
+            //GridbagLayout
+            g.gridx = 1;
+            g.gridy = 1;
+            g.weightx = 0;
+            optionen.add(description,g);
+
+        //Adding Enemy
         art = new JLabel("<html><font color = 'red'><font size = +1>Enemy Image</font></html>");
         art.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         art.setBackground(Color.PINK);
         g.gridx = 0;
-        g.gridy = 1;
+        g.gridy = 2;
         optionen.add(art,g);
 
         icon = new JLabel("<html><font color = 'red'><font size = +1>Difficulty</font></html>");
         icon.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         icon.setBackground(Color.RED);
         g.gridx = GridBagConstraints.RELATIVE;
-        g.gridy = 1;
+        g.gridy = 2;
         optionen.add(icon,g);
 
         enemy = new JLabel("<html><font color = 'red'><font size = +1>Select Enemies</font></html>");
         enemy.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         enemy.setBackground(Color.RED);
         g.gridx = GridBagConstraints.RELATIVE;
-        g.gridy = 1;
+        g.gridy = 2;
         g.gridwidth =3;
         g.gridheight = 1;
         g.fill = GridBagConstraints.HORIZONTAL;
@@ -140,7 +199,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         team.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         team.setBackground(Color.RED);
         g.gridx = GridBagConstraints.RELATIVE;
-        g.gridy = 1;
+        g.gridy = 2;
         g.gridwidth =1;
         g.gridheight = 1;
         g.fill = GridBagConstraints.HORIZONTAL;
@@ -154,7 +213,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         //
         gameOptions.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         g.gridx = GridBagConstraints.RELATIVE;
-        g.gridy =1;
+        g.gridy =2;
         g.weightx = 0;
         g.gridwidth = 3;
         g.gridheight = 1;
@@ -162,7 +221,59 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         g.fill = GridBagConstraints.HORIZONTAL;
         optionen.add(gameOptions,g);
 
+        //RGB Slider
+                JPanel rgb_allingment = new JPanel();
+                rgb_allingment.setLayout(new BorderLayout());
+                //Red Slider
+                red = new JSlider(SwingConstants.HORIZONTAL,0,255,100);
+                red.addChangeListener(this);
+                red.setMajorTickSpacing(1);
+
+                red.setPaintLabels(true);
+                red.setSnapToTicks(true);
+                Dictionary<Integer, Component> labelTable_red = new Hashtable<Integer, Component>();
+                    labelTable_red.put(0, new JLabel("<html><font color = 'red'>Red-RGB Value: 0</font></html>"));
+                    labelTable_red.put(255, new JLabel("<html><font color = 'red'>255</font></html>"));
+                //Beschriftung eingeführt
+                red.setLabelTable(labelTable_red);
+                red.setPreferredSize(new Dimension(buttonWidth/3,buttonHeigth/3));
+                red.setBackground(MyWindow.backgroundColor);
+                rgb_allingment.add(red,BorderLayout.NORTH);
+
+                //Green Slider
+                green = new JSlider(SwingConstants.HORIZONTAL,0,255,100);
+                green.addChangeListener(this);
+                green.setMajorTickSpacing(1);
+
+                green.setPaintLabels(true);
+                green.setSnapToTicks(true);
+                Dictionary<Integer, Component> labelTable_green = new Hashtable<Integer, Component>();
+                    labelTable_green.put(0, new JLabel("<html><font color = 'green'>Green-RGB Value: 0</font></html>"));
+                    labelTable_green.put(255, new JLabel("<html><font color = 'green'>255</font></html>"));
+                //Beschriftung eingeführt
+                green.setLabelTable(labelTable_green);
+                green.setPreferredSize(new Dimension(buttonWidth/3,buttonHeigth/3));
+                green.setBackground(MyWindow.backgroundColor);
+                rgb_allingment.add(green, BorderLayout.CENTER);
+
+                //Blue Slider
+                blue = new JSlider(SwingConstants.HORIZONTAL,0,255,100);
+                blue.addChangeListener(this);
+                blue.setMajorTickSpacing(1);
+
+                blue.setPaintLabels(true);
+                blue.setSnapToTicks(true);
+                Dictionary<Integer, Component> labelTable_blue = new Hashtable<Integer, Component>();
+                    labelTable_blue.put(0, new JLabel("<html><font color = 'blue'>Blue-RGB Value: 0</font></html>"));
+                    labelTable_blue.put(255, new JLabel("<html><font color = 'blue'>255</font></html>"));
+                //Beschriftung eingeführt
+                blue.setLabelTable(labelTable_blue);
+                blue.setPreferredSize(new Dimension(buttonWidth/3,buttonHeigth/3));
+                blue.setBackground(MyWindow.backgroundColor);
+                rgb_allingment.add(blue, BorderLayout.SOUTH);
+
         //
+        //Add Mini-MapImg
             map_loocking = new JLabel();
             map_loocking.setBackground(Color.WHITE);
             mapImage = preGameModel.mapSelectingAction(1,Color.GREEN,Color.BLUE).getScaledInstance(buttonWidth,buttonHeigth,Image.SCALE_SMOOTH);
@@ -174,7 +285,6 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             g.gridwidth = 1;
             g.gridheight = 1;
         optionen.add(map_loocking,g);
-
             //MapSelecter
             mapSelectter = new JComboBox();
             mapSelectter.setBackground(MyWindow.backgroundColor);
@@ -188,6 +298,28 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             g.gridx = 6;
             g.gridy = GridBagConstraints.RELATIVE;
         optionen.add(mapSelectter,g);
+        //Unter der Map die RGB Slider einfügen
+            g.gridx = 6;
+            g.gridy = GridBagConstraints.RELATIVE;
+            g.gridheight = 1;
+        optionen.add(rgb_allingment,g);
+        //Button to change Foreground OR Background
+            change_fb = new JButton("<html><font color = 'green'><font size = +1>Change Foreground</font></html>");
+            change_fb.setPreferredSize(new Dimension(buttonWidth, buttonHeigth));
+            change_fb.setBackground(MyWindow.backgroundColor);
+            change_fb.addActionListener(this);
+            g.gridx = 6;
+            g.gridy = GridBagConstraints.RELATIVE;
+        optionen.add(change_fb,g);
+
+            //Adding Firing Options
+            firingOptions = new JLabel("<html><font color = 'blue'><font size = +1>Select FiringOptions</font></html>");
+            firingOptions.setBackground(MyWindow.backgroundColor);
+                g.gridx = 6;
+                g.gridy = GridBagConstraints.RELATIVE;
+                g.gridwidth =1;
+                g.gridheight = 1;
+            optionen.add(firingOptions,g);
 
             //Gamemode-Selecter
             modeSelecter = new JComboBox();
@@ -195,7 +327,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             modeSelecter.setBorder(BorderFactory.createRaisedBevelBorder());
             modeSelecter.addActionListener(this);
             modeSelecter.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
-            for(String s : gamemodes)
+            for(String s : firingmode)
             {
                 modeSelecter.addItem(s);
             }
@@ -203,10 +335,11 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             g.gridy = GridBagConstraints.RELATIVE;
         optionen.add(modeSelecter,g);
 
+
         //Adding the Enemy Amount which can be selected
         for(int i = 0;i<ai_amount;i++)
         {
-            tankName = new JLabel("<html><font color = 'blue'>Test</font></html>");
+            tankName = new JLabel();
             //Create Images for Visual Shit
                 ImageIcon imageIcon = new ImageIcon("res/buttons/PanzerDefaultMetallic1.png");
                 imageIcon.setImage(imageIcon.getImage().getScaledInstance(buttonWidth + 2,buttonHeigth + 2,Image.SCALE_SMOOTH));
@@ -214,7 +347,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             //
             tankName.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
             g.gridx = 0;
-            g.gridy = 2+i;
+            g.gridy = 3+i;
             g.gridwidth = 1;
             g.gridheight = 1;
             g.weightx = 0;
@@ -222,26 +355,26 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             optionen.add(tankName,g);
 
             //Difficulty Slider
-                difficulty_slider[i] = new JSlider(SwingConstants.HORIZONTAL,0,100,Var.difficulty_sliderValue_preGameView[i]);
+                difficulty_slider[i] = new JSlider(SwingConstants.HORIZONTAL,0,10,Var.difficulty_sliderValue_preGameView[i]);
                 difficulty_slider[i].addChangeListener(this);
                 difficulty_slider[i].setMajorTickSpacing(1);
 
                 difficulty_slider[i].setPaintLabels(true);
                 difficulty_slider[i].setSnapToTicks(true);
-                Dictionary<Integer, Component> labelTable = new Hashtable<Integer, Component>();
-                    labelTable.put(0, new JLabel("Hard"));
-                    labelTable.put(100, new JLabel("Peanuts"));
+                Dictionary<Integer, Component> labelTable_difficulty = new Hashtable<Integer, Component>();
+                    labelTable_difficulty.put(0, new JLabel("Hard"));
+                    labelTable_difficulty.put(10, new JLabel("Peanuts"));
                 //Beschriftung eingeführt
-                difficulty_slider[i].setLabelTable(labelTable);
+                difficulty_slider[i].setLabelTable(labelTable_difficulty);
                 difficulty_slider[i].setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
                 difficulty_slider[i].setBackground(MyWindow.backgroundColor);
 
                 g.gridx = 1;
-                g.gridy = 2+i;
+                g.gridy = 3+i;
                 g.gridwidth = 1;
                 g.gridheight = 1;
                 g.weightx = 0;
-                g.insets = new Insets(10,0,0,0);
+                g.insets = new Insets(20,0,0,0);
             optionen.add(difficulty_slider[i],g);
             //
 
@@ -250,7 +383,8 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             aiCheckBox[i].setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
             aiCheckBox[i].setBackground(MyWindow.backgroundColor);
                 g.gridx = 4;
-                g.gridy = 2+i;
+                g.gridy = 3+i;
+            g.insets = new Insets(10,0,0,0);
             optionen.add(aiCheckBox[i],g);
 
             //Team Selecter
@@ -264,7 +398,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                 ai_teamSelecter[i].addItem(s);
             }
                 g.gridx = 5;
-                g.gridy = 2+i;
+                g.gridy = 3+i;
             optionen.add(ai_teamSelecter[i],g);
 
         }
@@ -380,7 +514,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             modeSelecter.setBorder(BorderFactory.createRaisedBevelBorder());
             modeSelecter.addActionListener(this);
             modeSelecter.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
-            for(String s : gamemodes)
+            for(String s : firingmode)
             {
                 modeSelecter.addItem(s);
             }
@@ -511,31 +645,58 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                 }
             }
             //TODO : Übergeben von Teams, Gamemode, map
-            if(gamemode == 0) gamemode = 2;
-            preGameModel.startAction(amount_selected_Players,difficulty_value_Ai,Var.login_profils,mapSelectter.getSelectedIndex()+1,gamemode);
+            if(gamemode == 0) gamemode = 1;
+            for(int i = 0;i<Var.login_profils.length;i++)
+            {
+                //Abbruch von Start wenn keine Feinde ausgewählt wurden
+                if(amount_selected_Players != 0 || Var.login_profils[i] != null){
+                    preGameModel.startAction(amount_selected_Players, difficulty_value_Ai, Var.login_profils, mapSelectter.getSelectedIndex() + 1, gamemode,foreground,background);
+
+                    i = Var.login_profils.length;
+                } else{
+                    JOptionPane.showMessageDialog(this, "Please Select an Enemy");
+
+                    i = Var.login_profils.length;
+                }
+            }
+               // preGameModel.startAction(amount_selected_Players, difficulty_value_Ai, Var.login_profils, mapSelectter.getSelectedIndex() + 1, gamemode);
         }
+
+        if(e.getSource() == change_fb)
+        {
+            if("<html><font color = 'green'><font size = +1>Change Background</font></html>".equals(change_fb.getText()))
+            {
+                change_fb.setText("<html><font color = 'green'><font size = +1>Change Foreground</font></html>");
+                System.out.println("Ich werde geändertt zu Foreground");
+            } else
+            {
+                change_fb.setText("<html><font color = 'green'><font size = +1>Change Background</font></html>");
+                System.out.println("Ich werde geändertt zu Foreground");
+            }
+        }
+
 
         if(e.getSource() == mapSelectter)
         {
-            System.out.println("Die wird ausgelöst");
-            mapImage = preGameModel.mapSelectingAction(mapSelectter.getSelectedIndex()+1,Color.GREEN,Color.BLUE).getScaledInstance(buttonWidth,buttonHeigth,Image.SCALE_SMOOTH);
+            //System.out.println("Die wird ausgelöst");
+            mapImage = preGameModel.mapSelectingAction(mapSelectter.getSelectedIndex()+1,foreground,background).getScaledInstance(buttonWidth,buttonHeigth,Image.SCALE_SMOOTH);
             map_loocking.setIcon(new ImageIcon(mapImage));
         }
 
         //Gamemodes
         if(e.getSource() == modeSelecter)
         {
-            if("Free for all".equals(modeSelecter.getSelectedItem()))
+            if("<html><font color = 'green'><font size = +1>Single Fire</font></html>".equals(modeSelecter.getSelectedItem()))
             {
                 System.out.println("So finde ich den heraus 1");
                 gamemode = 1;
             }
-            if("Team matches".equals(modeSelecter.getSelectedItem()))
+            if("<html><font color = 'green'><font size = +1>Team wise</font></html>".equals(modeSelecter.getSelectedItem()))
             {
                 System.out.println("So finde ich den heraus 2");
                 gamemode = 2;
             }
-            if("Instant Fight".equals(modeSelecter.getSelectedItem()))
+            if("<html><font color = 'green'><font size = +1>All at once</font></html>".equals(modeSelecter.getSelectedItem()))
             {
                 System.out.println("So finde ich den heraus 3");
                 gamemode = 3;
@@ -550,17 +711,21 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         {
             if(e.getSource() == ai_teamSelecter)
             {
-                if("Team 1".equals(ai_teamSelecter[i].getSelectedItem()))
+                if("<html><font color = 'green'><font size = +1>Team 1</font></html>".equals(ai_teamSelecter[i].getSelectedItem()))
                 {
                     team_from_ai[i] = 1;
                 }
-                if("Team 2".equals(ai_teamSelecter[i].getSelectedItem()))
+                if("<html><font color = 'green'><font size = +1>Team 2</font></html>".equals(ai_teamSelecter[i].getSelectedItem()))
                 {
                     team_from_ai[i] = 2;
                 }
-                if("Team 3".equals(ai_teamSelecter[i].getSelectedItem()))
+                if("<html><font color = 'green'><font size = +1>Team 3</font></html>".equals(ai_teamSelecter[i].getSelectedItem()))
                 {
                     team_from_ai[i] = 3;
+                }
+                if("<html><font color = 'green'><font size = +1>Team 4</font></html>".equals(ai_teamSelecter[i].getSelectedItem()))
+                {
+                    team_from_ai[i] = 4;
                 }
             }
         }
@@ -612,13 +777,67 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
     public void stateChanged(ChangeEvent e) {
         for(int i= 0; i<difficulty_slider.length;i++)
         {
-            Var.difficulty_sliderValue_preGameView[i] = difficulty_slider[i].getValue();
-            if(selected_aiCheckbox[i])
-            {
-                difficulty_value_Ai[i] = difficulty_slider[i].getValue();
-                System.out.println(difficulty_value_Ai[i]+ "This is its Index"+i);
+            if(e.getSource() == difficulty_slider[i]){
+                Var.difficulty_sliderValue_preGameView[i] = difficulty_slider[i].getValue();
+                if(selected_aiCheckbox[i])
+                {
+                    difficulty_value_Ai[i] = difficulty_slider[i].getValue();
+                    System.out.println(difficulty_value_Ai[i]+ "This is its Index"+i);
+                }
             }
         }
+        //RGB Slider Changed -> MapImage shall change
+            if(e.getSource() == red)
+            {
+                if("<html><font color = 'green'><font size = +1>Change Foreground</font></html>".equals(change_fb.getText()))
+                {
+                    foreground = new Color(red.getValue(),green.getValue(),blue.getValue());
 
+                    mapImage = preGameModel.mapSelectingAction(mapSelectter.getSelectedIndex()+1,foreground,background).getScaledInstance(buttonWidth,buttonHeigth,Image.SCALE_SMOOTH);
+                    map_loocking.setIcon(new ImageIcon(mapImage));
+                } else
+                {
+                    background = new Color(red.getValue(),green.getValue(),blue.getValue());
+
+                    mapImage = preGameModel.mapSelectingAction(mapSelectter.getSelectedIndex()+1,foreground,background).getScaledInstance(buttonWidth,buttonHeigth,Image.SCALE_SMOOTH);
+                    map_loocking.setIcon(new ImageIcon(mapImage));
+                }
+            }
+
+
+            if(e.getSource() == blue)
+            {
+                if("<html><font color = 'green'><font size = +1>Change Foreground</font></html>".equals(change_fb.getText()))
+                {
+                    foreground = new Color(red.getValue(),green.getValue(),blue.getValue());
+
+                    mapImage = preGameModel.mapSelectingAction(mapSelectter.getSelectedIndex()+1,foreground,background).getScaledInstance(buttonWidth,buttonHeigth,Image.SCALE_SMOOTH);
+                    map_loocking.setIcon(new ImageIcon(mapImage));
+                } else
+                {
+                    background = new Color(red.getValue(),green.getValue(),blue.getValue());
+
+                    mapImage = preGameModel.mapSelectingAction(mapSelectter.getSelectedIndex()+1,foreground,background).getScaledInstance(buttonWidth,buttonHeigth,Image.SCALE_SMOOTH);
+                    map_loocking.setIcon(new ImageIcon(mapImage));
+                }
+            }
+
+
+            if(e.getSource() == green)
+            {
+                if("<html><font color = 'green'><font size = +1>Change Foreground</font></html>".equals(change_fb.getText()))
+                {
+                    foreground = new Color(red.getValue(),green.getValue(),blue.getValue());
+
+                    mapImage = preGameModel.mapSelectingAction(mapSelectter.getSelectedIndex()+1,foreground,background).getScaledInstance(buttonWidth,buttonHeigth,Image.SCALE_SMOOTH);
+                    map_loocking.setIcon(new ImageIcon(mapImage));
+                } else
+                {
+                    background = new Color(red.getValue(),green.getValue(),blue.getValue());
+
+                    mapImage = preGameModel.mapSelectingAction(mapSelectter.getSelectedIndex()+1,foreground,background).getScaledInstance(buttonWidth,buttonHeigth,Image.SCALE_SMOOTH);
+                    map_loocking.setIcon(new ImageIcon(mapImage));
+                }
+            }
     }
 }

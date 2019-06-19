@@ -54,7 +54,7 @@ public class GameUiView extends JPanel implements ActionListener {
             g2d.setColor(Color.GREEN);
             g2d.fillRect(15, 215, (int) (270/100.0 * health), 70);
             g2d.setFont(new Font("Calibri",Font.BOLD,20));
-            g2d.drawString("Health:" + health + "/" + 100,0,200);
+            g2d.drawString("Health:" + health + "/" + 100,15,300);
         //´SpritBar
 
             Graphics2D g2dt = bottomSprit.createGraphics();
@@ -71,10 +71,14 @@ public class GameUiView extends JPanel implements ActionListener {
 
             AffineTransform aft = new AffineTransform();
 
+            g2dt.setFont(new Font("Calibri",Font.BOLD,20));
+            g2dt.drawString("Full",15,10);
+            g2dt.drawString("Empty",250,270);
             for(int i = 0;i < 7;i++) {
                 aft.setToRotation(Math.PI/12 * i,rotationPoint.getX(),rotationPoint.getY());
 
                 g2dt.setTransform(aft);
+
 
                 g2dt.fillRect(15, 10, 10, 20);
             }
@@ -96,15 +100,12 @@ public class GameUiView extends JPanel implements ActionListener {
     }
 
     //Gamemodel .getLocalHuman.getPanzer.(Da sind alle Infos)
-    //TODO: Die Bar unten fertig machen(Größe der Knöpfe,Lebensanzeige,Spritanzeige)
     public void erzeugenOverlay()
     {
 
 
-        fire = new MyButton("KnopfFeuerMetallic1.png","Fire Button",MyWindow.WIDTH/3,(int) (MyWindow.HEIGHT*0.3));
-
         drawBar();
-        
+
         FlowLayout fl = new FlowLayout();
         fl.setAlignment(FlowLayout.CENTER);
         fl.setVgap(0);
@@ -137,11 +138,11 @@ public class GameUiView extends JPanel implements ActionListener {
             muteMusik = new MyButton("KnopfSoundMetallic1.png","Press to Mute Musik");
         }
         muteMusik.addActionListener(this);
-        options.add(muteMusik,BorderLayout.NORTH);
+        options.add(muteMusik,BorderLayout.CENTER);
 
         weaponChoosing = new MyButton("WeaponKnopfMetallic1.png","Press to change Weapons");
         weaponChoosing.addActionListener(this);
-        options.add(weaponChoosing,BorderLayout.CENTER);
+        options.add(weaponChoosing,BorderLayout.NORTH);
 
         back = new MyButton("KnopfKampfVerlassenMetallic1.png","Back to Pregame");
         back.addActionListener(this);

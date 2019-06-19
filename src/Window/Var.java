@@ -122,7 +122,7 @@ public class Var {
         }
         try {
             music = new Sound();
-            music.setVolume(0.5f);
+            music.setVolume(0.1f);
             soundBarVolume = music.getVolume();
         } catch (LineUnavailableException e) {
             e.printStackTrace();
