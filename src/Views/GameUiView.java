@@ -101,10 +101,10 @@ public class GameUiView extends JPanel implements ActionListener {
     {
 
 
+        fire = new MyButton("KnopfFeuerMetallic1.png","Fire Button",MyWindow.WIDTH/3,(int) (MyWindow.HEIGHT*0.3));
+
         drawBar();
-
-
-
+        
         FlowLayout fl = new FlowLayout();
         fl.setAlignment(FlowLayout.CENTER);
         fl.setVgap(0);
