@@ -203,6 +203,15 @@ public class GameUiView extends JPanel implements ActionListener {
         {
             new File("data/").mkdirs();
 
+            try {
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("data/" + Var.activeUser.getName() + ".bin"));
+                objectOutputStream.writeObject(Var.activeUser);
+                objectOutputStream.close();
+
+            } catch (IOException d) {
+                System.out.println("Write Fehler while saving game: " + d);
+            }
+
             for(int i =0;i<Var.login_profils.length;i++)
             {
                 if(Var.login_profils[i] != null) {
