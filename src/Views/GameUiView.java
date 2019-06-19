@@ -3,12 +3,15 @@ package Views;
 import Model.GameModel;
 import Model.MainMenuModel;
 import Model.PreGameModel;
+import Weapons.Granade.Granade;
 import Window.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,39 +21,78 @@ import java.io.ObjectOutputStream;
 
 public class GameUiView extends JPanel implements ActionListener {
     MyButton fire,back,muteMusik,weaponChoosing,back_end_game;
-    int health,sprit;
+    private int health,sprit,maxSprit,yStart,xUnit;
     GameModel gameModel;
     JPanel options;
+    private BufferedImage bottomHealth,bottomSprit;
 
     BufferedImage heathBar;
     public  GameUiView(GameModel gameModel)
     {
         this.gameModel = gameModel;
+
+        bottomHealth = new BufferedImage(300 , 300,BufferedImage.TYPE_4BYTE_ABGR);
+        bottomSprit = new BufferedImage(300 , 300,BufferedImage.TYPE_4BYTE_ABGR);
+
+
     }
 
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
+
+    public void drawBar() {
+
         health = gameModel.getLastLocalHuman().getPanzer().getLeben();
         sprit = gameModel.getLastLocalHuman().getPanzer().getSprit();
-        Graphics2D g2d = (Graphics2D) g ;
+        maxSprit = gameModel.getLastLocalHuman().getPanzer().getMaxSprit();
+        Graphics2D g2d = bottomHealth.createGraphics();
+
+
         //HealthBar
+
+            g2d.drawImage(gameModel.getLastLocalHuman().getPanzer().getImage(), 0,0,300, 200,null);
             g2d.setColor(Color.BLACK);
-            g2d.fillRect(0,200,health * 5,50);
+            g2d.fillRect(10, 210,280, 80);
             g2d.setColor(Color.GREEN);
-            g2d.fillRect(0,200,health * 5,50);
+            g2d.fillRect(15, 215, (int) (270/100.0 * health), 70);
             g2d.setFont(new Font("Calibri",Font.BOLD,20));
             g2d.drawString("Health:" + health + "/" + 100,0,200);
         //´SpritBar
-            g2d.setColor(Color.BLACK);
-            g2d.fillRect(0,250,100,100);
-            g2d.setColor(Color.RED);
-            for(int i = 90;i>=0;i--)
-            {
-                g2d.drawLine(0,350,(int) Math.cos(i)*100,(int) Math.sin(i));
+
+            Graphics2D g2dt = bottomSprit.createGraphics();
+
+            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+            g2dt.setColor(Color.BLACK);
+
+            g2dt.fillRect(0,0,300,300);
+
+            Point2D rotationPoint = new Point2D.Double(20,280);
+
+            g2dt.setColor(Color.WHITE);
+
+            AffineTransform aft = new AffineTransform();
+
+            for(int i = 0;i < 7;i++) {
+                aft.setToRotation(Math.PI/12 * i,rotationPoint.getX(),rotationPoint.getY());
+
+                g2dt.setTransform(aft);
+
+                g2dt.fillRect(15, 10, 10, 20);
             }
-            //g2d.drawLine(0,350,(int) Math.cos(90),(int) Math.sin(90)+250);//(sprit/10)*3 = Sprit-Winkel-Verhältnis
-        repaint();
+
+            int[] xCords = new int[]{10,20,30,20};
+            int[] yCords = new int[]{290,280,290,10};
+
+            g2dt.setColor(Color.RED);
+
+            aft.setToRotation(Math.PI/2 - Math.PI/(2 * maxSprit) * sprit,rotationPoint.getX(),rotationPoint.getY());
+
+            g2dt.setTransform(aft);
+
+            g2dt.fillPolygon(new Polygon(xCords,yCords,4));
+
+            g2dt.setTransform(new AffineTransform());
+
+            this.repaint();
     }
 
     //Gamemodel .getLocalHuman.getPanzer.(Da sind alle Infos)
@@ -58,12 +100,35 @@ public class GameUiView extends JPanel implements ActionListener {
     public void erzeugenOverlay()
     {
 
-        fire = new MyButton("KnopfFeuerMetallic1.png","Fire Button",MyWindow.WIDTH/4,(int) (MyWindow.HEIGHT*0.3));
+
+        drawBar();
+
+
+
+        FlowLayout fl = new FlowLayout();
+        fl.setAlignment(FlowLayout.CENTER);
+        fl.setVgap(0);
+        fl.setHgap((int) (MyWindow.WIDTH * 0.05));
+        this.setLayout(fl);
+        this.setPreferredSize(new Dimension(MyWindow.WIDTH, (int) (MyWindow.HEIGHT*0.3)));
+
+
+
+        this.add(new JLabel(new ImageIcon(bottomHealth)));
+
+        this.add(new JLabel(new ImageIcon(bottomSprit)));
+
+
+
+        fire = new MyButton("KnopfFeuerMetallic1.png","Fire Button",MyWindow.WIDTH/3,(int) (MyWindow.HEIGHT*0.3));
+        fire.setMargin(new Insets(0,0,0,0));
         fire.addActionListener(this);
         this.add(fire);
 
         options = new JPanel();
-        options.setLayout(new BorderLayout());
+        BorderLayout bl = new BorderLayout();
+        bl.setVgap((int) (MyWindow.HEIGHT * 0.017));
+        options.setLayout(bl);
         if(Var.music.isMuted())
         {
             muteMusik = new MyButton("Mute1.png","Press to Mute Musik");
@@ -82,6 +147,11 @@ public class GameUiView extends JPanel implements ActionListener {
         back.addActionListener(this);
         options.add(back,BorderLayout.SOUTH);
         this.add(options);
+
+
+
+
+
     }
 
 

@@ -56,10 +56,6 @@ public class GameModel {
         players = new LinkedList<>();
         currentPlayer = new LinkedList<>();
 
-        teamanzahl = 2;
-
-        spielmode = 3;
-
         currentWeapons = new CopyOnWriteArrayList<>();
         deadPlayers = new LinkedList<>();
     }
@@ -76,7 +72,7 @@ public class GameModel {
 
         this.players = players;
 
-        this.spielmode = spielmode;
+        this.spielmode = 1;
 
         if(spielmode == 1){
             currentPlayer.add(players.getFirst());
@@ -97,6 +93,13 @@ public class GameModel {
             if(player.isLocalHuman()){
                 lastLocalHuman = player;
 
+            }
+        }
+
+
+        for(Player player : players){
+            if(player.getTeam() > teamanzahl){
+                teamanzahl++;
             }
         }
 
@@ -155,6 +158,10 @@ public class GameModel {
         }
     }
 
+    public void updateUI(){
+        gameUiView.drawBar();
+    }
+
     public void removeWeapon(Weapon weapon){
         currentWeapons.remove(weapon);
     }
@@ -191,6 +198,7 @@ public class GameModel {
                     }
                 }else{
                     int t = currentPlayer.getFirst().getTeam();
+                    currentPlayer = new LinkedList<>();
                     for(Player player : players){
                         if(player.getTeam() == t+1){
                             currentPlayer.add(player);
@@ -410,6 +418,8 @@ public class GameModel {
 
         //zeichnet das Waffenauswahlmenü
 
+        System.out.println(height);
+
         if(art == 1) {
             if (weaponsShowedTime <= GameLoop.imgH / 20) {
                 g2d.fillRect(0, (GameLoop.imgH - 20 * weaponsShowedTime), GameLoop.imgW, 20 * weaponsShowedTime);
@@ -430,8 +440,6 @@ public class GameModel {
 
         int size = lastLocalHuman.getWeapons().size();
 
-
-
         int h= size/5;
 
         if(size%5 != 0){
@@ -447,13 +455,13 @@ public class GameModel {
 
                 if (new Rectangle2D.Double(t % 5 * xtemp, (t / 5) * ytemp + height - h * ytemp, xtemp, ytemp).contains(mousex, mousey)) {
 
-                    if(mousey < (int) ((t / 5) * ytemp + height - h * ytemp - ytemp * 0.1) + (int) (ytemp * 1.2 * (2.0/9.0))  && clicked && sandbox) {
 
-                        System.out.println((int)((mousex - ((xtemp) * 0.1) - (int) (t % 5 * xtemp - xtemp * 0.1))/((xtemp) * (1/5.6))) );
+
+                    if(mousey < (int) ((t / 5) * ytemp + height - h * ytemp - ytemp * 0.1) + (int) (ytemp * 1.2 * (2.0/9.0))  && clicked && sandbox) {
 
                         if((int)((mousex - ((xtemp) * 0.1) - (int) (t % 5 * xtemp - xtemp * 0.1))/((xtemp) * (1.2/5.6))) < weapon.getLevelAnzhal()){
 
-                            System.out.println(22);
+
 
                             Weapon weapon1 = weapon.getLevelWeapon((int)((mousex - ((xtemp) * 0.1) - (int) (t % 5 * xtemp - xtemp * 0.1))/((xtemp) * (1.2/5.6))) + 1,this);
                             int anzahl = weapon.getAnzahl();
@@ -473,6 +481,8 @@ public class GameModel {
                             handeld = true;
 
                         }
+
+
 
                         weapon.drawImage((int) (t % 5 * xtemp - xtemp * 0.1), (int) ((t / 5) * ytemp + height - h * ytemp - ytemp * 0.1), (int) (xtemp * 1.2), (int) (ytemp * 1.2), g2d);
 
@@ -671,12 +681,12 @@ public class GameModel {
 
                 if(player.getTeam() != team) {
 
-                    player.getPanzer().schaden(damage, 0,sandbox);
+                    player.getPanzer().schaden(damage, 0,sandbox,this);
 
                     herkunft.addXP(damage);
                 }else{
 
-                    player.getPanzer().schaden(damage, 1,sandbox);
+                    player.getPanzer().schaden(damage, 1,sandbox,this);
                 }
             }
 
@@ -711,7 +721,7 @@ public class GameModel {
 
                 if(player.getTeam() != team) {
 
-                    player.getPanzer().schaden(damage, 0,sandbox);
+                    player.getPanzer().schaden(damage, 0,sandbox,this);
 
                     if(!sandbox) {
                         herkunft.addXP(damage);

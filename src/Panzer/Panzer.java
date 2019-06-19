@@ -153,9 +153,11 @@ public abstract class Panzer {
         hitbox = affineTransform.createTransformedShape(hit);
     }
 
-    public void schaden(int damage, int art,boolean sandbox) {
+    public void schaden(int damage, int art,boolean sandbox,GameModel model) {
         if(!sandbox) {
             leben -= damage;
+            model.updateUI();
+
         }
         int x = (int) (xPosition - width + Math.random() * width * 3);
         int y = (int) (yPosition + height - Math.random() * 2 * height);

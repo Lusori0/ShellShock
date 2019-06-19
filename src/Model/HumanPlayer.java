@@ -29,8 +29,10 @@ public class HumanPlayer extends Player {
             if (MyKeys.right) {
 
                 getPanzer().setMoveRight(true);
+                model.updateUI();
             } else if (MyKeys.left) {
                 getPanzer().setMoveLeft(true);
+                model.updateUI();
             }
 
             getPanzer().move(map);

@@ -59,6 +59,8 @@ public class GameLoop extends JPanel implements MouseListener {
 
         this.setLayout(layout);
 
+        //this.setPreferredSize(new Dimension(MyWindow.WIDTH, (int) (MyWindow.HEIGHT*0.7)));
+
 
         System.getProperties().setProperty("sun.java2d.opengl", "true");
 
@@ -117,6 +119,7 @@ public class GameLoop extends JPanel implements MouseListener {
 
 
             while (game) {
+
 
 
 
