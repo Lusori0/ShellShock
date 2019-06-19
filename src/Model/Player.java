@@ -20,7 +20,7 @@ public abstract class Player {
 
 
     public Player(GameModel model,int team,int id,Profil profil){
-        panzer = new StandartPanzer(model,profil.getName());
+        this.panzer = profil.getPanzer(model);
 
         this.profil = profil;
         this.id = id;

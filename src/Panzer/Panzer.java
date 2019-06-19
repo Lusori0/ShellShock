@@ -702,4 +702,22 @@ public abstract class Panzer {
             return time;
         }
     }
+
+    public static String getPanzerName(int level){
+        switch (level){
+            case 1:return "Normal Tank";
+            case 2:return "Light Tank";
+            case 3:return "Heavy Tank";
+            default: return "null";
+        }
+    }
+
+    public static BufferedImage getPanzerImage(int level){
+        switch (level){
+            case 1:return Var.panzerNormalGanz;
+            case 2:return Var.panzer;
+            case 3:return Var.panzer;
+            default: return null;
+        }
+    }
 }

@@ -1,7 +1,10 @@
 package Model;
 
+import Panzer.Panzer;
+
 import java.io.Serializable;
 import java.util.*;
+import Panzer.*;
 
 public class Profil implements Serializable {
     //Klasse zum Speichern des Profils
@@ -152,5 +155,9 @@ public class Profil implements Serializable {
                 return 8;
             default:return 0;
         }
+    }
+
+    public Panzer getPanzer(GameModel model) {
+        return new StandartPanzer(model,name);
     }
 }

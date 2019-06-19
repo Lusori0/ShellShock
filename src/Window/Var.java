@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class Var {
 
-    public static BufferedImage map,panzer,shotIcon,whiteBar,unselected,selected,shotIconDig,panzerRohr,drop;
+    public static BufferedImage map,panzer,shotIcon,whiteBar,unselected,selected,shotIconDig,panzerRohr,drop,panzerNormalGanz;
 
     public static BufferedImage shot,bigshot,hughshot,smallbounce,middlebounce,bigbounce,sniper,heavysniper,oneshot,fireball,nuke,meganuke,airstrike,bigairstrike,bombs,laser ,biglaser,granade,trinade,trishot,quadshot,multishot,shotgun,mg,ghostbomb;
 
@@ -42,6 +42,8 @@ public class Var {
         }
 
         try {
+            panzerNormalGanz = ImageIO.read(new File("res/buttons/PanzerDefaultMetallic1.png"));
+
             shot = ImageIO.read(new File("res/Icons/shot.png"));
             bigshot = ImageIO.read(new File("res/Icons/bigshot.png"));
             hughshot = ImageIO.read(new File("res/Icons/hughshot.png"));
