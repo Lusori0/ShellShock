@@ -38,7 +38,7 @@ public class ProfilView extends JPanel implements ActionListener {
         erzeugenOverlay();
 
     }
-
+    //TODO:  Image von beiden Panzern einfügen!
     private void erzeugenOverlay()
     {
         // Ersellen des Loadouts in Abhängigkeit des Gridbaglayouts
@@ -62,7 +62,6 @@ public class ProfilView extends JPanel implements ActionListener {
         //Initialisierung/Erzeugen des Inhalts
             levelDisplay = new JLabel("<html><font size = +5><font color = 'white'>Level : <font color='red'><font size = +5>"+level+"</font></html>");
             //Erstellen der Anordnung
-
 
                 g.gridy = 1;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
 

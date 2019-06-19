@@ -97,7 +97,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
     };
     String[] available_background_color = {};*/
 
-    //TODO:  Ingamevolume ändern //(ProfilView mit mehnren Panzern)!!!
+    //TODO:  Ingamevolume ändern
 
     ImageIcon gameOptionsImg;
     Image mapImage;
