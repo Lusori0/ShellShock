@@ -20,8 +20,6 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
 
     JSlider musicbar;
 
-    ImageIcon backImg,muteMusikImg;
-
     SettingsModel settingsModel;
 
     int musicbarValue;
@@ -94,13 +92,13 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
         // Slidebar test Ende
 
         //Initialisierung/Erzeugen des Inhalts
-            muteMusik = new MyButton("KnopfSoundMetallic1.png", "Press or use Slidebar to mute", muteMusikImg);
+            muteMusik = new MyButton("KnopfSoundMetallic1.png", "Press or use Slidebar to mute");
         if(Var.music.isMuted()){
             ImageIcon mute = new ImageIcon("res/buttons/Mute1.png");
             mute.setImage(mute.getImage().getScaledInstance(muteMusik.getWidth() + 2, muteMusik.getHeight() + 2, Image.SCALE_SMOOTH));
             muteMusik.setIcon(mute);
 
-            muteMusik = new MyButton("Mute1.png", "Press or use Slidebar to mute", muteMusikImg);
+            muteMusik = new MyButton("Mute1.png", "Press or use Slidebar to mute");
             muteMusik.addActionListener(this);
             //Einstellen von der Anordnung
 
@@ -116,7 +114,7 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
             this.add(muteMusik,g);
         } else
         {
-            muteMusik = new MyButton("KnopfSoundMetallic1.png", "Press or use Slidebar to mute", muteMusikImg);
+            muteMusik = new MyButton("KnopfSoundMetallic1.png", "Press or use Slidebar to mute");
             //muteMusik = new MyButton("KnopfSoundMetallic1.png","muteMusik",muteMusikImg);
             muteMusik.addActionListener(this);
             //Einstellen von der Anordnung
@@ -130,7 +128,7 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
 
 
         //Initialisierung/Erzeugen des Inhalts
-            back = new MyButton("KnopfZurückMetallic1.png","Back",backImg);
+            back = new MyButton("KnopfZurückMetallic1.png","Back");
             back.addActionListener(this);
 
             //Einstellen von der Anordnung

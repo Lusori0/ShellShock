@@ -26,7 +26,6 @@ public class MainMenuView extends JPanel implements ActionListener {
 
     private BufferedImage background;
 
-    private ImageIcon singleplayerImg, multiplayerImg, einstellungenImg, profilImg, exitImg;
 
 
 
@@ -88,7 +87,7 @@ public class MainMenuView extends JPanel implements ActionListener {
 
 
         //Initialisierung/Erzeugen des Inhalts
-            singelplayer = new MyButton("KnopfSingleplayerMetallic1.png", "Singleplayer", singleplayerImg);
+            singelplayer = new MyButton("KnopfSingleplayerMetallic1.png", "Singleplayer");
             singelplayer.addActionListener(this);
                 //Einstellen von der Anordnung
 
@@ -106,7 +105,7 @@ public class MainMenuView extends JPanel implements ActionListener {
 
 
         //Initialisierung/Erzeugen des Inhalts
-            multiplayer = new MyButton("KnopfMultiplayerMetallic1.png", "Mehrspieler", multiplayerImg);
+            multiplayer = new MyButton("KnopfMultiplayerMetallic1.png", "Mehrspieler");
             multiplayer.addActionListener(this);
             //Einstellen von der Anordnung
 
@@ -116,7 +115,7 @@ public class MainMenuView extends JPanel implements ActionListener {
             this.add(multiplayer, g);
 
         //Initialisierung/Erzeugen des Inhalts
-            einstellungen = new MyButton("KnopfEinstellungenMetallic1.png", "Einstellungen", einstellungenImg);
+            einstellungen = new MyButton("KnopfEinstellungenMetallic1.png", "Einstellungen");
             einstellungen.addActionListener(this);
             //Einstellen von der Anordnung
 
@@ -128,7 +127,7 @@ public class MainMenuView extends JPanel implements ActionListener {
 
 
         //Initialisierung/Erzeugen des Inhalts
-            profil = new MyButton("KnopfProfilMetallic1.png", "Profil", profilImg);
+            profil = new MyButton("KnopfProfilMetallic1.png", "Profil");
             profil.addActionListener(this);
 
             //Einstellen von der Anordnung
@@ -140,7 +139,7 @@ public class MainMenuView extends JPanel implements ActionListener {
             this.add(profil, g);
 
         //Initialisierung/Erzeugen der Buttons
-            exit = new MyButton("KnopfExitMetallic1.png", "Exit", exitImg);
+            exit = new MyButton("KnopfExitMetallic1.png", "Exit");
             exit.addActionListener(this);
             //Einstellen von der Anordnung
 
