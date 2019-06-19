@@ -58,7 +58,7 @@ public class GameUiView extends JPanel implements ActionListener {
     public void erzeugenOverlay()
     {
 
-        fire = new MyButton("KnopfFeuerMetallic1.png","Fire Button",MyWindow.WIDTH/4,(int) (MyWindow.HEIGHT*0.3));
+        fire = new MyButton("KnopfFeuerMetallic1.png","Fire Button",MyWindow.WIDTH/3,(int) (MyWindow.HEIGHT*0.3));
         fire.addActionListener(this);
         this.add(fire);
 
