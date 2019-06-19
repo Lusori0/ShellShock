@@ -44,7 +44,7 @@ public class Bullet {
         opac = 255;
         this.damage = 5;
         weaponsize = 12;
-        this.explosionRadius = 100;
+        this.explosionRadius = 50;
     }
 
     public void draw(Graphics2D g2d,Panzer herkunft) {
@@ -59,7 +59,7 @@ public class Bullet {
 
                 if(cord[0] != (int)x && cord[1] != (int)y) {
 
-                    g2d.setColor(Color.WHITE);
+                    g2d.setColor(new Color(255,150,255));
                     double size = (this.weaponsize * 1.2) / 40 * temp;
 
 

@@ -119,7 +119,7 @@ public abstract class AirStrikeAbs extends Weapon {
 
 
 
-        Point2D tCollisionPoint = affineTransform.transform(new Point2D.Double(xPosition,yPosition + weaponsize/2),null);
+        Point2D tCollisionPoint = affineTransform.transform(new Point2D.Double(xPosition,yPosition),null);
 
         if(gameModel.isCollision((int)tCollisionPoint.getX(),(int)tCollisionPoint.getY()) && wasNoCollision){
 
@@ -144,7 +144,7 @@ public abstract class AirStrikeAbs extends Weapon {
 
                 for(int i = 0; i < count;i++){
                     int dis = (count-1) * 30;
-                    shots.add(new Bullet((int) (xPosition - dis/2 + i * 30),20,gameModel,explosionRadius));
+                    shots.add(new Bullet((int) (xPosition - dis/2 + i * 30),damage,gameModel,explosionRadius));
                 }
             }
 

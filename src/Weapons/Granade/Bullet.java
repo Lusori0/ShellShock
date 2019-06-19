@@ -71,7 +71,7 @@ public class Bullet {
         }
 
 
-        Point2D tCollisionPoint = this.affineTransform.transform(new Point2D.Double(this.x, this.y + this.weaponsize / 2.0), null);
+        Point2D tCollisionPoint = this.affineTransform.transform(new Point2D.Double(this.x, this.y), null);
 
         if(gameModel.isCollision((int)tCollisionPoint.getX(),(int)tCollisionPoint.getY()) && wasNoCollision){
 
@@ -96,7 +96,7 @@ public class Bullet {
 
 
             wasNoCollision = false;
-        }else if(!gameModel.isCollision((int)tCollisionPoint.getX(),(int)tCollisionPoint.getY())){
+        }else{
             wasNoCollision = true;
         }
 

@@ -30,7 +30,7 @@ public abstract class LaserAbs extends Weapon {
     private Color drawColor;
 
     public LaserAbs(GameModel gameModel, String name, int level,int id,BufferedImage icon,Color drawColor,int size) {
-        super(gameModel,name,id,Color.WHITE);
+        super(gameModel,name,id,new Color(253,255,179));
 
         this.icon = icon;
         this.drawColor = drawColor;

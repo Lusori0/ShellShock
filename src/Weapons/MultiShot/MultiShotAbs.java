@@ -29,7 +29,7 @@ public abstract class MultiShotAbs extends Weapon {
     private LinkedList<Bullet> shots = new LinkedList<>();
 
     public MultiShotAbs(GameModel gameModel, String name, int level, int id,int count,BufferedImage icon) {
-        super(gameModel,name,id, Color.WHITE);
+        super(gameModel,name,id, new Color(255,150,255));
 
         this.count = count;
 

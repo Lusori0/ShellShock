@@ -22,7 +22,6 @@ public abstract class Shot extends Weapon {
     private int explosionTimer = 0;
     protected int explosionRadius;
     protected int damage;
-    private int steps = 5;
     private boolean hit = false;
 
 
@@ -30,7 +29,7 @@ public abstract class Shot extends Weapon {
     private int starttimer = 0;
     protected int effecttime;
 
-    public Shot(GameModel gameModel, String name, int level,int id,BufferedImage icon) {
+    public Shot(GameModel gameModel, String name, int id, BufferedImage icon) {
         super(gameModel,name,id,Color.WHITE);
 
         this.icon = icon;
@@ -52,13 +51,14 @@ public abstract class Shot extends Weapon {
         starttimer = 0;
         affineTransform = new AffineTransform();
         played = false;
+        coords = new LinkedList<>();
     }
 
     @Override
     public void create(int startX, int startY, double winkel, double strength, boolean rechts,Panzer herkunft) {
         super.create(startX, startY, winkel, strength, rechts,herkunft);
         for(int i = 0; i < 40;i++){
-            coords.add(new int[]{(int) startX, (int) startY});
+            coords.add(new int[]{startX, startY});
         }
     }
 
@@ -106,12 +106,12 @@ public abstract class Shot extends Weapon {
 
                 g2d.setColor(Color.WHITE);
                 g2d.setTransform(affineTransform);
-                g2d.fillOval((int) xPosition + weaponsize/2 - explosionRadius / 2, (int) yPosition + weaponsize/2 - explosionRadius / 2, (int)(explosionRadius ), (int)(explosionRadius));
+                g2d.fillOval((int) xPosition + weaponsize/2 - explosionRadius / 2, (int) yPosition + weaponsize/2 - explosionRadius / 2, (explosionRadius ), (explosionRadius));
                 g2d.setTransform(new AffineTransform());
                 explosionTimer++;
             } else if (explosionTimer <= 100) {
                 g2d.setColor(new Color(255, 255, 255, (int) (255 - 255 * explosionTimer / (double) 100)));
-                g2d.fillOval((int) xPosition - explosionRadius / 2, (int) yPosition - explosionRadius / 2, (int) (explosionRadius), (int) (explosionRadius));
+                g2d.fillOval((int) xPosition - explosionRadius / 2, (int) yPosition - explosionRadius / 2, (explosionRadius), (explosionRadius));
                 explosionTimer++;
             } else {
 
@@ -126,7 +126,8 @@ public abstract class Shot extends Weapon {
 
     protected void callculateNewCoords(){
 
-        for(int i = 0; i < steps;i++) {
+        int steps = 5;
+        for(int i = 0; i < steps; i++) {
 
             double ht = speed * strength;
             downspeed += gravity;

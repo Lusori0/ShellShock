@@ -6,8 +6,6 @@ import Window.*;
 
 public class HumanPlayer extends Player {
 
-
-
     public HumanPlayer(GameModel model, int team,int id,Profil profil) {
         super(model, team,id,profil);
     }
@@ -31,8 +29,10 @@ public class HumanPlayer extends Player {
             if (MyKeys.right) {
 
                 getPanzer().setMoveRight(true);
+                model.updateUI();
             } else if (MyKeys.left) {
                 getPanzer().setMoveLeft(true);
+                model.updateUI();
             }
 
             getPanzer().move(map);
@@ -40,7 +40,6 @@ public class HumanPlayer extends Player {
             getPanzer().moveNotTurn(map);
         }
     }
-
 
     @Override
     public void prepare(GameModel model) {
@@ -55,7 +54,4 @@ public class HumanPlayer extends Player {
 
     }
 
-
-    @Override
-    public void setValues(int x, int y, double drawWinkel, double winkel,double rohrwinkel,boolean right) {}
 }

@@ -47,8 +47,6 @@ public abstract class Weapon {
     protected BufferedImage icon;
     protected String name;
 
-    protected BufferedImage[] icons;
-
     protected Panzer herkunft;
 
     protected AffineTransform affineTransform;
@@ -58,6 +56,11 @@ public abstract class Weapon {
 
     private Color color;
     protected boolean played;
+
+    /*Alle Waffen erben von der Klasse Weapon
+    * für die Physik der Waffen gibt es zwei verschiedene Arten:
+    * zum einen die in der Klasse Shot bei der auf den ersten Aufprall die Explosion folgt
+    * zum anderen die aus der Klasse Bouncer, bei der das Projektil wie ein Ball funktioniert*/
 
     public Weapon(GameModel gameModel,String name,int id,Color color) {
         this.gameModel = gameModel;
@@ -75,6 +78,7 @@ public abstract class Weapon {
 
     public void createImage(){
 
+        //Erzeugt das Bild für das Waffenauswahlmenü
 
 
         image = new BufferedImage(560,225,BufferedImage.TYPE_4BYTE_ABGR);
@@ -195,17 +199,7 @@ public abstract class Weapon {
 
     }
 
-    private void callculateNewCoords(){
-
-    }
-
-    private void weaponEnd(){
-
-
-    }
-
     public abstract void reset();
-
 
     public void drawImage(int x,int y,int widht,int height,Graphics2D g2d){
         g2d.drawImage(image,x,y,widht,height,null);
