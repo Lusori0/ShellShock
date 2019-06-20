@@ -175,7 +175,7 @@ public class GameUiView extends JPanel implements ActionListener {
         if ((e.getSource() == back))
         {
             gameModel.getLastLocalHuman().getPanzer().setLeben(0);
-            gameModel.nextTurn();
+            gameModel.feuerButtonAction();
         }
         if ((e.getSource() == muteMusik))
         {

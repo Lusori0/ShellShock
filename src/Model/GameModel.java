@@ -4,6 +4,7 @@ import Panzer.Panzer;
 import Views.GameLoop;
 import Views.GameUiView;
 import Views.GameView;
+import Weapons.Shot.NormalShot;
 import Weapons.Weapon;
 import Window.MyKeys;
 import Window.MyWindow;
@@ -627,17 +628,19 @@ public class GameModel {
         if(!shot) {
 
 
+            boolean temp = false;
 
             for(Player player : currentPlayer) {
 
-                player.shoot(this);
+                if(player.getPanzer().getLeben() > 0) {
+
+                    player.shoot(this);
 
 
-                currentWeapons.add(player.getSelectedWeapon());
+                    currentWeapons.add(player.getSelectedWeapon());
 
 
-
-                if(!sandbox) {
+                    if (!sandbox) {
 
                         if (player.getSelectedWeapon().getAnzahl() == 1) {
                             player.getWeapons().remove(player.getSelectedWeapon());
@@ -649,6 +652,11 @@ public class GameModel {
                             player.subWaffenanzahl();
                         }
 
+                    }
+                }else{
+                    NormalShot shot =  new NormalShot(this);
+                    shot.create((int)player.getPanzer().getBulletspawn().getX(), (int) player.getPanzer().getBulletspawn().getY(),player.getPanzer().getWinkel() - Math.PI/2,1,false,player.getPanzer());
+                    currentWeapons.add(shot);
                 }
 
             }
