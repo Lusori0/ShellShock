@@ -247,6 +247,8 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
         if (e.getSource() == ingameVolume_bar)
         {
             Var.ingameSoundbar =(float) ingameVolume_bar.getValue()/100;
+            Var.inGameVolume = Var.ingameSoundbar;
+            Var.activeUser.setInGameVolume(Var.inGameVolume);
             
         }
 

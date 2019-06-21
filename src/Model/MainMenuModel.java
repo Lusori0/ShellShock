@@ -41,7 +41,6 @@ public class MainMenuModel {
 
     //method for saving user
     public void saveProfile(Profil profil){
-        Var.inGameVolume = Var.ingameSoundbar;
         new File("data/").mkdirs();
         try {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("data/" + profil.getName() + ".bin"));
