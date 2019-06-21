@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class Var {
 
-    public static BufferedImage map,panzer,shotIcon,whiteBar,unselected,selected,shotIconDig,panzerRohr,drop,panzerNormalGanz;
+    public static BufferedImage map,panzer,shotIcon,whiteBar,unselected,selected,shotIconDig,panzerRohr,drop,panzerNormalGanz,lightPanzer,lightPanzerGanz,heavyPanzer,heavyPanzerGanz;
 
     public static BufferedImage shot,bigshot,hughshot,smallbounce,middlebounce,bigbounce,sniper,heavysniper,oneshot,fireball,nuke,meganuke,airstrike,bigairstrike,bombs,laser ,biglaser,granade,trinade,trishot,quadshot,multishot,shotgun,mg,ghostbomb;
 
@@ -42,7 +42,6 @@ public class Var {
         }
 
         try {
-            panzerNormalGanz = ImageIO.read(new File("res/buttons/PanzerDefaultMetallic1.png"));
 
             shot = ImageIO.read(new File("res/Icons/shot.png"));
             bigshot = ImageIO.read(new File("res/Icons/bigshot.png"));
@@ -83,7 +82,15 @@ public class Var {
             drop = ImageIO.read(new File("res/Icons/supply.png"));
 
             map = ImageIO.read(new File("res/map3.png"));
+
             panzer = ImageIO.read(new File("res/panzer.png"));
+            lightPanzer = ImageIO.read(new File("res/lightPanzer.png"));
+            heavyPanzer = ImageIO.read(new File("res/heavyPanzer.png"));
+
+            panzerNormalGanz = ImageIO.read(new File("res/buttons/PanzerDefaultMetallic1.png"));
+            lightPanzerGanz = ImageIO.read(new File("res/buttons/PanzerLightMetallic.png"));
+            heavyPanzerGanz = ImageIO.read(new File("res/buttons/PanzerHeavyMetallic.png"));
+
             shotIcon = ImageIO.read(new File("res/shotIcon.png"));
             whiteBar = ImageIO.read(new File("res/whiteBar.png"));
             unselected = ImageIO.read(new File("res/unselected.png"));
