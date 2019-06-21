@@ -43,7 +43,7 @@ public class GameLoop extends JPanel implements MouseListener {
 
     private boolean game = true;
 
-    private static boolean pauset;
+    public static boolean pauset;
 
 
     public GameLoop(GameModel gameModel,Color background,Color foreground){
@@ -160,13 +160,11 @@ public class GameLoop extends JPanel implements MouseListener {
                     //drawStart
 
                     if (pauset) {
-                        try {
-                            Thread.sleep(10000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                        continue;
+                    }else{
+                        if(buffer == null){
+                            createStrategy();
                         }
-
-                        pauset = false;
                     }
 
 
