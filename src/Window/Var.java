@@ -85,7 +85,7 @@ public class Var {
 
             panzer = ImageIO.read(new File("res/panzer.png"));
             lightPanzer = ImageIO.read(new File("res/lightPanzer.png"));
-            heavyPanzer = ImageIO.read(new File("res/heavyPanlzer.png"));
+            heavyPanzer = ImageIO.read(new File("res/heavyPanzer.png"));
 
             panzerNormalGanz = ImageIO.read(new File("res/buttons/PanzerDefaultMetallic1.png"));
             lightPanzerGanz = ImageIO.read(new File("res/buttons/PanzerLightMetallic.png"));
