@@ -162,7 +162,7 @@ public class GameLoop extends JPanel implements MouseListener {
                     if (pauset) {
                         continue;
                     }else{
-                        if(buffer == null){
+                        if(buffer.contentsLost()){
                             createStrategy();
                         }
                     }

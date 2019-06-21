@@ -145,8 +145,6 @@ public class Var {
 
     public static void playSound(Clip clip) {
         try{
-            Var.inGameVolume = Var.ingameSoundbar;
-
 
             FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             float range = volume.getMaximum() - volume.getMinimum();
