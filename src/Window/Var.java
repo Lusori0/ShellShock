@@ -173,6 +173,7 @@ public class Var {
         System.out.println("active user set");
         activeUser = profilRead;
         inGameVolume = activeUser.getInGameVolume();
+        ingameSoundbar = activeUser.getInGameVolume();
         music.setVolume(activeUser.getMusicVolume());
         soundBarVolume = (int)(100*activeUser.getMusicVolume());
     }
