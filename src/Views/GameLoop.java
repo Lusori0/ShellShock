@@ -230,24 +230,26 @@ public class GameLoop extends JPanel implements MouseListener {
                         }
                     }
 
-                    if(MyKeys.weapon) {
-                        g2d.setColor(new Color(50, 50, 50, 100));
+                    if(!gameModel.isEnded()) {
+                        if (MyKeys.weapon) {
+                            g2d.setColor(new Color(50, 50, 50, 100));
 
 
-                        if (mouseEntered) {
-                            Point p = MouseInfo.getPointerInfo().getLocation();
-                            SwingUtilities.convertPointFromScreen(p, canvas);
-                            mouseX = p.x * imgW / MyWindow.WIDTH;
-                            mouseY = (int) (p.y * imgH / (MyWindow.HEIGHT * 0.7));
+                            if (mouseEntered) {
+                                Point p = MouseInfo.getPointerInfo().getLocation();
+                                SwingUtilities.convertPointFromScreen(p, canvas);
+                                mouseX = p.x * imgW / MyWindow.WIDTH;
+                                mouseY = (int) (p.y * imgH / (MyWindow.HEIGHT * 0.7));
 
+                            }
+
+                            if (gameModel.showWeapons(g2d, mouseX, mouseY, mouseClicked, 1)) {
+                                mouseClicked = false;
+                            }
+                        } else if (gameModel.getWeaponsShowedTime() > 0 && !MyKeys.weapon) {
+                            g2d.setColor(new Color(50, 50, 50, 100));
+                            gameModel.showWeapons(g2d, mouseX, mouseY, mouseClicked, -1);
                         }
-
-                        if (gameModel.showWeapons(g2d, mouseX, mouseY, mouseClicked, 1)) {
-                            mouseClicked = false;
-                        }
-                    }else if(gameModel.getWeaponsShowedTime() > 0 && !MyKeys.weapon){
-                        g2d.setColor(new Color(50, 50, 50, 100));
-                        gameModel.showWeapons(g2d,mouseX,mouseY,mouseClicked,-1);
                     }
 
 
