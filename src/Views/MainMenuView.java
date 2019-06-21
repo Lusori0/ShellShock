@@ -96,7 +96,7 @@ public class MainMenuView extends JPanel implements ActionListener {
 
                     g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
 
-                    g.insets = new Insets(100, 0, 0, 0);// Erzeugen eines Abstandes mit dem nächsten Button
+                    g.insets = new Insets(50, 0, 0, 0);// Erzeugen eines Abstandes mit dem nächsten Button
 
                     g.gridy = 0;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
 
@@ -144,7 +144,6 @@ public class MainMenuView extends JPanel implements ActionListener {
             //Einstellen von der Anordnung
 
                 g.gridy = 4;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
-
             //Einfügen der Inhalte in Abhängigkeit der GridBag
             this.add(exit, g);
 

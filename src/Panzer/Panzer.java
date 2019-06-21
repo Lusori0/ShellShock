@@ -68,7 +68,7 @@ public abstract class Panzer {
 
         playSound(engineClip);
 
-        Var.inGameVolume = 0.4f;
+        Var.inGameVolume = Var.ingameSoundbar;
 
         affineTransform = new AffineTransform();
 

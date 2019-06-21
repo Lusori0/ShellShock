@@ -42,9 +42,9 @@ public class PreGameModel {
        return model.getMap().getMapSmall(art,model,mapC,skyC);
     }
 
-    public void startAction(int amount,int[] difficutly,Profil[] profils,int mapId,int gamemode,Color f,Color b){
+    public void startAction(int amount,int[] difficutly,Profil[] profils,int mapId,int gamemode,Color f,Color b,int[] team_human,int[] team_ai,int team_currenUser){
         LinkedList<Player> players = new LinkedList<>();
-
+        //TODO: einfach den Team sachen einbumsen
         LinkedList<Integer> weaponsTest = new LinkedList<>();
 
         weaponsTest.add(1);
@@ -53,24 +53,25 @@ public class PreGameModel {
 
         Profil profil = new Profil("test",1,"test",1,weaponsTest,0.5f,0.5f);
 
-        players.add(new HumanPlayer(model,1,model.getNextId(), Var.activeUser));
+        players.add(new HumanPlayer(model,team_currenUser,model.getNextId(), Var.activeUser));
        for(int p = 0;p<profils.length;p++)
        {
 
            if(profils[p] != null){
-               players.add(new HumanPlayer(model,2,model.getNextId(),profils[p]));
+               players.add(new HumanPlayer(model,team_human[p],model.getNextId(),profils[p]));
            }else{
                p++;
            }
 
        }
 
+        //Einfügen der Ai abhängig von ausgewähltem Scheiß
         if(amount >0)
         {
             for(int i = 0;i<amount;i++)
             {
                 System.out.println(Var.activeUser);
-                players.add(new KiPlayer(model,2,model.getNextId(), difficutly[i],Var.activeUser));
+                players.add(new KiPlayer(model,team_ai[i],model.getNextId(), difficutly[i],Var.activeUser));
             }
         } else{}
 

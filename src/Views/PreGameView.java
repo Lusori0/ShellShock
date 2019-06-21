@@ -40,6 +40,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         int[] difficulty_value_Ai = new int[ai_amount];
         int[] team_from_ai = new int[ai_amount];
         int[] team_from_human = new int[human_amount];
+        int team_current_user;
     //
     //Jeckboxes for more Players
         JCheckBox[] aiCheckBox = new JCheckBox[ai_amount];
@@ -53,6 +54,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
 
     JComboBox[] ai_teamSelecter = new JComboBox[ai_amount];
     JComboBox[] human_teamSelecter = new JComboBox[human_amount];
+    JComboBox curren_tank_Selecter = new JComboBox();
 
     JComboBox mapSelectter,modeSelecter;
     //RGB Slider + Button
@@ -144,8 +146,8 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
 
         //Adding currentProfile in Top Row
             currentPlayer_tank = new JLabel();
-            ImageIcon tank = new ImageIcon("res/buttons/PanzerDefaultMetallic1.png"); //Falls man mit mehreren Panzer einfach getPanzer bei Var.aktiveUser
-            tank.setImage(tank.getImage().getScaledInstance(buttonWidth + 2,buttonHeigth + 2,Image.SCALE_SMOOTH));
+                ImageIcon tank = new ImageIcon("res/buttons/PanzerDefaultMetallic1.png"); //Falls man mit mehreren Panzer einfach getPanzer bei Var.aktiveUser
+                tank.setImage(tank.getImage().getScaledInstance(buttonWidth + 2,buttonHeigth + 2,Image.SCALE_SMOOTH));
             currentPlayer_tank.setIcon(tank);
             //GridbagLayout
             g.gridx = 0;
@@ -158,6 +160,19 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             g.gridx = 1;
             g.gridy = 1;
             optionen.add(description,g);
+            //TeamSelecter
+                curren_tank_Selecter = new JComboBox();
+                curren_tank_Selecter.setBackground(MyWindow.backgroundColor);
+                curren_tank_Selecter.setBorder(BorderFactory.createRaisedBevelBorder());
+                curren_tank_Selecter.addActionListener(this);
+                curren_tank_Selecter.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
+                for(String s : team_String)
+                {
+                    curren_tank_Selecter.addItem(s);
+                }
+                g.gridx = 2;
+                g.gridy = 1;
+            optionen.add(curren_tank_Selecter,g);
 
         //Adding Enemy
         art = new JLabel("<html><font color = 'red'><font size = +1>Enemy Image</font></html>");
@@ -379,7 +394,6 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
     public void erzeugenOverlayMultiplayer()
     {
         mulitplayer = true;
-        //TODO: Also den Ganzen Scheiß umwerfen und Umkräppeln nach Niels Design!!!
 
         this.setLayout(b);
         optionen.setLayout(new GridBagLayout());
@@ -395,27 +409,57 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         back.addActionListener(this);
         buttons.add(back);
 
+        //Adding currentProfile in Top Row
+            currentPlayer_tank = new JLabel();
+            ImageIcon tank = new ImageIcon("res/buttons/PanzerDefaultMetallic1.png"); //Falls man mit mehreren Panzer einfach getPanzer bei Var.aktiveUser
+            tank.setImage(tank.getImage().getScaledInstance(buttonWidth + 2,buttonHeigth + 2,Image.SCALE_SMOOTH));
+            currentPlayer_tank.setIcon(tank);
+            //GridbagLayout
+            g.gridx = 0;
+            g.gridy = 1;
+
+            optionen.add(currentPlayer_tank,g);
+            JLabel description = new JLabel("<html><font color = 'red'><font size = +1>Current aktive User Tank</font></html>");
+
+            //GridbagLayout
+            g.gridx = 1;
+            g.gridy = 1;
+        optionen.add(description,g);
+
+        //TeamSelecter
+            curren_tank_Selecter = new JComboBox();
+            curren_tank_Selecter.setBackground(MyWindow.backgroundColor);
+            curren_tank_Selecter.setBorder(BorderFactory.createRaisedBevelBorder());
+            curren_tank_Selecter.addActionListener(this);
+            curren_tank_Selecter.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
+            for(String s : team_String)
+            {
+                curren_tank_Selecter.addItem(s);
+            }
+            g.gridx = 2;
+            g.gridy = 1;
+        optionen.add(curren_tank_Selecter,g);
 
         //Der neue Scheiß
         art = new JLabel("<html><font color = 'red'><font size = +1>Enemy Image</font></html>");
         art.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         art.setBackground(Color.PINK);
         g.gridx = 0;
-        g.gridy = 1;
+        g.gridy = 2;
         optionen.add(art,g);
 
         icon = new JLabel("<html><font color = 'red'><font size = +1></font></html>");
         icon.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         icon.setBackground(Color.RED);
         g.gridx = GridBagConstraints.RELATIVE;
-        g.gridy = 1;
+        g.gridy = 2;
         optionen.add(icon,g);
 
         enemy = new JLabel("<html><font color = 'red'><font size = +1>Select Enemies</font></html>");
         enemy.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         enemy.setBackground(Color.RED);
         g.gridx = GridBagConstraints.RELATIVE;
-        g.gridy = 1;
+        g.gridy = 2;
         g.gridwidth =3;
         g.gridheight = 1;
         g.fill = GridBagConstraints.HORIZONTAL;
@@ -425,7 +469,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         team.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         team.setBackground(Color.RED);
         g.gridx = GridBagConstraints.RELATIVE;
-        g.gridy = 1;
+        g.gridy = 2;
         g.gridwidth =1;
         g.gridheight = 1;
         g.fill = GridBagConstraints.HORIZONTAL;
@@ -439,7 +483,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         //
         gameOptions.setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
         g.gridx = GridBagConstraints.RELATIVE;
-        g.gridy =1;
+        g.gridy =2;
         g.weightx = 0;
         g.gridwidth = 3;
         g.gridheight = 1;
@@ -537,8 +581,8 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             g.gridy = GridBagConstraints.RELATIVE;
         optionen.add(change_fb,g);
 
-        //Adding Firing Options//TODO: Niels Fragen ob man das macht mit Firingmode in Multiplayer!!
-           /* firingOptions = new JLabel("<html><font color = 'blue'><font size = +1>Select FiringOptions</font></html>");
+        //Adding Firing Options
+            firingOptions = new JLabel("<html><font color = 'blue'><font size = +1>Select FiringOptions</font></html>");
             firingOptions.setBackground(MyWindow.backgroundColor);
             g.gridx = 6;
             g.gridy = GridBagConstraints.RELATIVE;
@@ -558,7 +602,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             }
             g.gridx = 6;
             g.gridy = GridBagConstraints.RELATIVE;
-            optionen.add(modeSelecter,g);*/
+            optionen.add(modeSelecter,g);
 
         // 2 Elements in one Grid
             connecting = new JPanel[ai_amount];
@@ -596,7 +640,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             //
             tankName.setPreferredSize(new Dimension(buttonWidth, buttonHeigth));
             g.gridx = 0;
-            g.gridy = 2 + i;
+            g.gridy = 3 + i;
             g.gridwidth = 1;
             g.gridheight = 1;
             g.weightx = 0;
@@ -605,7 +649,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
 
 
 
-            //Team Selecter
+            /*//Team Selecter
                 ai_teamSelecter[i] = new JComboBox();
                 ai_teamSelecter[i].setBackground(MyWindow.backgroundColor);
                 ai_teamSelecter[i].setBorder(BorderFactory.createRaisedBevelBorder());
@@ -617,10 +661,10 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                 }
                 g.gridx = 5;
                 g.gridy = 2+i;
-            optionen.add(ai_teamSelecter[i],g);
+            optionen.add(ai_teamSelecter[i],g);*/
 
             g.gridx = 4;
-            g.gridy = 2 + i;
+            g.gridy = 3 + i;
             g.gridwidth = 1;
             g.gridheight = 1;
             g.insets = new Insets(10, 0, 0, 0);
@@ -677,14 +721,13 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                     amount_selected_Players ++;
                 }
             }
-            //TODO : Übergeben von Teams, Gamemode, map
             if(gamemode == 0) gamemode = 1;
             for(int i = 0;i<Var.login_profils.length;i++)
             {
                 Var.selected_humanCheckbox_speicher[i] = false;
                 //Abbruch von Start wenn keine Feinde ausgewählt wurden
                 if(amount_selected_Players != 0 || Var.login_profils[i] != null){
-                    preGameModel.startAction(amount_selected_Players, difficulty_value_Ai, Var.login_profils, mapSelectter.getSelectedIndex() + 1, gamemode,foreground,background);
+                    preGameModel.startAction(amount_selected_Players, difficulty_value_Ai, Var.login_profils, mapSelectter.getSelectedIndex() + 1, gamemode,foreground,background,team_from_human,team_from_ai,team_current_user);
 
                     i = Var.login_profils.length;
                 } else{
@@ -693,7 +736,6 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                     i = Var.login_profils.length;
                 }
             }
-               // preGameModel.startAction(amount_selected_Players, difficulty_value_Ai, Var.login_profils, mapSelectter.getSelectedIndex() + 1, gamemode);
         }
 
 
@@ -751,36 +793,78 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         if (e.getSource() == back) {
             for(int i=0;i<human_amount;i++)
             {
+                Var.login_profils[i] = null;
                 Var.selected_humanCheckbox_speicher[i] = false;
             }
             preGameModel.backAction();
         }
 
-
-
-        //Teams
-        for(int i = 0; i<ai_amount;i++)
+        if(e.getSource() == curren_tank_Selecter)
         {
-            if(e.getSource() == ai_teamSelecter)
+            if("<html><font color = 'green'><font size = +1>Team 1</font></html>".equals(curren_tank_Selecter.getSelectedItem()))
             {
-                if("<html><font color = 'green'><font size = +1>Team 1</font></html>".equals(ai_teamSelecter[i].getSelectedItem()))
-                {
-                    team_from_ai[i] = 1;
-                }
-                if("<html><font color = 'green'><font size = +1>Team 2</font></html>".equals(ai_teamSelecter[i].getSelectedItem()))
-                {
-                    team_from_ai[i] = 2;
-                }
-                if("<html><font color = 'green'><font size = +1>Team 3</font></html>".equals(ai_teamSelecter[i].getSelectedItem()))
-                {
-                    team_from_ai[i] = 3;
-                }
-                if("<html><font color = 'green'><font size = +1>Team 4</font></html>".equals(ai_teamSelecter[i].getSelectedItem()))
-                {
-                    team_from_ai[i] = 4;
-                }
+                team_current_user = 1;
+            }
+            if("<html><font color = 'green'><font size = +1>Team 2</font></html>".equals(curren_tank_Selecter.getSelectedItem()))
+            {
+                team_current_user = 2;
+            }
+            if("<html><font color = 'green'><font size = +1>Team 3</font></html>".equals(curren_tank_Selecter.getSelectedItem()))
+            {
+                team_current_user = 3;
+            }
+            if("<html><font color = 'green'><font size = +1>Team 4</font></html>".equals(curren_tank_Selecter.getSelectedItem()))
+            {
+                team_current_user = 4;
             }
         }
+
+
+        //Teams from ai
+            for(int i = 0; i<ai_amount;i++) {
+                if(e.getSource() == ai_teamSelecter)
+                {
+                    if("<html><font color = 'green'><font size = +1>Team 1</font></html>".equals(ai_teamSelecter[i].getSelectedItem()))
+                    {
+                        team_from_ai[i] = 1;
+                    }
+                    if("<html><font color = 'green'><font size = +1>Team 2</font></html>".equals(ai_teamSelecter[i].getSelectedItem()))
+                    {
+                        team_from_ai[i] = 2;
+                    }
+                    if("<html><font color = 'green'><font size = +1>Team 3</font></html>".equals(ai_teamSelecter[i].getSelectedItem()))
+                    {
+                        team_from_ai[i] = 3;
+                    }
+                    if("<html><font color = 'green'><font size = +1>Team 4</font></html>".equals(ai_teamSelecter[i].getSelectedItem()))
+                    {
+                        team_from_ai[i] = 4;
+                    }
+                }
+            }
+
+        //Teams from human
+            for(int i = 0; i<human_amount;i++) {
+                if(e.getSource() == human_teamSelecter)
+                {
+                    if("<html><font color = 'green'><font size = +1>Team 1</font></html>".equals(human_teamSelecter[i].getSelectedItem()))
+                    {
+                        team_from_human[i] = 1;
+                    }
+                    if("<html><font color = 'green'><font size = +1>Team 2</font></html>".equals(human_teamSelecter[i].getSelectedItem()))
+                    {
+                        team_from_human[i] = 2;
+                    }
+                    if("<html><font color = 'green'><font size = +1>Team 3</font></html>".equals(human_teamSelecter[i].getSelectedItem()))
+                    {
+                        team_from_human[i] = 3;
+                    }
+                    if("<html><font color = 'green'><font size = +1>Team 4</font></html>".equals(human_teamSelecter[i].getSelectedItem()))
+                    {
+                        team_from_human[i] = 4;
+                    }
+                }
+            }
 
     }
 
@@ -797,6 +881,22 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                         aiCheckBox[i].setText("<html><font color = 'blue'><font size = +1>Selected</font></html>");
                         icon.setText("<html><font color = 'red'><font size = +1>Choose Difficulty</font></html>");
                         selected_aiCheckbox[i] = true;
+
+                            //Team Selecter
+                                ai_teamSelecter[i] = new JComboBox();
+                                ai_teamSelecter[i].setBackground(MyWindow.backgroundColor);
+                                ai_teamSelecter[i].setBorder(BorderFactory.createRaisedBevelBorder());
+                                ai_teamSelecter[i].addActionListener(this);
+                                ai_teamSelecter[i].setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
+                                for(String s : team_String)
+                                {
+                                    ai_teamSelecter[i].addItem(s);
+                                }
+                                g.gridx = 5;
+                                g.gridy = 3+i;
+                            optionen.add(ai_teamSelecter[i],g);
+
+
 
                             difficulty_slider[i] = new JSlider(SwingConstants.HORIZONTAL, 0, 10, Var.difficulty_sliderValue_preGameView[i]);
                             difficulty_slider[i].addChangeListener(this);
@@ -851,6 +951,20 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                             connecting[i].repaint();
                         }
 
+                        //Team Selecter
+                            ai_teamSelecter[i] = new JComboBox();
+                            ai_teamSelecter[i].setBackground(MyWindow.backgroundColor);
+                            ai_teamSelecter[i].setBorder(BorderFactory.createRaisedBevelBorder());
+                            ai_teamSelecter[i].addActionListener(this);
+                            ai_teamSelecter[i].setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
+                            for(String s : team_String)
+                            {
+                                ai_teamSelecter[i].addItem(s);
+                            }
+                            g.gridx = 5;
+                            g.gridy = 3+i;
+                        optionen.add(ai_teamSelecter[i],g);
+
 
                             for(int c =0;c<human_amount;c++)
                             {
@@ -882,7 +996,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                                 difficulty_slider[i].setBackground(MyWindow.backgroundColor);
 
                                 g.gridx = 1;
-                                g.gridy = 2 + i;
+                                g.gridy = 3 + i;
                                 g.gridwidth = 1;
                                 g.gridheight = 1;
                                 g.weightx = 0;
@@ -923,6 +1037,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                                 }
                             }
                         optionen.remove(difficulty_slider[i]);
+                        optionen.remove(ai_teamSelecter[i]);
                         optionen.repaint();
                         optionen.revalidate();
                     }
@@ -965,9 +1080,11 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                             }
                         }
                     }
+
+                   optionen.remove(human_teamSelecter[i]);
                    if(Var.login_profils[i] == null)
                    {
-                       optionen.remove(login_human[i]);     
+                       optionen.remove(login_human[i]);
                        optionen.revalidate();
                        optionen.repaint();
                    }
@@ -979,6 +1096,8 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                     Var.login_profils[Var.login_profils.length-1] = null;
                 }
 
+
+
                 if(e.getStateChange() == ItemEvent.SELECTED) {
                     Var.selected_humanCheckbox_speicher[i] = true;
                     selected_humanCheckbox[i] = true;
@@ -986,7 +1105,21 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                             connecting[i].remove(aiCheckBox[i]);
                             connecting[i].revalidate();
                             connecting[i].repaint();
-                       //Adding Login Button
+
+                     //Team Selecter
+                            human_teamSelecter[i] = new JComboBox();
+                            human_teamSelecter[i].setBackground(MyWindow.backgroundColor);
+                            human_teamSelecter[i].setBorder(BorderFactory.createRaisedBevelBorder());
+                            human_teamSelecter[i].addActionListener(this);
+                            human_teamSelecter[i].setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
+                            for(String s : team_String)
+                            {
+                                human_teamSelecter[i].addItem(s);
+                            }
+                            g.gridx = 5;
+                            g.gridy = 3+i;
+                        optionen.add(human_teamSelecter[i],g);
+                    //Adding Login Button
                     for(int c =0;c<ai_amount;c++)
                     {
                         if(selected_aiCheckbox[c])
@@ -1003,7 +1136,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                         login_human[i] = new MyButton("KnopfProfilLoginMetallic1.png","Press to connect a profile");
                         login_human[i].addActionListener(e1 -> {new LogInModel(true);});
                         g.gridx = 1;
-                        g.gridy = 2 + i;
+                        g.gridy = 3 + i;
                         g.gridwidth = 1;
                         g.gridheight = 1;
                         g.weightx = 0;

@@ -92,13 +92,13 @@ public class ProfilView extends JPanel implements ActionListener, ItemListener {
 
             heavy = new JLabel();
 
-                heavy_tank = new ImageIcon("res/buttons/PanzerDefaultMetallic1.png" );
+                heavy_tank = new ImageIcon("res/buttons/PanzerHeavyMetallic.png" );
 
             heavy.setIcon(heavy_tank);
             g.gridx = 0;
             g.gridy = 2;
             this.add(heavy,g);
-            if(Var.activeUser.getLevel() >=5) {
+            if(Var.activeUser.getLevel() >=20) {
                 heavy_box = new JCheckBox("<html><font color = 'white'><font size = +1>Not Selected</font></html>", false);
                 heavy_box.addItemListener(this);
                 heavy_box.setBackground(MyWindow.backgroundColor);
@@ -106,7 +106,7 @@ public class ProfilView extends JPanel implements ActionListener, ItemListener {
                 this.add(heavy_box, g);
             } else
             {
-                locked_heavy = new JLabel("<html><font color = 'red'><font size = +1>You unlock this tank at Level 5</font></html>");
+                locked_heavy = new JLabel("<html><font color = 'red'><font size = +1>You unlock this tank at Level 20</font></html>");
                 locked_heavy.setPreferredSize(new Dimension(panzerImg.getIconWidth()*2,panzerImg.getIconHeight()));
                 g.gridy = 3;
                 g.gridwidth = 2;
@@ -116,14 +116,14 @@ public class ProfilView extends JPanel implements ActionListener, ItemListener {
 
             light = new JLabel();
 
-                light_tank = new ImageIcon("res/buttons/PanzerDefaultMetallic1.png" );
+                light_tank = new ImageIcon("res/buttons/PanzerLightMetallic.png" );
 
             light.setIcon(light_tank);
             g.gridx = 2;
             g.gridy = 2;
             g.gridwidth = 1;
             this.add(light,g);
-            if(Var.activeUser.getLevel() >= 3) {
+            if(Var.activeUser.getLevel() >= 10) {
                 light_box = new JCheckBox("<html><font color = 'white'><font size = +1>Not Selected</font></html>", false);
                 light_box.addItemListener(this);
                 light_box.setBackground(MyWindow.backgroundColor);
@@ -131,7 +131,7 @@ public class ProfilView extends JPanel implements ActionListener, ItemListener {
                 this.add(light_box, g);
             } else
             {
-                locked_light = new JLabel("<html><font color = 'red'><font size = +1>You unlock this tank at Level 3</font></html>");
+                locked_light = new JLabel("<html><font color = 'red'><font size = +1>You unlock this tank at Level 10</font></html>");
                 locked_light.setPreferredSize(new Dimension(panzerImg.getIconWidth()*2,panzerImg.getIconHeight()));
                 g.gridy = 3;
                 g.gridwidth = 3;
