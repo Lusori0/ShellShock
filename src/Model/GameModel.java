@@ -4,6 +4,7 @@ import Panzer.Panzer;
 import Views.GameLoop;
 import Views.GameUiView;
 import Views.GameView;
+import Weapons.Shot.NormalShot;
 import Weapons.Weapon;
 import Window.MyKeys;
 import Window.MyWindow;
@@ -72,7 +73,7 @@ public class GameModel {
 
         this.players = players;
 
-        this.spielmode = 1;
+        this.spielmode = spielmode;
 
         if(spielmode == 1){
             currentPlayer.add(players.getFirst());
@@ -141,6 +142,8 @@ public class GameModel {
 
     public void movePanzer(){
 
+
+
         // bewegen der Panzer
 
         for(Player player : players){
@@ -174,44 +177,54 @@ public class GameModel {
 
         switch(spielmode){
             case 1:
-                for(Player player : players){
-                    if(player == currentPlayer.getFirst()){
-                        currentPlayer.remove(player);
-
-                        if(players.indexOf(player) == players.indexOf(players.getLast())){
-                            currentPlayer.add(players.getFirst());
-                            break;
-                        }else{
-                            currentPlayer.add(players.get(players.indexOf(player) + 1));
-                            break;
-                        }
-                    }
-                }
+                int id = currentPlayer.getFirst().getId();
+                currentPlayer.remove(currentPlayer.getFirst());
+                currentPlayer.add(getNextAlivePlayer(id));
                 break;
             case 2:
-                if(currentPlayer.getFirst().getTeam() == teamanzahl){
-                    currentPlayer = new LinkedList<>();
-                    for(Player player : players){
-                        if(player.getTeam() == 1){
-                            currentPlayer.add(player);
-                        }
-                    }
-                }else{
-                    int t = currentPlayer.getFirst().getTeam();
-                    currentPlayer = new LinkedList<>();
-                    for(Player player : players){
-                        if(player.getTeam() == t+1){
-                            currentPlayer.add(player);
-                        }
-                    }
-                }
-
+                int team = currentPlayer.getFirst().getTeam();
+                currentPlayer = getNextAliveTeam(team);
                 break;
             case 3:
                 break;
         }
 
 
+    }
+
+    private Player getNextAlivePlayer(int id){
+        if(id == highId){
+            return getNextAlivePlayer(0);
+        }else{
+            for(Player player : players){
+                if(player.getId() == id + 1){
+                    return player;
+                }
+            }
+
+            return getNextAlivePlayer(id + 1);
+        }
+    }
+
+    private LinkedList<Player> getNextAliveTeam(int team){
+
+        LinkedList<Player> returnValue = new LinkedList<>();
+
+        if(team == teamanzahl){
+            return getNextAliveTeam(0);
+        }else{
+            for(Player player : players){
+                if(player.getTeam() == team + 1){
+                    returnValue.add(player);
+                }
+            }
+
+            if(returnValue.size() > 0){
+                return returnValue;
+            }else{
+                return getNextAliveTeam(team + 1);
+            }
+        }
     }
 
     public void nextTurn(){
@@ -272,7 +285,6 @@ public class GameModel {
 
                 for (Player player : currentPlayer) {
                     player.setOnTurn(true);
-
                 }
 
 
@@ -283,6 +295,8 @@ public class GameModel {
                         player.prepare(this);
                     }
                 }
+
+                updateUI();
 
                 shot = false;
             } else {
@@ -366,7 +380,7 @@ public class GameModel {
         if(!shot) {
 
             for(Player player : currentPlayer){
-                if (player.isLocalHuman()) {
+                if (player.equals(lastLocalHuman)) {
                     if (player.getPanzer().isSelected()) {
 
 
@@ -389,7 +403,7 @@ public class GameModel {
         if(!shot) {
 
             for(Player player : currentPlayer){
-                if (player.isLocalHuman()) {
+                if (player.equals(lastLocalHuman)) {
                     if (player.getPanzer().isSelected()) {
 
                         player.getPanzer().setTemps();
@@ -418,7 +432,7 @@ public class GameModel {
 
         //zeichnet das Waffenauswahlmenü
 
-        System.out.println(height);
+
 
         if(art == 1) {
             if (weaponsShowedTime <= GameLoop.imgH / 20) {
@@ -465,7 +479,6 @@ public class GameModel {
 
                             Weapon weapon1 = weapon.getLevelWeapon((int)((mousex - ((xtemp) * 0.1) - (int) (t % 5 * xtemp - xtemp * 0.1))/((xtemp) * (1.2/5.6))) + 1,this);
                             int anzahl = weapon.getAnzahl();
-                            System.out.println(weapon1.getName());
                             weapon1.setAnzahl(anzahl);
                             weapon1.createImage();
 
@@ -519,7 +532,7 @@ public class GameModel {
         if (currentPlayer != null) {
             if (!shot) {
                 for (Player player : currentPlayer) {
-                    if(player.isLocalHuman()) {
+                    if(player.equals(lastLocalHuman)) {
                         player.getPanzer().drawUi(g2d, this);
                     }
                 }
@@ -567,12 +580,21 @@ public class GameModel {
                 player.getPanzer().draw(g2d,2);
             }
 
+            System.out.println(spielmode);
+
+
             if(currentPlayer.contains(player)){
+
+
+
                 if(!shot) {
+
                     drawRedRect(player, g2d);
                 }
             }
         }
+
+
 
         for(Player player : deadPlayers){
             player.getPanzer().draw(g2d,3);
@@ -605,17 +627,21 @@ public class GameModel {
     private void shoot(){
         if(!shot) {
 
+
+            boolean temp = false;
+
             for(Player player : currentPlayer) {
 
-                player.shoot(this);
+                if(player.getPanzer().getLeben() > 0) {
+
+                    player.shoot(this);
 
 
-                currentWeapons.add(player.getSelectedWeapon());
+                    currentWeapons.add(player.getSelectedWeapon());
 
 
+                    if (!sandbox) {
 
-                if(!sandbox) {
-                    if (player.isLocalHuman() || player.isKi()) {
                         if (player.getSelectedWeapon().getAnzahl() == 1) {
                             player.getWeapons().remove(player.getSelectedWeapon());
                             player.subWaffenanzahl();
@@ -625,7 +651,12 @@ public class GameModel {
                             player.getSelectedWeapon().reset();
                             player.subWaffenanzahl();
                         }
+
                     }
+                }else{
+                    NormalShot shot =  new NormalShot(this);
+                    shot.create((int)player.getPanzer().getBulletspawn().getX(), (int) player.getPanzer().getBulletspawn().getY(),player.getPanzer().getWinkel() - Math.PI/2,1,false,player.getPanzer());
+                    currentWeapons.add(shot);
                 }
 
             }
@@ -636,8 +667,15 @@ public class GameModel {
 
     public void feuerButtonAction(){
         for(Player player : currentPlayer) {
-            if(player.isLocalHuman()) {
+            if(player.equals(lastLocalHuman)) {
                 player.setLockedIn(true);
+                for(Player player1 : currentPlayer){
+                    if(!player1.equals(player) && !player1.isLockedIn()){
+                        lastLocalHuman = player1;
+                        updateUI();
+                    }
+                }
+                return;
             }
         }
 
@@ -714,7 +752,7 @@ public class GameModel {
             player.getPanzer().moveNotTurn(map);
             player.getPanzer().setPolyPoints(this);
 
-            System.out.println(shape.getBounds());
+
             if(shape.intersects(player.getPanzer().getHitbox().getBounds2D()) ||shape.contains(player.getPanzer().getBulletspawn())){
 
 
