@@ -23,7 +23,6 @@ public class PreGameModel {
         if(profil_Login != null)
         {
             preGameView.setProfils(profil_Login);
-            System.out.println("Sollte eingeloogt sein!!");
         }
         if(multiplayer)
         {

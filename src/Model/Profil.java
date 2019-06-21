@@ -29,6 +29,8 @@ public class Profil implements Serializable {
         this.panzerLevel = panzerLevel;
     }
 
+
+    //getter und setter
     public String getName(){
         return name;
     }

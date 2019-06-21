@@ -16,6 +16,7 @@ public class MainMenuModel {
 
         MyWindow.setContent(new MainMenuView(this));
     }
+    //Button actions
 
     public void singlePlayerAction(){
         new SinglePlayerModel();
@@ -35,11 +36,10 @@ public class MainMenuModel {
 
     public void exitAction(){
         saveProfile(Var.activeUser);
-        System.out.println(Var.activeUser.getMusicVolume());
         System.exit(0);
     }
 
-
+    //method for saving user
     public void saveProfile(Profil profil){
         new File("data/").mkdirs();
         try {
@@ -48,7 +48,7 @@ public class MainMenuModel {
             objectOutputStream.close();
 
         } catch (IOException e) {
-            System.out.println("Write Fehler while saving game: " + e);
+            System.out.println("Write error while saving game: " + e);
         }
     }
 }

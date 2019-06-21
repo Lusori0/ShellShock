@@ -41,7 +41,7 @@ public class LogInModel {
                 objectInputStream.close();
 
             } catch (IOException | ClassNotFoundException e) {
-                System.out.println("Read Fehler: " + e);
+                System.out.println("Read error: " + e);
             }
             //Passwortabgleich
             if (profilRead.getPassword().equals(password)) {
@@ -81,7 +81,7 @@ public class LogInModel {
                 objectOutputStream.close();
 
             } catch (IOException e) {
-                System.out.println("Write Fehler: " + e);
+                System.out.println("Write error: " + e);
             }
             Var.setActiveUser(profil);
             new MainMenuModel();
@@ -106,7 +106,7 @@ public class LogInModel {
                 objectInputStream.close();
 
             } catch (IOException | ClassNotFoundException e) {
-                System.out.println("Read Fehler: " + e);
+                System.out.println("Read error: " + e);
             }
             //Passwortabgleich
             if (profilRead.getPassword().equals(password)) {
@@ -157,7 +157,7 @@ public class LogInModel {
                 objectOutputStream.close();
 
             } catch (IOException e) {
-                System.out.println("Write Fehler: " + e);
+                System.out.println("Write error: " + e);
             }
             new PreGameModel(GameType.MULTI_LOCAL,false,true,profil);
         }
