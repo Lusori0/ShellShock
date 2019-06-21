@@ -130,7 +130,7 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
             this.add(muteMusik,g);
         }
 
-        ingame = new JLabel("<html><font color = 'green'><font size = +1>Change Background Music with Slider</font></html>");
+        ingame = new JLabel("<html><font color = 'green'><font size = +1>Change Ingame Music with Slider</font></html>");
             g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
 
             g.insets= new Insets(100,0,0,0);// Erzeugen eines Abstandes mit dem nächsten Button
@@ -244,10 +244,10 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
            settingsModel.changeMusicVolume((float) musicbar.getValue()/100);
             musicbarValue = musicbar.getValue();
         }
+
         if (e.getSource() == ingameVolume_bar)
         {
             Var.ingameSoundbar =(float) ingameVolume_bar.getValue()/100;
-            
         }
 
 
