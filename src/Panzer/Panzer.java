@@ -737,8 +737,8 @@ public abstract class Panzer {
     public static BufferedImage getPanzerImage(int level){
         switch (level){
             case 1:return Var.panzerNormalGanz;
-            case 2:return Var.heavyPanzerGanz;
-            case 3:return Var.lightPanzerGanz;
+            case 2:return Var.lightPanzerGanz;
+            case 3:return Var.heavyPanzerGanz;
             default: return null;
         }
     }
