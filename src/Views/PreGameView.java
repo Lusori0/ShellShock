@@ -84,22 +84,6 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             "<html><font color = 'green'><font size = +1>Map5</font></html>",
             "<html><font color = 'green'><font size = +1>Random Map</font></html>"
     };
-    /*String[] available_foreground_color = {
-            "<html><font color = 'green'><font size = +1>RED</font></html>",
-            "<html><font color = 'green'><font size = +1>GREEN</font></html>",
-            "<html><font color = 'green'><font size = +1>BLUE</font></html>",
-            "<html><font color = 'green'><font size = +1>YELLOW</font></html>",
-            "<html><font color = 'green'><font size = +1>CYAN</font></html>",
-            "<html><font color = 'green'><font size = +1>MAGENTA</font></html>",
-            "<html><font color = 'green'><font size = +1>WHITE</font></html>",
-            "<html><font color = 'green'><font size = +1>RED</font></html>",
-            "<html><font color = 'green'><font size = +1>RED</font></html>",
-            "<html><font color = 'green'><font size = +1>RED</font></html>",
-            "<html><font color = 'green'><font size = +1>RED</font></html>",
-            "<html><font color = 'green'><font size = +1>RED</font></html>",
-            "<html><font color = 'green'><font size = +1>RED</font></html>",
-    };
-    String[] available_background_color = {};*/
 
     //TODO:  Ingamevolume ändern
 
@@ -123,6 +107,15 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         for(int i =0;i<human_amount;i++)
         {
             selected_humanCheckbox[i] = Var.selected_humanCheckbox_speicher[i];
+        }
+
+        for(int i : team_from_ai)
+        {
+            i= 2;
+        }
+        for(int i : team_from_human)
+        {
+            i= 2;
         }
     }
 

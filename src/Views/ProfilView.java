@@ -31,7 +31,7 @@ public class ProfilView extends JPanel implements ActionListener, ItemListener {
 
     JLabel locked_heavy,locked_light;
 
-    JPanel panzer_label;
+    JPanel panzer_label,heavy_label,light_label;
 
     ImageIcon panzerImg,heavy_tank,light_tank;
 
@@ -80,9 +80,14 @@ public class ProfilView extends JPanel implements ActionListener, ItemListener {
                 panzerImg = new ImageIcon("res/buttons/PanzerDefaultMetallic1.png" );
 
             panzer.setIcon(panzerImg);
+            g.gridx = 0;
             g.gridy = 2;
             this.add(panzer,g);
 
+            panzer_label = new JPanel();
+            panzer_label.setLayout(new BorderLayout());
+            JLabel name = new JLabel("StandartPanzer");
+            JLabel leben = new JLabel();
 
             panzer_box = new JCheckBox("<html><font color = 'blue'><font size = +1>Selected</font></html>",true);
             panzer_box.addItemListener(this);
@@ -95,7 +100,7 @@ public class ProfilView extends JPanel implements ActionListener, ItemListener {
                 heavy_tank = new ImageIcon("res/buttons/PanzerHeavyMetallic.png" );
 
             heavy.setIcon(heavy_tank);
-            g.gridx = 0;
+            g.gridx = 2;
             g.gridy = 2;
             this.add(heavy,g);
             if(Var.activeUser.getLevel() >=20) {
@@ -119,7 +124,7 @@ public class ProfilView extends JPanel implements ActionListener, ItemListener {
                 light_tank = new ImageIcon("res/buttons/PanzerLightMetallic.png" );
 
             light.setIcon(light_tank);
-            g.gridx = 2;
+            g.gridx = 1;
             g.gridy = 2;
             g.gridwidth = 1;
             this.add(light,g);
@@ -199,6 +204,8 @@ public class ProfilView extends JPanel implements ActionListener, ItemListener {
 
                 heavy_box.setText("<html><font color = 'white'><font size = +1>Not Selected</font></html>");
                 heavy_box.setSelected(false);
+
+                Var.activeUser.setPanzerLevel(1);
             }
         }
 
@@ -222,6 +229,8 @@ public class ProfilView extends JPanel implements ActionListener, ItemListener {
 
                 light_box.setText("<html><font color = 'white'><font size = +1>Not Selected</font></html>");
                 light_box.setSelected(false);
+
+                Var.activeUser.setPanzerLevel(3);
             }
         }
 
@@ -245,6 +254,8 @@ public class ProfilView extends JPanel implements ActionListener, ItemListener {
 
                 panzer_box.setText("<html><font color = 'white'><font size = +1>Not Selected</font></html>");
                 panzer_box.setSelected(false);
+
+                Var.activeUser.setPanzerLevel(2);
             }
         }
     }
