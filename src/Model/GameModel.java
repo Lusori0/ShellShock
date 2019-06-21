@@ -21,26 +21,29 @@ public class GameModel {
 
     private GameView gameView;
     private GameLoop gameLoop;
-    private LinkedList<Player>  players;
-    private LinkedList<Player>  deadPlayers;
-    private CopyOnWriteArrayList<Weapon> currentWeapons;
     private GameMap map;
-    private int height;
+    private GameUiView gameUiView;
+
     private Player lastLocalHuman;
+
+    private LinkedList<Player> players;
+    private LinkedList<Player> deadPlayers;
     private LinkedList<Player> currentPlayer;
+    private CopyOnWriteArrayList<Weapon> currentWeapons;
+    private LinkedList<Drop> drops = new LinkedList<>();
+
     private boolean shot;
+    private boolean sandbox;
+    private boolean dropping;
+
+    private int height;
     private int weaponsShowedTime = 0;
     private int spielmode,teamanzahl;
-
-
     private int highId = 0;
 
     private double redTriTimer = 0;
-    private boolean sandbox;
-    private GameUiView gameUiView;
 
-    private LinkedList<Drop> drops = new LinkedList<>();
-    private boolean dropping;
+
 
 
     public GameModel(){
@@ -579,8 +582,6 @@ public class GameModel {
             }else{
                 player.getPanzer().draw(g2d,2);
             }
-
-            System.out.println(spielmode);
 
 
             if(currentPlayer.contains(player)){

@@ -16,8 +16,9 @@ public class Profil implements Serializable {
     private List<Integer> unlockedWeapons = new ArrayList<>();
     private float musicVolume;
     private float inGameVolume;
+    private int panzerLevel;
 
-    public Profil(String name, int level, String password, int xp, List<Integer> unlockedWeapons, float musicVolume, float inGameVolume){
+    public Profil(String name, int level, String password, int xp, List<Integer> unlockedWeapons, float musicVolume, float inGameVolume, int panzerLevel){
         this.name = name;
         this.level = level;
         this.password = password;
@@ -25,6 +26,7 @@ public class Profil implements Serializable {
         this.unlockedWeapons = unlockedWeapons;
         this.musicVolume = musicVolume;
         this.inGameVolume = inGameVolume;
+        this.panzerLevel = panzerLevel;
     }
 
     public String getName(){
@@ -48,6 +50,9 @@ public class Profil implements Serializable {
     public void addXp(){
         xp++;
     }
+    public int getPanzerLevel(){return panzerLevel;}
+    public void setPanzerLevel(int pLevel){panzerLevel = pLevel;}
+
 
     public int levelUp(){
         level++;
@@ -157,7 +162,19 @@ public class Profil implements Serializable {
         }
     }
 
+
+
     public Panzer getPanzer(GameModel model) {
-        return new StandartPanzer(model,name);
+        switch(panzerLevel){
+            case 2:
+                return new StandartPanzer(model,name);
+            case 3:
+                return new LightPanzer(model, name);
+            case 1:
+                return new HeavyPanzer(model, name);
+            default:
+                return null;
+        }
+
     }
 }

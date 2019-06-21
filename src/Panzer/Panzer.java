@@ -540,6 +540,10 @@ public abstract class Panzer {
         return affineTransform;
     }
 
+    public int getMaxLeben() {
+        return maxLeben;
+    }
+
     //SETTER
 
     public void setLeben(int i) {
