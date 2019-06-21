@@ -846,6 +846,10 @@ public class GameModel {
         return deadPlayers;
     }
 
+    public GameView getGameView() {
+        return gameView;
+    }
+
     //DROP
 
     private class Drop {

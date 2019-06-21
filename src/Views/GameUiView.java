@@ -3,6 +3,7 @@ package Views;
 import Model.GameModel;
 import Model.MainMenuModel;
 import Model.PreGameModel;
+import Model.SettingsModel;
 import Weapons.Granade.Granade;
 import Window.*;
 
@@ -24,7 +25,7 @@ import java.util.Hashtable;
 
 
 public class GameUiView extends JPanel implements ActionListener, ChangeListener {
-    MyButton fire,back,muteMusik,weaponChoosing,back_end_game;
+    MyButton fire,back,toSettings,weaponChoosing,back_end_game;
     private int health,sprit,maxSprit,maxHealth,yStart,xUnit;
     GameModel gameModel;
     JPanel options;
@@ -58,7 +59,7 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
             g2d.setColor(Color.BLACK);
             g2d.fillRect(10, 210,280, 80);
             g2d.setColor(Color.GREEN);
-            g2d.fillRect(15, 215, (int) (270/maxHealth * health), 70);
+            g2d.fillRect(15, 215, (int) (270.0/maxHealth * health), 70);
             g2d.setFont(new Font("Calibri",Font.BOLD,20));
             if(health > 0) {
                 g2d.drawString("Health:" + health + "/" + maxHealth, 15, 300);
@@ -140,15 +141,12 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
         BorderLayout bl = new BorderLayout();
         bl.setVgap((int) (MyWindow.HEIGHT * 0.017));
         options.setLayout(bl);
-        if(Var.music.isMuted())
-        {
-            muteMusik = new MyButton("Mute1.png","Press to Mute Musik");
-        } else
-        {
-            muteMusik = new MyButton("KnopfSoundMetallic1.png","Press to Mute Musik");
-        }
-        muteMusik.addActionListener(this);
-        options.add(muteMusik,BorderLayout.CENTER);
+
+        toSettings = new MyButton("KnopfEinstellungenMetallic1.png","Press to enter Settings");
+
+
+        toSettings.addActionListener(this);
+        options.add(toSettings,BorderLayout.CENTER);
 
         weaponChoosing = new MyButton("WeaponKnopfMetallic1.png","Press to change Weapons");
         weaponChoosing.addActionListener(this);
@@ -221,22 +219,9 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
             gameModel.getLastLocalHuman().getPanzer().setLeben(0);
             gameModel.feuerButtonAction();
         }
-        if ((e.getSource() == muteMusik))
+        if ((e.getSource() == toSettings))
         {
-            System.out.println("Sollte was passiert sein!");
-            Var.music.muteMusic();
-            if(Var.music.isMuted())
-            {
-                ImageIcon mute = new ImageIcon("res/buttons/Mute1.png");
-                mute.setImage(mute.getImage().getScaledInstance(muteMusik.getWidth() + 2, muteMusik.getHeight() + 2, Image.SCALE_SMOOTH));
-                muteMusik.setIcon(mute);
-            } else
-            {
-                ImageIcon mute = new ImageIcon("res/buttons/KnopfSoundMetallic1.png");
-                mute.setImage(mute.getImage().getScaledInstance(muteMusik.getWidth() + 2, muteMusik.getHeight() + 2, Image.SCALE_SMOOTH));
-                muteMusik.setIcon(mute);
-            }
-
+            new SettingsModel(gameModel.getGameView());
         }
         if(e.getSource() == weaponChoosing)
         {

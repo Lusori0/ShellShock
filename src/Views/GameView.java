@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class GameView extends JPanel {
 
-    BorderLayout mainLayout;
+    private BorderLayout mainLayout;
 
     public GameView(){
 
