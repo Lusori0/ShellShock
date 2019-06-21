@@ -716,6 +716,24 @@ public abstract class Panzer {
         }
     }
 
+    public static int getPanzerLeben(int level){
+        switch (level){
+            case 1:return 100;
+            case 2:return 100;
+            case 3:return 150;
+            default: return 0;
+        }
+    }
+
+    public static int getPanzerSprit(int level){
+        switch (level){
+            case 1:return 300;
+            case 2:return 500;
+            case 3:return 300;
+            default: return 0;
+        }
+    }
+
     public static BufferedImage getPanzerImage(int level){
         switch (level){
             case 1:return Var.panzerNormalGanz;

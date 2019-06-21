@@ -35,6 +35,7 @@ public class GameModel {
     private boolean shot;
     private boolean sandbox;
     private boolean dropping;
+    private boolean ended;
 
     private int height;
     private int weaponsShowedTime = 0;
@@ -42,7 +43,6 @@ public class GameModel {
     private int highId = 0;
 
     private double redTriTimer = 0;
-
 
 
 
@@ -108,6 +108,7 @@ public class GameModel {
         }
 
         for(Player player : players){
+            System.out.println(player.getTeam());
             if(sandbox){
                 player.setSandboxWeapons(this);
                 player.setSelectedWeapon(player.getWeapons().get(0));
@@ -324,6 +325,7 @@ public class GameModel {
             }
         }
 
+        ended = true;
         return true;
     }
 
@@ -823,6 +825,10 @@ public class GameModel {
 
     public int getHeight() {
         return height;
+    }
+
+    public boolean isEnded() {
+        return ended;
     }
 
     public int getWeaponsShowedTime() {
