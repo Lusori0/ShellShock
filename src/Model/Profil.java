@@ -164,13 +164,15 @@ public class Profil implements Serializable {
         }
     }
 
+
+
     public Panzer getPanzer(GameModel model) {
         switch(panzerLevel){
-            case 1:
-                return new StandartPanzer(model,name);
             case 2:
-                return new LightPanzer(model, name);
+                return new StandartPanzer(model,name);
             case 3:
+                return new LightPanzer(model, name);
+            case 1:
                 return new HeavyPanzer(model, name);
             default:
                 return null;

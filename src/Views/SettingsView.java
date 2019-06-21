@@ -18,11 +18,13 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
 
     MyButton back,muteMusik;
 
-    JSlider musicbar;
+    JSlider musicbar,ingameVolume_bar;
 
     SettingsModel settingsModel;
 
-    int musicbarValue;
+    JLabel background,ingame;
+
+    int musicbarValue,ingame_Volume;
 
     public SettingsView ( SettingsModel settingsModel)
     {
@@ -45,9 +47,18 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
 
         //Slidebar test Anfang
         //if(Var.music.getVolume() == 0){Var.music.setVolume(0.5f);}
+            background = new JLabel("<html><font color = 'green'><font size = +1>Change Background Music with Slider</font></html>");
+                g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
+
+                g.insets= new Insets(100,0,0,0);// Erzeugen eines Abstandes mit dem nächsten Button
+
+                g.gridy = 0;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
+
+        this.add(background,g);
+
+
 
             musicbarValue = Var.soundBarVolume;
-            System.out.println(musicbarValue +"Der Anfang der Musicbar");
             musicbar = new JSlider(SwingConstants.HORIZONTAL,0,100,musicbarValue );
             musicbar.addChangeListener(this);
             musicbar.setMajorTickSpacing(10);
@@ -77,13 +88,9 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
             //Einstellen von der Anordnung
                 //g.weightx = 1f;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
 
-                g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
-
                 g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
 
-                g.insets= new Insets(100,0,0,0);// Erzeugen eines Abstandes mit dem nächsten Button
-
-                g.gridy = 0;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
+                g.gridy = GridBagConstraints.RELATIVE;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
 
             //Einfügen der Inhalte in Abhängigkeit der GridBag
 
@@ -102,13 +109,11 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
             muteMusik.addActionListener(this);
             //Einstellen von der Anordnung
 
-            g.fill = GridBagConstraints.VERTICAL;//Anordnung des Button in dem GridbagLayout--> Vertikal --> Untereinander
-
             g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
 
-            g.insets= new Insets(100,0,0,0);// Erzeugen eines Abstandes mit dem nächsten Button
+            g.gridy = GridBagConstraints.RELATIVE;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
 
-            g.gridy = 1;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
+            g.gridy = GridBagConstraints.RELATIVE;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
 
             //Einfügen der Inhalte in Abhängigkeit der GridBag
             this.add(muteMusik,g);
@@ -119,12 +124,61 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
             muteMusik.addActionListener(this);
             //Einstellen von der Anordnung
 
-            g.gridy = 1;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
+            g.gridy = GridBagConstraints.RELATIVE;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
 
             //Einfügen der Inhalte in Abhängigkeit der GridBag
             this.add(muteMusik,g);
         }
 
+        ingame = new JLabel("<html><font color = 'green'><font size = +1>Change Background Music with Slider</font></html>");
+            g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
+
+            g.insets= new Insets(100,0,0,0);// Erzeugen eines Abstandes mit dem nächsten Button
+
+            g.gridy = GridBagConstraints.RELATIVE;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
+
+        this.add(ingame,g);
+
+
+            ingame_Volume = (int) (Var.inGameVolume*100);
+            System.out.println(Var.inGameVolume);
+             System.out.println(ingame_Volume+ "Das ist das IngameVolumne");
+            ingameVolume_bar = new JSlider(SwingConstants.HORIZONTAL,0,100,ingame_Volume );
+            ingameVolume_bar.addChangeListener(this);
+            ingameVolume_bar.setMajorTickSpacing(10);
+
+            ingameVolume_bar.setPaintTicks(true);
+            ingameVolume_bar.setPaintLabels(true);
+            ingameVolume_bar.setSnapToTicks(true);
+
+            // Beschriftung des Sliders
+            Dictionary<Integer, Component> labelTable_ingame = new Hashtable<Integer, Component>();
+            labelTable_ingame.put(0, new JLabel("0%"));
+            labelTable_ingame.put(10, new JLabel("10%"));
+            labelTable_ingame.put(20, new JLabel("20%"));
+            labelTable_ingame.put(30, new JLabel("30%"));
+            labelTable_ingame.put(40, new JLabel("40%"));
+            labelTable_ingame.put(50, new JLabel("50%"));
+            labelTable_ingame.put(60, new JLabel("60%"));
+            labelTable_ingame.put(70, new JLabel("70%"));
+            labelTable_ingame.put(80, new JLabel("80%"));
+            labelTable_ingame.put(90, new JLabel("90%"));
+            labelTable_ingame.put(100, new JLabel("100%"));
+            //
+            ingameVolume_bar.setLabelTable(labelTable_ingame);
+            ingameVolume_bar.setPreferredSize(new Dimension(500,100));
+            ingameVolume_bar.setBackground(MyWindow.backgroundColor);
+
+            //Einstellen von der Anordnung
+            //g.weightx = 1f;// Festlegung der Größe --> Button bleibt gleich bei 1.0 größer
+
+            g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
+
+            g.gridy = GridBagConstraints.RELATIVE;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
+
+            //Einfügen der Inhalte in Abhängigkeit der GridBag
+
+            this.add(ingameVolume_bar,g);
 
 
         //Initialisierung/Erzeugen des Inhalts
@@ -133,7 +187,7 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
 
             //Einstellen von der Anordnung
 
-                g.gridy = 2;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
+                g.gridy = GridBagConstraints.RELATIVE;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
 
             //Einfügen der Inhalte in Abhängigkeit der GridBag
             this.add(back,g);
@@ -189,6 +243,11 @@ public class SettingsView extends JPanel implements ActionListener, ChangeListen
             //
            settingsModel.changeMusicVolume((float) musicbar.getValue()/100);
             musicbarValue = musicbar.getValue();
+        }
+        if (e.getSource() == ingameVolume_bar)
+        {
+            Var.ingameSoundbar =(float) ingameVolume_bar.getValue()/100;
+            
         }
 
 

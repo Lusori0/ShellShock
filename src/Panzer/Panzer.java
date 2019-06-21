@@ -68,7 +68,7 @@ public abstract class Panzer {
 
         playSound(engineClip);
 
-        Var.inGameVolume = 0.4f;
+        Var.inGameVolume = Var.ingameSoundbar;
 
         affineTransform = new AffineTransform();
 
@@ -538,6 +538,10 @@ public abstract class Panzer {
 
     public AffineTransform getAffineTransform() {
         return affineTransform;
+    }
+
+    public int getMaxLeben() {
+        return maxLeben;
     }
 
     //SETTER
