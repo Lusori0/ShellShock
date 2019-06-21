@@ -25,7 +25,7 @@ import java.util.Hashtable;
 
 public class GameUiView extends JPanel implements ActionListener, ChangeListener {
     MyButton fire,back,muteMusik,weaponChoosing,back_end_game;
-    private int health,sprit,maxSprit,yStart,xUnit;
+    private int health,sprit,maxSprit,maxHealth,yStart,xUnit;
     GameModel gameModel;
     JPanel options;
     JSlider ingamevolume;
@@ -46,6 +46,7 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
     public void drawBar() {
 
         health = gameModel.getLastLocalHuman().getPanzer().getLeben();
+        maxHealth = gameModel.getLastLocalHuman().getPanzer().getMaxLeben();
         sprit = gameModel.getLastLocalHuman().getPanzer().getSprit();
         maxSprit = gameModel.getLastLocalHuman().getPanzer().getMaxSprit();
         Graphics2D g2d = bottomHealth.createGraphics();
@@ -57,9 +58,13 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
             g2d.setColor(Color.BLACK);
             g2d.fillRect(10, 210,280, 80);
             g2d.setColor(Color.GREEN);
-            g2d.fillRect(15, 215, (int) (270/100.0 * health), 70);
+            g2d.fillRect(15, 215, (int) (270/maxHealth * health), 70);
             g2d.setFont(new Font("Calibri",Font.BOLD,20));
-            g2d.drawString("Health:" + health + "/" + 100,15,300);
+            if(health > 0) {
+                g2d.drawString("Health:" + health + "/" + maxHealth, 15, 300);
+            }else{
+                g2d.drawString("Health:" + 0 + "/" + maxHealth, 15, 300);
+            }
         //´SpritBar
 
             Graphics2D g2dt = bottomSprit.createGraphics();
