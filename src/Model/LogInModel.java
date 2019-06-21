@@ -110,8 +110,19 @@ public class LogInModel {
             }
             //Passwortabgleich
             if (profilRead.getPassword().equals(password)) {
-                JOptionPane.showMessageDialog(logInView,"Connecting Profile with Player!");
-                new PreGameModel(GameType.MULTI_LOCAL,false,true,profilRead);
+                for(int i=0;i<Var.login_profils.length;i++)
+                {
+                    if( Var.login_profils[i] != null && name.equals(Var.login_profils[i].getName()) ) {
+                        JOptionPane.showMessageDialog(logInView, "Already activated, can't connect two times the same profile!");
+                        i = Var.login_profils.length;
+                    }else
+                    {
+                        JOptionPane.showMessageDialog(logInView, "Connecting Profile with Player!");
+                        i = Var.login_profils.length;
+                        new PreGameModel(GameType.MULTI_LOCAL, false, true, profilRead);
+                    }
+                }
+
             } else {
                 JOptionPane.showMessageDialog(logInView, "Wrong Password");
             }
