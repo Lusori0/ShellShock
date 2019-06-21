@@ -1,5 +1,6 @@
 package Model;
 
+import Views.GameLoop;
 import Views.GameView;
 import Views.SettingsView;
 
@@ -29,6 +30,7 @@ public class SettingsModel {
             new MainMenuModel();
         }else{
             MyWindow.setContent(gameView);
+            GameLoop.pauset = false;
         }
     }
 

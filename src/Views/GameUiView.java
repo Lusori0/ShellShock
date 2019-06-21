@@ -221,6 +221,7 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
         }
         if ((e.getSource() == toSettings))
         {
+            GameLoop.pauset = true;
             new SettingsModel(gameModel.getGameView());
         }
         if(e.getSource() == weaponChoosing)
