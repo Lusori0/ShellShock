@@ -45,7 +45,6 @@ public class PreGameModel {
 
     public void startAction(int amount,int[] difficutly,Profil[] profils,int mapId,int gamemode,Color f,Color b,int[] team_human,int[] team_ai){
         LinkedList<Player> players = new LinkedList<>();
-        //TODO: einfach den Team sachen einbumsen
         LinkedList<Integer> weaponsTest = new LinkedList<>();
 
         weaponsTest.add(1);

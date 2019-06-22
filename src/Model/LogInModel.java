@@ -56,6 +56,7 @@ public class LogInModel {
         }
     }
 
+
     public void makeNewProfileAction(String name,String password){
         File f = new File("data/" + name + ".bin");
         new File("data/").mkdirs();
@@ -91,6 +92,10 @@ public class LogInModel {
         }
 
     }
+
+
+
+
     //Game Login Profile
     public void LogInAction_Game(String name , String password){
 
@@ -131,6 +136,10 @@ public class LogInModel {
             JOptionPane.showMessageDialog(logInView,"Wrong Username");
         }
     }
+
+
+
+
 
     public void makeNewProfileAction_Game(String name,String password){
         File f = new File("data/" + name + ".bin");

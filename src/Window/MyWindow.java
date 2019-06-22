@@ -37,17 +37,15 @@ public class MyWindow{
 
     public MyWindow() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         window = new JFrame("SchoolShock");
-       // window.setPreferredSize(new Dimension(1920,1080));
-        //window.setSize(1200,1080);
 
 
 
         window.setUndecorated(true);
         //Festlegung der Variablen für spätere Verwendung
-        WIDTH = (int) getWidth();
-        HEIGHT = (int) getHeight();
-
-       window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        WIDTH = 1280;//(int) getWidth();
+        HEIGHT = 1024;//(int) getHeight();
+        window.setSize(1280,1024);
+       //window.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 
 
