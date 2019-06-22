@@ -55,6 +55,8 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
 
     public void drawBar() {
 
+        repaint();
+
         health = gameModel.getLastLocalHuman().getPanzer().getLeben();
         maxHealth = gameModel.getLastLocalHuman().getPanzer().getMaxLeben();
         sprit = gameModel.getLastLocalHuman().getPanzer().getSprit();
@@ -65,7 +67,7 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
         //HealthBar
             g2d.drawImage(Panzer.getPanzerImage(gameModel.getLastLocalHuman().getProfil().getPanzerLevel()), 0,0,300, 200,null);
             g2d.setColor(Color.BLACK);
-            g2d.fillRect(10, 210,280, 80);
+            g2d.fillRect(10, 210,280, 90);
             g2d.setColor(Color.GREEN);
             g2d.fillRect(15, 215, (int) (270.0/maxHealth * health), 70);
             g2d.setFont(new Font("Calibri",Font.BOLD,20));
@@ -115,15 +117,20 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
 
             g2dt.setTransform(new AffineTransform());
 
-            this.repaint();
+            repaint();
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 
-        g.drawImage(background,0,0,MyWindow.WIDTH, (int) (MyWindow.HEIGHT * 0.3),null);
-        g.drawImage(bottomHealth, (int) (MyWindow.WIDTH * 0.02),0,MyWindow.WIDTH/5,(int)(MyWindow.HEIGHT * 0.3),null);
-        g.drawImage(bottomSprit, (int) (MyWindow.WIDTH * 0.04) + MyWindow.WIDTH/5,0,MyWindow.WIDTH/5,(int)(MyWindow.HEIGHT * 0.3),null);
+        Graphics2D g2d = (Graphics2D)g;
+
+        g2d.drawImage(background,0,0,MyWindow.WIDTH, (int) (MyWindow.HEIGHT * 0.3),null);
+
+        if(!gameModel.isEnded()) {
+            g2d.drawImage(bottomHealth, (int) (MyWindow.WIDTH * 0.02), 0, MyWindow.WIDTH / 5, (int) (MyWindow.HEIGHT * 0.3), null);
+            g2d.drawImage(bottomSprit, (int) (MyWindow.WIDTH * 0.04) + MyWindow.WIDTH / 5, 0, MyWindow.WIDTH / 5, (int) (MyWindow.HEIGHT * 0.3), null);
+        }
     }
 
     //Gamemodel .getLocalHuman.getPanzer.(Da sind alle Infos)
@@ -147,7 +154,10 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
         this.add(fire);
 
         options = new JPanel();
+        options.setOpaque(true);
+        options.setBackground(new Color(0,0,0,0));
         BorderLayout bl = new BorderLayout();
+
         bl.setVgap((int) (MyWindow.HEIGHT * 0.017));
         options.setLayout(bl);
 
