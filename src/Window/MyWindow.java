@@ -36,7 +36,7 @@ public class MyWindow{
 
 
     public MyWindow() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        window = new JFrame("ShellShock");
+        window = new JFrame("SchoolShock");
 
 
 
