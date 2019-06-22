@@ -44,10 +44,10 @@ public class MyWindow{
 
         window.setUndecorated(true);
         //Festlegung der Variablen für spätere Verwendung
-        WIDTH = 1280;//(int) getWidth();
-        HEIGHT = 1024;//(int) getHeight();
-        window.setSize(WIDTH,HEIGHT);
-       //window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        WIDTH = (int) getWidth();
+        HEIGHT = (int) getHeight();
+
+       window.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 
 
