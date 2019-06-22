@@ -255,7 +255,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                     labelTable_green.put(255, new JLabel("<html><font color = 'green'>255</font></html>"));
                 //Beschriftung eingeführt
                 green.setLabelTable(labelTable_green);
-                green.setPreferredSize(new Dimension(buttonWidth/3,buttonHeigth/2));
+                green.setPreferredSize(new Dimension(buttonWidth,buttonHeigth/2));
                 green.setBackground(MyWindow.backgroundColor);
                 rgb_allingment.add(green, BorderLayout.CENTER);
 
@@ -271,7 +271,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                     labelTable_blue.put(255, new JLabel("<html><font color = 'blue'>255</font></html>"));
                 //Beschriftung eingeführt
                 blue.setLabelTable(labelTable_blue);
-                blue.setPreferredSize(new Dimension(buttonWidth/3,buttonHeigth/3));
+                blue.setPreferredSize(new Dimension(buttonWidth,buttonHeigth/2));
                 blue.setBackground(MyWindow.backgroundColor);
                 rgb_allingment.add(blue, BorderLayout.SOUTH);
 
@@ -493,11 +493,11 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             red.setPaintLabels(true);
             red.setSnapToTicks(true);
             Dictionary<Integer, Component> labelTable_red = new Hashtable<Integer, Component>();
-            labelTable_red.put(0, new JLabel("<html><font color = 'red'>Red-RGB Value: 0</font></html>"));
+            labelTable_red.put(0, new JLabel("<html><font color = 'red'>0</font></html>"));
             labelTable_red.put(255, new JLabel("<html><font color = 'red'>255</font></html>"));
             //Beschriftung eingeführt
             red.setLabelTable(labelTable_red);
-            red.setPreferredSize(new Dimension(buttonWidth/3,buttonHeigth/3));
+            red.setPreferredSize(new Dimension(buttonWidth,buttonHeigth/2));
             red.setBackground(MyWindow.backgroundColor);
             rgb_allingment.add(red,BorderLayout.NORTH);
 
@@ -509,11 +509,11 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             green.setPaintLabels(true);
             green.setSnapToTicks(true);
             Dictionary<Integer, Component> labelTable_green = new Hashtable<Integer, Component>();
-            labelTable_green.put(0, new JLabel("<html><font color = 'green'>Green-RGB Value: 0</font></html>"));
+            labelTable_green.put(0, new JLabel("<html><font color = 'green'>0</font></html>"));
             labelTable_green.put(255, new JLabel("<html><font color = 'green'>255</font></html>"));
             //Beschriftung eingeführt
             green.setLabelTable(labelTable_green);
-            green.setPreferredSize(new Dimension(buttonWidth/3,buttonHeigth/3));
+            green.setPreferredSize(new Dimension(buttonWidth,buttonHeigth/2));
             green.setBackground(MyWindow.backgroundColor);
             rgb_allingment.add(green, BorderLayout.CENTER);
 
@@ -525,11 +525,11 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             blue.setPaintLabels(true);
             blue.setSnapToTicks(true);
             Dictionary<Integer, Component> labelTable_blue = new Hashtable<Integer, Component>();
-            labelTable_blue.put(0, new JLabel("<html><font color = 'blue'>Blue-RGB Value: 0</font></html>"));
+            labelTable_blue.put(0, new JLabel("<html><font color = 'blue'>0</font></html>"));
             labelTable_blue.put(255, new JLabel("<html><font color = 'blue'>255</font></html>"));
             //Beschriftung eingeführt
             blue.setLabelTable(labelTable_blue);
-            blue.setPreferredSize(new Dimension(buttonWidth/3,buttonHeigth/3));
+            blue.setPreferredSize(new Dimension(buttonWidth,buttonHeigth/2));
             blue.setBackground(MyWindow.backgroundColor);
             rgb_allingment.add(blue, BorderLayout.SOUTH);
         //
@@ -561,7 +561,8 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             //Unter der Map die RGB Slider einfügen
             g.gridx = 6;
             g.gridy = GridBagConstraints.RELATIVE;
-            g.gridheight = 1;
+            g.gridwidth = 2;
+            g.gridheight = 2;
         optionen.add(rgb_allingment,g);
         //Button to change Foreground OR Background
             change_fb = new JButton("<html><font color = 'green'><font size = +1>Change Foreground</font></html>");
@@ -570,6 +571,8 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             change_fb.addActionListener(this);
             g.gridx = 6;
             g.gridy = GridBagConstraints.RELATIVE;
+            g.gridwidth = 1;
+            g.gridheight = 1;
         optionen.add(change_fb,g);
 
         //Adding Firing Options
@@ -603,7 +606,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                 connecting[i].setBackground(MyWindow.backgroundColor);
                 connecting[i].setLayout(new BorderLayout());
                 connecting[i].setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
-                aiCheckBox[i] = new JCheckBox("<html><font color = 'white'><font size = +1>Ai (Unselected)</font></html>", selected_aiCheckbox[i]);
+                aiCheckBox[i] = new JCheckBox("<html><font color = 'white'>Ai (Unselected)</font></html>", selected_aiCheckbox[i]);
                 aiCheckBox[i].addItemListener(this);
                 aiCheckBox[i].setBackground(MyWindow.backgroundColor);
                 connecting[i].add(aiCheckBox[i],BorderLayout.NORTH);
@@ -612,9 +615,12 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             {
                 if(selected_humanCheckbox[i])
                 {
-                    humanCheckBox[i] = new JCheckBox("<html><font color = 'blue'><font size = +1>Connected as "+(Var.login_profils[i].getName())+"</font></html>", selected_humanCheckbox[i]);
+                    humanCheckBox[i] = new JCheckBox("<html><font color = 'blue'>Connected as "+(Var.login_profils[i].getName())+"</font></html>", selected_humanCheckbox[i]);
+                    connecting[i].remove(aiCheckBox[i]);
+                    connecting[i].revalidate();
+                    connecting[i].repaint();
                 }else{
-                    humanCheckBox[i] = new JCheckBox("<html><font color = 'white'><font size = +1>Humanplayer (Unselected)</font></html>", selected_humanCheckbox[i]);
+                    humanCheckBox[i] = new JCheckBox("<html><font color = 'white'>Humanplayer (Unselected)</font></html>", selected_humanCheckbox[i]);
                 }
                 humanCheckBox[i].addItemListener(this);
                 humanCheckBox[i].setBackground(MyWindow.backgroundColor);
@@ -748,7 +754,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                     labelTable_red.put(255, new JLabel("<html><font color = 'red'>255</font></html>"));
                     //Beschriftung eingeführt
                     red.setLabelTable(labelTable_red);
-                    red.setPreferredSize(new Dimension(buttonWidth/3,buttonHeigth/3));
+                    red.setPreferredSize(new Dimension(buttonWidth,buttonHeigth/2));
                     red.setBackground(MyWindow.backgroundColor);
                     rgb_allingment.add(red,BorderLayout.NORTH);
 
@@ -764,7 +770,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                     labelTable_green.put(255, new JLabel("<html><font color = 'green'>255</font></html>"));
                     //Beschriftung eingeführt
                     green.setLabelTable(labelTable_green);
-                    green.setPreferredSize(new Dimension(buttonWidth/3,buttonHeigth/3));
+                    green.setPreferredSize(new Dimension(buttonWidth,buttonHeigth/2));
                     green.setBackground(MyWindow.backgroundColor);
                     rgb_allingment.add(green, BorderLayout.CENTER);
 
@@ -780,7 +786,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                     labelTable_blue.put(255, new JLabel("<html><font color = 'blue'>255</font></html>"));
                     //Beschriftung eingeführt
                     blue.setLabelTable(labelTable_blue);
-                    blue.setPreferredSize(new Dimension(buttonWidth/3,buttonHeigth/3));
+                    blue.setPreferredSize(new Dimension(buttonWidth,buttonHeigth/2));
                     blue.setBackground(MyWindow.backgroundColor);
                     rgb_allingment.add(blue, BorderLayout.SOUTH);
                 //
@@ -806,11 +812,11 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                     red_b.setPaintLabels(true);
                     red_b.setSnapToTicks(true);
                     Dictionary<Integer, Component> labelTable_red = new Hashtable<Integer, Component>();
-                    labelTable_red.put(0, new JLabel("<html><font color = 'red'>Red-RGB Value: 0</font></html>"));
+                    labelTable_red.put(0, new JLabel("<html><font color = 'red'>0</font></html>"));
                     labelTable_red.put(255, new JLabel("<html><font color = 'red'>255</font></html>"));
                     //Beschriftung eingeführt
                     red_b.setLabelTable(labelTable_red);
-                    red_b.setPreferredSize(new Dimension(buttonWidth/3,buttonHeigth/3));
+                    red_b.setPreferredSize(new Dimension(buttonWidth,buttonHeigth/2));
                     red_b.setBackground(MyWindow.backgroundColor);
                     rgb_allingment.add(red_b,BorderLayout.NORTH);
 
@@ -822,11 +828,11 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                     green_b.setPaintLabels(true);
                     green_b.setSnapToTicks(true);
                     Dictionary<Integer, Component> labelTable_green = new Hashtable<Integer, Component>();
-                    labelTable_green.put(0, new JLabel("<html><font color = 'green'>Green-RGB Value: 0</font></html>"));
+                    labelTable_green.put(0, new JLabel("<html><font color = 'green'>0</font></html>"));
                     labelTable_green.put(255, new JLabel("<html><font color = 'green'>255</font></html>"));
                     //Beschriftung eingeführt
                     green_b.setLabelTable(labelTable_green);
-                    green_b.setPreferredSize(new Dimension(buttonWidth/3,buttonHeigth/3));
+                    green_b.setPreferredSize(new Dimension(buttonWidth,buttonHeigth/2));
                     green_b.setBackground(MyWindow.backgroundColor);
                     rgb_allingment.add(green_b, BorderLayout.CENTER);
 
@@ -838,11 +844,11 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                     blue_B.setPaintLabels(true);
                     blue_B.setSnapToTicks(true);
                         Dictionary<Integer, Component> labelTable_blue = new Hashtable<Integer, Component>();
-                    labelTable_blue.put(0, new JLabel("<html><font color = 'blue'>Blue-RGB Value: 0</font></html>"));
+                    labelTable_blue.put(0, new JLabel("<html><font color = 'blue'>0</font></html>"));
                     labelTable_blue.put(255, new JLabel("<html><font color = 'blue'>255</font></html>"));
                     //Beschriftung eingeführt
                     blue_B.setLabelTable(labelTable_blue);
-                    blue_B.setPreferredSize(new Dimension(buttonWidth/3,buttonHeigth/3));
+                    blue_B.setPreferredSize(new Dimension(buttonWidth,buttonHeigth/2));
                     blue_B.setBackground(MyWindow.backgroundColor);
                     rgb_allingment.add(blue_B, BorderLayout.SOUTH);
 
@@ -895,71 +901,61 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             preGameModel.backAction();
         }
 
-        /*if(e.getSource() == curren_tank_Selecter)
-        {
-            if("<html><font color = 'green'><font size = +1>Team 1</font></html>".equals(curren_tank_Selecter.getSelectedItem()))
-            {
-                team_current_user = 1;
-            }
-            if("<html><font color = 'green'><font size = +1>Team 2</font></html>".equals(curren_tank_Selecter.getSelectedItem()))
-            {
-                team_current_user = 2;
-            }
-            if("<html><font color = 'green'><font size = +1>Team 3</font></html>".equals(curren_tank_Selecter.getSelectedItem()))
-            {
-                team_current_user = 3;
-            }
-            if("<html><font color = 'green'><font size = +1>Team 4</font></html>".equals(curren_tank_Selecter.getSelectedItem()))
-            {
-                team_current_user = 4;
-            }
-        }*/
 
 
         //Teams from ai
             for(int i = 0; i<ai_amount;i++) {
-                if(e.getSource() == ai_teamSelecter)
+                if(e.getSource() == ai_teamSelecter[i])
                 {
                     if(("<html><font color = 'green'><font size = +1>Team 1</font></html>").equals(ai_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_ai[i] = 1;
                     }
+
                     if(("<html><font color = 'green'><font size = +1>Team 2</font></html>").equals(ai_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_ai[i] = 2;
-                        System.out.println("Das ist ausgewählt");
                     }
+
                     if(("<html><font color = 'green'><font size = +1>Team 3</font></html>").equals(ai_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_ai[i] = 3;
                     }
+
                     if(("<html><font color = 'green'><font size = +1>Team 4</font></html>").equals(ai_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_ai[i] = 4;
                     }
+
                 }
             }
 
+
+
         //Teams from human
             for(int i = 0; i<human_amount;i++) {
-                if(e.getSource() == human_teamSelecter)
+                if(e.getSource() == human_teamSelecter[i])
                 {
                     if("<html><font color = 'green'><font size = +1>Team 1</font></html>".equals(human_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_human[i] = 1;
                     }
+
                     if("<html><font color = 'green'><font size = +1>Team 2</font></html>".equals(human_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_human[i] = 2;
                     }
+
                     if("<html><font color = 'green'><font size = +1>Team 3</font></html>".equals(human_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_human[i] = 3;
                     }
+
                     if("<html><font color = 'green'><font size = +1>Team 4</font></html>".equals(human_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_human[i] = 4;
                     }
+                    
                 }
             }
 
@@ -1043,7 +1039,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                 } else {
 
                     if (e.getStateChange() == ItemEvent.SELECTED) {
-                        aiCheckBox[i].setText("<html><font color = 'blue'><font size = +1>Ai (Selected)</font></html>");
+                        aiCheckBox[i].setText("<html><font color = 'blue'>Ai (Selected)</font></html>");
                         if(i<humanCheckBox.length){
                             connecting[i].remove(humanCheckBox[i]);
                             connecting[i].revalidate();
@@ -1071,10 +1067,10 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                                 if(selected_humanCheckbox[c])
                                 {
                                     System.out.println(c+" " +"Der Index"+ selected_humanCheckbox[c] +" "+ "Boolean Wert");
-                                    icon.setText("<html><font color = 'red'><font size = +1>Login Buttons/Choose Difficulty</font></html>");
+                                    icon.setText("<html><font color = 'red'>Login Buttons/Choose Difficulty</font></html>");
                                     c = human_amount;
                                 } else {
-                                    icon.setText("<html><font color = 'red'><font size = +1>Choose Difficulty</font></html>");
+                                    icon.setText("<html><font color = 'red'>Choose Difficulty</font></html>");
                                 }
                             }
 
@@ -1112,13 +1108,13 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                             connecting[i].revalidate();
                             connecting[i].repaint();
                         }
-                        aiCheckBox[i].setText("<html><font color = 'white'><font size = +1>Ai (Unselected)</font></html>");
+                        aiCheckBox[i].setText("<html><font color = 'white'>Ai (Unselected)</font></html>");
                         selected_aiCheckbox[i] = false;
                         //Checken ob noch was ausgewählt ist in der icon-Spalte(Login Button oder Ai-Slider)
                             for(int a = 0;a<selected_aiCheckbox.length;a++) {
                                 if (selected_aiCheckbox[a]) {
                                     System.out.println(a + " " + "Das ist der Index wo es true ist");
-                                    icon.setText("<html><font color = 'red'><font size = +1>Choose Difficulty</font></html>");
+                                    icon.setText("<html><font color = 'red'>Choose Difficulty</font></html>");
                                     a=selected_aiCheckbox.length;
                                 } else {
                                     icon.setText("");
@@ -1130,7 +1126,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                                 if(selected_humanCheckbox[l])
                                 {
                                     System.out.println(l + " " + "Das ist der Index wo es true ist");
-                                    icon.setText("<html><font color = 'red'><font size = +1>Login Buttons</font></html>");
+                                    icon.setText("<html><font color = 'red'>Login Buttons</font></html>");
                                     l=selected_aiCheckbox.length;
                                 } else {
                                     icon.setText("");
@@ -1158,7 +1154,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                         connecting[i].revalidate();
                         connecting[i].repaint();
                     //Back to beginning
-                    humanCheckBox[i].setText("<html><font color = 'white'><font size = +1>Humanplayer (Unselected)</font></html>");
+                    humanCheckBox[i].setText("<html><font color = 'white'>Humanplayer (Unselected)</font></html>");
 
 
                    for(int a = 0;a<selected_aiCheckbox.length;a++) {
@@ -1233,7 +1229,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                             icon.setText("<html><font color = 'red'><font size = +1>Login Buttons</font></html>");
                         }
                     }
-                        humanCheckBox[i].setText("<html><font color = 'blue'><font size = +1>Please connect a profile </font></html>");
+                        humanCheckBox[i].setText("<html><font color = 'blue'>Please connect a profile </font></html>");
 
                         login_human[i] = new MyButton("KnopfProfilLoginMetallic1.png","Press to connect a profile");
                         login_human[i].addActionListener(e1 -> {new LogInModel(true);});
