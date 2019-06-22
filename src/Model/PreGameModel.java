@@ -41,7 +41,7 @@ public class PreGameModel {
        return model.getMap().getMapSmall(art,model,mapC,skyC);
     }
 
-    public void startAction(int amount,int[] difficutly,Profil[] profils,int mapId,int gamemode,Color f,Color b,int[] team_human,int[] team_ai,int team_currenUser){
+    public void startAction(int amount,int[] difficutly,Profil[] profils,int mapId,int gamemode,Color f,Color b,int[] team_human,int[] team_ai){
         LinkedList<Player> players = new LinkedList<>();
         //TODO: einfach den Team sachen einbumsen
         LinkedList<Integer> weaponsTest = new LinkedList<>();
@@ -52,7 +52,7 @@ public class PreGameModel {
 
         //Profil profil = new Profil("test",1,"test",1,weaponsTest,0.5f,0.5f,1);
 
-        players.add(new HumanPlayer(model,team_currenUser,model.getNextId(), Var.activeUser));
+        players.add(new HumanPlayer(model,1,model.getNextId(), Var.activeUser));
        for(int p = 0;p<profils.length;p++)
        {
 
@@ -81,6 +81,10 @@ public class PreGameModel {
 
     public void backAction(){
         new MainMenuModel();
+    }
+
+    public GameModel getModel() {
+        return model;
     }
 
     public void startAction(LinkedList<Player> players, Color background, Color foreground){

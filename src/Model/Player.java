@@ -164,6 +164,10 @@ public abstract class Player {
         return waffenanzahl;
     }
 
+    public Profil getProfil() {
+        return profil;
+    }
+
     //SETTER
 
     public void setLevelUp(boolean levelUp) {

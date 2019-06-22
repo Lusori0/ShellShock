@@ -4,6 +4,7 @@ import Model.GameModel;
 import Model.MainMenuModel;
 import Model.PreGameModel;
 import Model.SettingsModel;
+import Panzer.Panzer;
 import Weapons.Granade.Granade;
 import Window.*;
 
@@ -54,8 +55,8 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
 
 
         //HealthBar
-
-            g2d.drawImage(gameModel.getLastLocalHuman().getPanzer().getImage(), 0,0,300, 200,null);
+               
+            g2d.drawImage(Panzer.getPanzerImage(gameModel.getLastLocalHuman().getProfil().getPanzerLevel()), 0,0,300, 200,null);
             g2d.setColor(Color.BLACK);
             g2d.fillRect(10, 210,280, 80);
             g2d.setColor(Color.GREEN);
