@@ -37,7 +37,7 @@ public class MultiPlayerView extends JPanel implements ActionListener {
 
         g.gridx = 0;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
 
-        g.insets = new Insets(100, 0, 0, 0);// Erzeugen eines Abstandes mit dem nächsten Button
+        g.insets = new Insets(MyWindow.HEIGHT/10, 0, 0, 0);// Erzeugen eines Abstandes mit dem nächsten Button
 
         g.gridy = 0;//Festlegung in welchem Grid y der Button sein soll --> 0= erster Grid
 

@@ -8,6 +8,7 @@ import Panzer.Panzer;
 import Weapons.Granade.Granade;
 import Window.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -30,8 +31,8 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
     private int health,sprit,maxSprit,maxHealth,yStart,xUnit;
     GameModel gameModel;
     JPanel options;
-    JSlider ingamevolume;
     private BufferedImage bottomHealth,bottomSprit;
+    BufferedImage background;
 
     BufferedImage heathBar;
     public  GameUiView(GameModel gameModel)
@@ -41,6 +42,11 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
         bottomHealth = new BufferedImage(300 , 300,BufferedImage.TYPE_4BYTE_ABGR);
         bottomSprit = new BufferedImage(300 , 300,BufferedImage.TYPE_4BYTE_ABGR);
 
+        try {
+            background = ImageIO.read(new File("res/gameimages/Multiplayerplayermenü.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -55,7 +61,6 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
 
 
         //HealthBar
-               
             g2d.drawImage(Panzer.getPanzerImage(gameModel.getLastLocalHuman().getProfil().getPanzerLevel()), 0,0,300, 200,null);
             g2d.setColor(Color.BLACK);
             g2d.fillRect(10, 210,280, 80);

@@ -31,7 +31,6 @@ public class Background {
         } else
         {
             try {
-
                     background = ImageIO.read(new File("res/gameimages/Menübildschirm_big.png"));
             } catch (IOException e) {
                 System.out.println("Fehler entstanden bim laden der File!!" + e);

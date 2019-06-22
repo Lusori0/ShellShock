@@ -67,7 +67,6 @@ public class ProfilView extends JPanel implements ActionListener, ItemListener {
     //TODO:  Image von beiden Panzern einfügen!
     private void erzeugenOverlay()
     {
-        System.out.println("Das sidn die boolean Werte:::::"+selected_panzer + seleceted_heavy + selected_light);
         // Ersellen des Loadouts in Abhängigkeit des Gridbaglayouts
 
         this.setLayout(new GridBagLayout());
@@ -78,7 +77,7 @@ public class ProfilView extends JPanel implements ActionListener, ItemListener {
 
                 g.gridx = 1;//Festlegung in welchem Grid x der Button sein soll --> 0= erster Grid
 
-                g.insets= new Insets(100,0,0,0);// Erzeugen eines Abstandes mit dem nächsten Button
+                g.insets= new Insets(MyWindow.HEIGHT/20,0,0,0);// Erzeugen eines Abstandes mit dem nächsten Button
 
                 g.gridy = 0;
             //Einfügen der Buttons in Abhängigkeit der GridBag
@@ -107,9 +106,9 @@ public class ProfilView extends JPanel implements ActionListener, ItemListener {
                 panzer_label.setLayout(new BorderLayout());
                 panzer_label.setPreferredSize(new Dimension(panzerImg.getIconWidth(),panzerImg.getIconHeight()));
                 panzer_label.setBackground(MyWindow.backgroundColor);
-                 tank = new JLabel("<html><font color = 'white'><font size = +1>Name : "+ Panzer.getPanzerName(1)+ "</font></html>");
-                 leben = new JLabel("<html><font color = 'white'><font size = +1>Live : "+ Panzer.getPanzerLeben(1)+ "</font></html>");
-                 sprit = new JLabel("<html><font color = 'white'><font size = +1>Gas : "+ Panzer.getPanzerSprit(1)+ "</font></html>");
+                 tank = new JLabel("<html><font color = 'white'>Name : "+ Panzer.getPanzerName(1)+ "</font></html>");
+                 leben = new JLabel("<html><font color = 'white'>Live : "+ Panzer.getPanzerLeben(1)+ "</font></html>");
+                 sprit = new JLabel("<html><font color = 'white'>Gas : "+ Panzer.getPanzerSprit(1)+ "</font></html>");
                 panzer_label.add(tank,BorderLayout.NORTH);
                 panzer_label.add(leben,BorderLayout.CENTER);
                 panzer_label.add(sprit,BorderLayout.SOUTH);
@@ -134,7 +133,7 @@ public class ProfilView extends JPanel implements ActionListener, ItemListener {
             g.gridy = 2;
             this.add(heavy,g);
             //
-                heavy_label = new JPanel();
+               heavy_label = new JPanel();
                 heavy_label.setLayout(new BorderLayout());
                 heavy_label.setPreferredSize(new Dimension(panzerImg.getIconWidth(),panzerImg.getIconHeight()));
                 heavy_label.setBackground(MyWindow.backgroundColor);

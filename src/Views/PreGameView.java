@@ -221,7 +221,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         g.weightx = 0;
         g.gridwidth = 3;
         g.gridheight = 1;
-        g.insets = new Insets(0,buttonWidth,0,0);
+        g.insets = new Insets(MyWindow.HEIGHT/100,buttonWidth,0,0);
         g.fill = GridBagConstraints.HORIZONTAL;
         optionen.add(gameOptions,g);
 
@@ -236,11 +236,11 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                 red.setPaintLabels(true);
                 red.setSnapToTicks(true);
                 Dictionary<Integer, Component> labelTable_red = new Hashtable<Integer, Component>();
-                    labelTable_red.put(0, new JLabel("<html><font color = 'red'>Red-RGB Value: 0</font></html>"));
+                    labelTable_red.put(0, new JLabel("<html><font color = 'red'>0</font></html>"));
                     labelTable_red.put(255, new JLabel("<html><font color = 'red'>255</font></html>"));
                 //Beschriftung eingeführt
                 red.setLabelTable(labelTable_red);
-                red.setPreferredSize(new Dimension(buttonWidth/3,buttonHeigth/3));
+                red.setPreferredSize(new Dimension(buttonWidth,buttonHeigth/2));
                 red.setBackground(MyWindow.backgroundColor);
                 rgb_allingment.add(red,BorderLayout.NORTH);
 
@@ -248,15 +248,14 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                 green = new JSlider(SwingConstants.HORIZONTAL,0,255,Var.greentemp);
                 green.addChangeListener(this);
                 green.setMajorTickSpacing(1);
-
                 green.setPaintLabels(true);
                 green.setSnapToTicks(true);
                 Dictionary<Integer, Component> labelTable_green = new Hashtable<Integer, Component>();
-                    labelTable_green.put(0, new JLabel("<html><font color = 'green'>Green-RGB Value: 0</font></html>"));
+                    labelTable_green.put(0, new JLabel("<html><font color = 'green'>0</font></html>"));
                     labelTable_green.put(255, new JLabel("<html><font color = 'green'>255</font></html>"));
                 //Beschriftung eingeführt
                 green.setLabelTable(labelTable_green);
-                green.setPreferredSize(new Dimension(buttonWidth/3,buttonHeigth/3));
+                green.setPreferredSize(new Dimension(buttonWidth/3,buttonHeigth/2));
                 green.setBackground(MyWindow.backgroundColor);
                 rgb_allingment.add(green, BorderLayout.CENTER);
 
@@ -268,7 +267,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                 blue.setPaintLabels(true);
                 blue.setSnapToTicks(true);
                 Dictionary<Integer, Component> labelTable_blue = new Hashtable<Integer, Component>();
-                    labelTable_blue.put(0, new JLabel("<html><font color = 'blue'>Blue-RGB Value: 0</font></html>"));
+                    labelTable_blue.put(0, new JLabel("<html><font color = 'blue'>0</font></html>"));
                     labelTable_blue.put(255, new JLabel("<html><font color = 'blue'>255</font></html>"));
                 //Beschriftung eingeführt
                 blue.setLabelTable(labelTable_blue);
@@ -305,7 +304,8 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         //Unter der Map die RGB Slider einfügen
             g.gridx = 6;
             g.gridy = GridBagConstraints.RELATIVE;
-            g.gridheight = 1;
+            g.gridwidth =2;
+            g.gridheight = 2;
         optionen.add(rgb_allingment,g);
         //Button to change Foreground OR Background
             change_fb = new JButton("<html><font color = 'green'><font size = +1>Change Foreground</font></html>");
@@ -314,6 +314,8 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             change_fb.addActionListener(this);
             g.gridx = 6;
             g.gridy = GridBagConstraints.RELATIVE;
+            g.gridwidth = 1;
+            g.gridheight =1;
         optionen.add(change_fb,g);
 
             //Adding Firing Options
@@ -742,7 +744,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                     red.setPaintLabels(true);
                     red.setSnapToTicks(true);
                     Dictionary<Integer, Component> labelTable_red = new Hashtable<Integer, Component>();
-                    labelTable_red.put(0, new JLabel("<html><font color = 'red'>Red-RGB Value: 0</font></html>"));
+                    labelTable_red.put(0, new JLabel("<html><font color = 'red'>0</font></html>"));
                     labelTable_red.put(255, new JLabel("<html><font color = 'red'>255</font></html>"));
                     //Beschriftung eingeführt
                     red.setLabelTable(labelTable_red);
@@ -758,7 +760,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                     green.setPaintLabels(true);
                     green.setSnapToTicks(true);
                     Dictionary<Integer, Component> labelTable_green = new Hashtable<Integer, Component>();
-                    labelTable_green.put(0, new JLabel("<html><font color = 'green'>Green-RGB Value: 0</font></html>"));
+                    labelTable_green.put(0, new JLabel("<html><font color = 'green'>0</font></html>"));
                     labelTable_green.put(255, new JLabel("<html><font color = 'green'>255</font></html>"));
                     //Beschriftung eingeführt
                     green.setLabelTable(labelTable_green);
@@ -774,7 +776,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                     blue.setPaintLabels(true);
                     blue.setSnapToTicks(true);
                     Dictionary<Integer, Component> labelTable_blue = new Hashtable<Integer, Component>();
-                    labelTable_blue.put(0, new JLabel("<html><font color = 'blue'>Blue-RGB Value: 0</font></html>"));
+                    labelTable_blue.put(0, new JLabel("<html><font color = 'blue'>0</font></html>"));
                     labelTable_blue.put(255, new JLabel("<html><font color = 'blue'>255</font></html>"));
                     //Beschriftung eingeführt
                     blue.setLabelTable(labelTable_blue);
@@ -918,19 +920,20 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             for(int i = 0; i<ai_amount;i++) {
                 if(e.getSource() == ai_teamSelecter)
                 {
-                    if("<html><font color = 'green'><font size = +1>Team 1</font></html>".equals(ai_teamSelecter[i].getSelectedItem()))
+                    if(("<html><font color = 'green'><font size = +1>Team 1</font></html>").equals(ai_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_ai[i] = 1;
                     }
-                    if("<html><font color = 'green'><font size = +1>Team 2</font></html>".equals(ai_teamSelecter[i].getSelectedItem()))
+                    if(("<html><font color = 'green'><font size = +1>Team 2</font></html>").equals(ai_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_ai[i] = 2;
+                        System.out.println("Das ist ausgewählt");
                     }
-                    if("<html><font color = 'green'><font size = +1>Team 3</font></html>".equals(ai_teamSelecter[i].getSelectedItem()))
+                    if(("<html><font color = 'green'><font size = +1>Team 3</font></html>").equals(ai_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_ai[i] = 3;
                     }
-                    if("<html><font color = 'green'><font size = +1>Team 4</font></html>".equals(ai_teamSelecter[i].getSelectedItem()))
+                    if(("<html><font color = 'green'><font size = +1>Team 4</font></html>").equals(ai_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_ai[i] = 4;
                     }
