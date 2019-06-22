@@ -955,7 +955,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                     {
                         team_from_human[i] = 4;
                     }
-                    
+
                 }
             }
 
