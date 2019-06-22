@@ -13,6 +13,7 @@ public class PreGameModel {
 
     private GameType gametype;
     private final boolean sandbox;
+    boolean multi;
     PreGameView preGameView;
     private GameModel model = new GameModel();
 
@@ -20,6 +21,7 @@ public class PreGameModel {
          preGameView = new PreGameView(this);
         this.gametype = gametype;
         this.sandbox = sandbox;
+        multi = multiplayer;
         if(profil_Login != null)
         {
             preGameView.setProfils(profil_Login);
@@ -80,7 +82,12 @@ public class PreGameModel {
     }
 
     public void backAction(){
-        new MainMenuModel();
+        if(multi){
+            new MultiPlayerModel();
+        }else {
+            new SinglePlayerModel();
+        }
+
     }
 
     public GameModel getModel() {
