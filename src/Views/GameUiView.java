@@ -132,9 +132,15 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
 
 
 
-        this.add(new JLabel(new ImageIcon(bottomHealth)));
+        JLabel healthImg = new JLabel(new ImageIcon(bottomHealth));
+        healthImg.setPreferredSize(new Dimension(MyWindow.WIDTH/6, (int) (MyWindow.HEIGHT * 0.3)));
 
-        this.add(new JLabel(new ImageIcon(bottomSprit)));
+        this.add(healthImg);
+
+        JLabel spritImg = new JLabel(new ImageIcon(bottomSprit));
+        spritImg.setPreferredSize(new Dimension(MyWindow.WIDTH/6, (int) (MyWindow.HEIGHT * 0.3)));
+
+        this.add(spritImg);
 
 
 
@@ -148,9 +154,9 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
         bl.setVgap((int) (MyWindow.HEIGHT * 0.017));
         options.setLayout(bl);
 
+
+
         toSettings = new MyButton("KnopfEinstellungenMetallic1.png","Press to enter Settings");
-
-
         toSettings.addActionListener(this);
         options.add(toSettings,BorderLayout.CENTER);
 
@@ -158,49 +164,11 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
         weaponChoosing.addActionListener(this);
         options.add(weaponChoosing,BorderLayout.NORTH);
 
-        /*
-            ingamevolume = new JSlider(SwingConstants.HORIZONTAL,0,100,(int) (Var.inGameVolume*100) );
-            ingamevolume.addChangeListener(this);
-            ingamevolume.setMajorTickSpacing(10);
-
-            ingamevolume.setPaintTicks(true);
-            ingamevolume.setPaintLabels(true);
-            ingamevolume.setSnapToTicks(true);
-
-            // Beschriftung des Sliders
-            Dictionary<Integer, Component> labelTable = new Hashtable<Integer, Component>();
-                labelTable.put(0, new JLabel("0%"));
-                labelTable.put(10, new JLabel("10%"));
-                labelTable.put(20, new JLabel("20%"));
-                labelTable.put(30, new JLabel("30%"));
-                labelTable.put(40, new JLabel("40%"));
-                labelTable.put(50, new JLabel("50%"));
-                labelTable.put(60, new JLabel("60%"));
-                labelTable.put(70, new JLabel("70%"));
-                labelTable.put(80, new JLabel("80%"));
-                labelTable.put(90, new JLabel("90%"));
-                labelTable.put(100, new JLabel("100%"));
-            //
-            ingamevolume.setLabelTable(labelTable);
-            ingamevolume.setPreferredSize(new Dimension(250,100));
-            ingamevolume.setBackground(MyWindow.backgroundColor);
-            options.add(ingamevolume);
-        */
-
-
 
         back = new MyButton("KnopfKampfVerlassenMetallic1.png","Back to Pregame");
         back.addActionListener(this);
         options.add(back,BorderLayout.SOUTH);
         this.add(options);
-
-
-
-
-
-
-
-
     }
 
 

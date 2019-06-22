@@ -122,9 +122,9 @@ public class GameMap {
 
         //Map collision detection
 
-        if(x > -GameLoop.imgW/10 && x < GameLoop.imgW * 1.1 && y > 0) {
+        if(x > 0 && x < GameLoop.imgW && y > 0) {
             return map.contains(new Point2D.Double(x, y));
-        }else return y > 0;
+        }else return true;
     }
 
     public void noImpactExplosion(Shape shape,int damage,Panzer herkunft){
