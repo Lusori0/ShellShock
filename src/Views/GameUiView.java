@@ -108,6 +108,16 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
 
             g2dt.setTransform(new AffineTransform());
 
+            BufferedImage temp1 = new BufferedImage(MyWindow.WIDTH/6, (int) (MyWindow.HEIGHT * 0.3),BufferedImage.TYPE_4BYTE_ABGR);
+            Graphics2D g2dtemp1 = temp1.createGraphics();
+            g2dtemp1.drawImage(bottomHealth,0,0,MyWindow.WIDTH/6, (int) (MyWindow.HEIGHT * 0.3),null);
+            bottomHealth = temp1;
+
+            BufferedImage temp2 = new BufferedImage(MyWindow.WIDTH/6, (int) (MyWindow.HEIGHT * 0.3),BufferedImage.TYPE_4BYTE_ABGR);
+            Graphics2D g2dtemp2 = temp2.createGraphics();
+            g2dtemp2.drawImage(bottomSprit,0,0,MyWindow.WIDTH/6, (int) (MyWindow.HEIGHT * 0.3),null);
+            bottomSprit = temp2;
+
             this.repaint();
     }
 
