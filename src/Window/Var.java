@@ -30,6 +30,7 @@ public class Var {
     public static Profil activeUser;
     public static Profil[] login_profils = new Profil[5];
     public static  boolean [] selected_humanCheckbox_speicher = new boolean[5];
+    public static  boolean [] selected_aiCheckbox_speicher = new boolean[7];
     public static int redtemp = 120,bluetemp = 80,greentemp = 100,red_btemp = 100,green_btemp  = 100,blue_btemp = 100;//Speichern der RGB Slider Werte
 
     public Var() {

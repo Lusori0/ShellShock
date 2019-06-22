@@ -44,6 +44,7 @@ public class MyWindow{
         //Festlegung der Variablen für spätere Verwendung
         WIDTH =  (int) getWidth();
         HEIGHT = (int) getHeight();
+
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 

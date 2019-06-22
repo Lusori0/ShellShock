@@ -108,11 +108,15 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
         g = new GridBagConstraints();
         b = new BorderLayout();
 
-        //Bollean
-        for(int i =0;i<human_amount;i++)
-        {
-            selected_humanCheckbox[i] = Var.selected_humanCheckbox_speicher[i];
-        }
+        //Copy the Values in class variable
+            for(int i =0;i<human_amount;i++)
+            {
+                selected_humanCheckbox[i] = Var.selected_humanCheckbox_speicher[i];
+            }
+            for(int i =0;i<ai_amount;i++)
+            {
+                selected_aiCheckbox[i] = Var.selected_aiCheckbox_speicher[i];
+            }
 
         for(int i : team_from_ai)
         {
@@ -606,7 +610,13 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                 connecting[i].setBackground(MyWindow.backgroundColor);
                 connecting[i].setLayout(new BorderLayout());
                 connecting[i].setPreferredSize(new Dimension(buttonWidth,buttonHeigth));
-                aiCheckBox[i] = new JCheckBox("<html><font color = 'white'>Ai (Unselected)</font></html>", selected_aiCheckbox[i]);
+                if(selected_aiCheckbox[i])
+                {
+                    aiCheckBox[i] = new JCheckBox("<html><font color = 'blue'>Ai (Selected)</font></html>", selected_aiCheckbox[i]);
+                }else{
+                    aiCheckBox[i] = new JCheckBox("<html><font color = 'white'>Ai (Unselected)</font></html>", selected_aiCheckbox[i]);
+                }
+
                 aiCheckBox[i].addItemListener(this);
                 aiCheckBox[i].setBackground(MyWindow.backgroundColor);
                 connecting[i].add(aiCheckBox[i],BorderLayout.NORTH);
@@ -714,8 +724,20 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                 Var.selected_humanCheckbox_speicher[i] = false;
                 //Abbruch von Start wenn keine Feinde ausgewählt wurden
                 if(amount_selected_Players != 0 || Var.login_profils[i] != null){
-                    preGameModel.startAction(amount_selected_Players, difficulty_value_Ai, Var.login_profils, mapSelectter.getSelectedIndex() + 1, gamemode,foreground,background,team_from_human,team_from_ai);
-
+                        for (int a = 0; a < ai_amount; a++)
+                        {
+                            if(team_from_ai[a]> 1 || team_from_human[i] >1)
+                            {
+                                System.out.println("AufjedenFall sind KIs vorhanden!!");
+                                preGameModel.startAction(amount_selected_Players, difficulty_value_Ai, Var.login_profils, mapSelectter.getSelectedIndex() + 1, gamemode,foreground,background,team_from_human,team_from_ai);
+                                a = ai_amount;
+                            } else
+                            {
+                                JOptionPane.showMessageDialog(this,"Please select for at lest 1 Enemy a different Team than Team 1");
+                                a = ai_amount;
+                            }
+                        }
+                    //preGameModel.startAction(amount_selected_Players, difficulty_value_Ai, Var.login_profils, mapSelectter.getSelectedIndex() + 1, gamemode,foreground,background,team_from_human,team_from_ai);
                     i = Var.login_profils.length;
                 } else{
                     JOptionPane.showMessageDialog(this, "Please Select an Enemy");
@@ -974,7 +996,6 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                         aiCheckBox[i].setText("<html><font color = 'blue'><font size = +1>Selected</font></html>");
                         icon.setText("<html><font color = 'red'><font size = +1>Choose Difficulty</font></html>");
                         selected_aiCheckbox[i] = true;
-
                             //Team Selecter
                             ai_teamSelecter[i] = new JComboBox();
                             ai_teamSelecter[i].setBackground(MyWindow.backgroundColor);
@@ -1045,7 +1066,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                             connecting[i].revalidate();
                             connecting[i].repaint();
                         }
-
+                        Var.selected_aiCheckbox_speicher[i] = true;
                         //Team Selecter
                             ai_teamSelecter[i] = new JComboBox();
                             ai_teamSelecter[i].setBackground(MyWindow.backgroundColor);
@@ -1070,7 +1091,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                                     icon.setText("<html><font color = 'red'>Login Buttons/Choose Difficulty</font></html>");
                                     c = human_amount;
                                 } else {
-                                    icon.setText("<html><font color = 'red'>Choose Difficulty</font></html>");
+                                    icon.setText("<html><font color = 'red'><font size = +1>Choose Difficulty</font></html>");
                                 }
                             }
 
@@ -1114,7 +1135,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                             for(int a = 0;a<selected_aiCheckbox.length;a++) {
                                 if (selected_aiCheckbox[a]) {
                                     System.out.println(a + " " + "Das ist der Index wo es true ist");
-                                    icon.setText("<html><font color = 'red'>Choose Difficulty</font></html>");
+                                    icon.setText("<html><font color = 'red'><font size = +1>Choose Difficulty</font></html>");
                                     a=selected_aiCheckbox.length;
                                 } else {
                                     icon.setText("");
@@ -1126,16 +1147,18 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                                 if(selected_humanCheckbox[l])
                                 {
                                     System.out.println(l + " " + "Das ist der Index wo es true ist");
-                                    icon.setText("<html><font color = 'red'>Login Buttons</font></html>");
+                                    icon.setText("<html><font color = 'red'><font size = +1>Login Buttons</font></html>");
                                     l=selected_aiCheckbox.length;
                                 } else {
                                     icon.setText("");
                                 }
                             }
-                        optionen.remove(difficulty_slider[i]);
-                        optionen.remove(ai_teamSelecter[i]);
-                        optionen.repaint();
-                        optionen.revalidate();
+                            if(difficulty_slider[i] != null && ai_teamSelecter[i] != null){
+                                optionen.remove(difficulty_slider[i]);
+                                optionen.remove(ai_teamSelecter[i]);
+                                optionen.repaint();
+                                optionen.revalidate();
+                            }
                     }
 
                 }
@@ -1222,9 +1245,9 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                     {
                         if(selected_aiCheckbox[c])
                         {
-                            System.out.println(c+" " +"Der Index"+ selected_aiCheckbox[c] +" "+ "Boolean Wert");
-                            icon.setText("<html><font color = 'red'><font size = +1>Login Buttons/Choose Difficulty</font></html>");
-                            c = human_amount;
+                            System.out.println(c+" " +"Der Index"+ selected_aiCheckbox[c] +" "+ "Boolean Wert123123");
+                            icon.setText("<html><font color = 'red'>Login Buttons/Choose Difficulty</font></html>");
+                            c = ai_amount;
                         } else {
                             icon.setText("<html><font color = 'red'><font size = +1>Login Buttons</font></html>");
                         }
