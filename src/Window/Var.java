@@ -39,7 +39,7 @@ public class Var {
             explosionClip = AudioSystem.getClip();
             fireClip = AudioSystem.getClip();
             shotClip = AudioSystem.getClip();
-        } catch (LineUnavailableException e) {
+        } catch (LineUnavailableException | IllegalArgumentException e ) {
             e.printStackTrace();
         }
 
