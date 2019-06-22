@@ -122,7 +122,7 @@ public class GameMap {
 
         //Map collision detection
 
-        if(x > 0 && x < GameLoop.imgW && y > 0) {
+        if(x > 0 && x < GameLoop.imgW && y < GameLoop.imgH) {
             return map.contains(new Point2D.Double(x, y));
         }else return true;
     }
@@ -223,7 +223,6 @@ public class GameMap {
         Graphics2D g2d = img.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         g2d.drawImage(getMap(art,gameModel,mapC,skyC),0,0,560,360,null);
-        //TODO: Vergleiche mit PregameView Die Map bei art = 5 oder 6 sind jedes mal unterschiedlich!!
         return img;
     }
 

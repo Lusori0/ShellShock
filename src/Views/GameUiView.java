@@ -27,14 +27,16 @@ import java.util.Hashtable;
 
 
 public class GameUiView extends JPanel implements ActionListener, ChangeListener {
-    MyButton fire,back,toSettings,weaponChoosing,back_end_game;
-    private int health,sprit,maxSprit,maxHealth,yStart,xUnit;
-    GameModel gameModel;
-    JPanel options;
+    private MyButton fire,back,toSettings,weaponChoosing,back_end_game;
+    private int health;
+    private int sprit;
+    private int maxSprit;
+    private int maxHealth;
+    private GameModel gameModel;
+    private JPanel options;
     private BufferedImage bottomHealth,bottomSprit;
-    BufferedImage background;
+    private BufferedImage background;
 
-    BufferedImage heathBar;
     public  GameUiView(GameModel gameModel)
     {
         this.gameModel = gameModel;
@@ -43,7 +45,7 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
         bottomSprit = new BufferedImage(300 , 300,BufferedImage.TYPE_4BYTE_ABGR);
 
         try {
-            background = ImageIO.read(new File("res/gameimages/Multiplayerplayermenü.png"));
+            background = ImageIO.read(new File("res/gameimages/Metall2.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -89,8 +91,8 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
             AffineTransform aft = new AffineTransform();
 
             g2dt.setFont(new Font("Calibri",Font.BOLD,20));
-            g2dt.drawString("Full",15,10);
-            g2dt.drawString("Empty",250,270);
+            g2dt.drawString("Full",15,60);
+            g2dt.drawString("Empty",200,280);
             for(int i = 0;i < 7;i++) {
                 aft.setToRotation(Math.PI/12 * i,rotationPoint.getX(),rotationPoint.getY());
 
@@ -113,17 +115,15 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
 
             g2dt.setTransform(new AffineTransform());
 
-            BufferedImage temp1 = new BufferedImage(MyWindow.WIDTH/6, (int) (MyWindow.HEIGHT * 0.3),BufferedImage.TYPE_4BYTE_ABGR);
-            Graphics2D g2dtemp1 = temp1.createGraphics();
-            g2dtemp1.drawImage(bottomHealth,0,0,MyWindow.WIDTH/6, (int) (MyWindow.HEIGHT * 0.3),null);
-            bottomHealth = temp1;
-
-            BufferedImage temp2 = new BufferedImage(MyWindow.WIDTH/6, (int) (MyWindow.HEIGHT * 0.3),BufferedImage.TYPE_4BYTE_ABGR);
-            Graphics2D g2dtemp2 = temp2.createGraphics();
-            g2dtemp2.drawImage(bottomSprit,0,0,MyWindow.WIDTH/6, (int) (MyWindow.HEIGHT * 0.3),null);
-            bottomSprit = temp2;
-
             this.repaint();
+    }
+
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+
+        g.drawImage(background,0,0,MyWindow.WIDTH, (int) (MyWindow.HEIGHT * 0.3),null);
+        g.drawImage(bottomHealth, (int) (MyWindow.WIDTH * 0.02),0,MyWindow.WIDTH/5,(int)(MyWindow.HEIGHT * 0.3),null);
+        g.drawImage(bottomSprit, (int) (MyWindow.WIDTH * 0.04) + MyWindow.WIDTH/5,0,MyWindow.WIDTH/5,(int)(MyWindow.HEIGHT * 0.3),null);
     }
 
     //Gamemodel .getLocalHuman.getPanzer.(Da sind alle Infos)
@@ -134,24 +134,11 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
         drawBar();
 
         FlowLayout fl = new FlowLayout();
-        fl.setAlignment(FlowLayout.CENTER);
+        fl.setAlignment(FlowLayout.RIGHT);
         fl.setVgap(0);
-        fl.setHgap((int) (MyWindow.WIDTH * 0.05));
+        fl.setHgap((int) (MyWindow.WIDTH * 0.02));
         this.setLayout(fl);
         this.setPreferredSize(new Dimension(MyWindow.WIDTH, (int) (MyWindow.HEIGHT*0.3)));
-
-
-
-        JLabel healthImg = new JLabel(new ImageIcon(bottomHealth));
-        healthImg.setPreferredSize(new Dimension(MyWindow.WIDTH/6, (int) (MyWindow.HEIGHT * 0.3)));
-
-        this.add(healthImg);
-
-        JLabel spritImg = new JLabel(new ImageIcon(bottomSprit));
-        spritImg.setPreferredSize(new Dimension(MyWindow.WIDTH/6, (int) (MyWindow.HEIGHT * 0.3)));
-
-        this.add(spritImg);
-
 
 
         fire = new MyButton("KnopfFeuerMetallic1.png","Fire Button",MyWindow.WIDTH/3,(int) (MyWindow.HEIGHT*0.3));
