@@ -122,7 +122,7 @@ public class GameMap {
 
         //Map collision detection
 
-        if(x > 0 && x < GameLoop.imgW && y > 0) {
+        if(x > 0 && x < GameLoop.imgW && y < GameLoop.imgH) {
             return map.contains(new Point2D.Double(x, y));
         }else return true;
     }
