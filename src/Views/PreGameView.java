@@ -6,6 +6,7 @@ import Window.MyButton;
 import Window.MyWindow;
 import Window.Var;
 
+import javax.sound.midi.SysexMessage;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -120,11 +121,11 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
 
         for(int i : team_from_ai)
         {
-            i= 2;
+            team_from_ai[i]= 2;
         }
         for(int i : team_from_human)
         {
-            i= 2;
+            team_from_human[i]= 2;
         }
     }
 
@@ -721,6 +722,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             if(gamemode == 0) gamemode = 1;
             for(int i = 0;i<Var.login_profils.length;i++)
             {
+                System.out.println(team_from_human[i]);
                 Var.selected_humanCheckbox_speicher[i] = false;
                 //Abbruch von Start wenn keine Feinde ausgewählt wurden
                 if(amount_selected_Players != 0 || Var.login_profils[i] != null){
