@@ -732,7 +732,7 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                         {
                             if(team_from_ai[a]> 1 || team_from_human[i] >1)
                             {
-                                System.out.println("AufjedenFall sind KIs vorhanden!!");
+                                System.out.println("Auf jeden Fall sind KIs vorhanden!!");
                                 preGameModel.startAction(amount_selected_Players, difficulty_value_Ai, Var.login_profils, mapSelectter.getSelectedIndex() + 1, gamemode,foreground,background,team_from_human,team_from_ai);
                                 a = ai_amount;
                             } else
