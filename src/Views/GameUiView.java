@@ -172,7 +172,7 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
         options.add(weaponChoosing,BorderLayout.NORTH);
 
 
-        back = new MyButton("KnopfKampfVerlassenMetallic1.png","Back to Pregame");
+        back = new MyButton("KnopfKampfVerlassenMetallic1.png","Leave the Match");
         back.addActionListener(this);
         options.add(back,BorderLayout.SOUTH);
         this.add(options);
@@ -181,7 +181,7 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
 
     public void erzeugenOverlay_End()
     {
-        back_end_game = new MyButton("KnopfKampfVerlassenMetallic1.png","Back to Pregame");
+        back_end_game = new MyButton("leaveGameKnopfMetallic1.png","Back to MainMenu");
         back_end_game.addActionListener(this);
         this.add(back_end_game);
         this.setVisible(true);
