@@ -27,6 +27,8 @@ public class Var {
     public static int soundBarVolume = 0;
     public static float ingameSoundbar = 0f;
     public static int[] difficulty_sliderValue_preGameView = new int[8];
+    public static int[] team_from_human_speicher = new int[5];
+    public static int[] team_from_ai_speicher = new int[8];
     public static Profil activeUser;
     public static Profil[] login_profils = new Profil[5];
     public static  boolean [] selected_humanCheckbox_speicher = new boolean[5];
@@ -34,6 +36,16 @@ public class Var {
     public static int redtemp = 120,bluetemp = 80,greentemp = 100,red_btemp = 100,green_btemp  = 100,blue_btemp = 100;//Speichern der RGB Slider Werte
 
     public Var() {
+
+        for(int  i = 0;i<team_from_human_speicher.length;i++)
+        {
+            team_from_human_speicher[i] = 2;
+        }
+
+        for(int  i = 0;i<team_from_ai_speicher.length;i++)
+        {
+            team_from_ai_speicher[i] = 2;
+        }
 
         try {
 

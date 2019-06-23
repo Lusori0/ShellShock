@@ -119,13 +119,13 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                 selected_aiCheckbox[i] = Var.selected_aiCheckbox_speicher[i];
             }
 
-        for(int i : team_from_ai)
+        for(int i = 0;i<team_from_ai.length;i++)
         {
-            team_from_ai[i]= 2;
+            team_from_ai[i]= Var.team_from_ai_speicher[i];
         }
-        for(int i : team_from_human)
+        for(int i = 0; i<team_from_human.length;i++)
         {
-            team_from_human[i]= 2;
+            team_from_human[i]= Var.team_from_human_speicher[i];
         }
     }
 
@@ -722,8 +722,10 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
             if(gamemode == 0) gamemode = 1;
             for(int i = 0;i<Var.login_profils.length;i++)
             {
-                System.out.println(team_from_human[i]);
-                Var.selected_humanCheckbox_speicher[i] = false;
+                for(int l = 0;l<Var.selected_humanCheckbox_speicher.length;l++)
+                {
+                    Var.selected_humanCheckbox_speicher[l] = false;
+                }
                 //Abbruch von Start wenn keine Feinde ausgewählt wurden
                 if(amount_selected_Players != 0 || Var.login_profils[i] != null){
                         for (int a = 0; a < ai_amount; a++)
@@ -934,21 +936,25 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                     if(("<html><font color = 'green'><font size = +1>Team 1</font></html>").equals(ai_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_ai[i] = 1;
+                        Var.team_from_ai_speicher[i] = 1;
                     }
 
                     if(("<html><font color = 'green'><font size = +1>Team 2</font></html>").equals(ai_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_ai[i] = 2;
+                        Var.team_from_ai_speicher[i] = 2;
                     }
 
                     if(("<html><font color = 'green'><font size = +1>Team 3</font></html>").equals(ai_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_ai[i] = 3;
+                        Var.team_from_ai_speicher[i] = 3;
                     }
 
                     if(("<html><font color = 'green'><font size = +1>Team 4</font></html>").equals(ai_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_ai[i] = 4;
+                        Var.team_from_ai_speicher[i] = 4;
                     }
 
                 }
@@ -963,21 +969,26 @@ public class PreGameView extends JPanel implements ActionListener, ItemListener,
                     if("<html><font color = 'green'><font size = +1>Team 1</font></html>".equals(human_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_human[i] = 1;
+                        Var.team_from_human_speicher[i] = 1;
                     }
 
                     if("<html><font color = 'green'><font size = +1>Team 2</font></html>".equals(human_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_human[i] = 2;
+                        Var.team_from_human_speicher[i] = 2;
                     }
 
                     if("<html><font color = 'green'><font size = +1>Team 3</font></html>".equals(human_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_human[i] = 3;
+                        Var.team_from_human_speicher[i] = 3;
+                        System.out.println(i + "Index wo was passiert ist"+ team_from_human[i]);
                     }
 
                     if("<html><font color = 'green'><font size = +1>Team 4</font></html>".equals(human_teamSelecter[i].getSelectedItem()))
                     {
                         team_from_human[i] = 4;
+                        Var.team_from_human_speicher[i] = 4;
                     }
 
                 }
