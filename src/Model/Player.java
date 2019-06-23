@@ -18,9 +18,13 @@ public abstract class Player {
     private boolean isLevelUp;
     private String name;
 
+    protected GameModel model;
+
 
     public Player(GameModel model,int team,int id,Profil profil){
         this.panzer = profil.getPanzer(model);
+
+        this.model = model;
 
         this.profil = profil;
         this.id = id;

@@ -41,6 +41,8 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
     {
         this.gameModel = gameModel;
 
+
+
         bottomHealth = new BufferedImage(300 , 300,BufferedImage.TYPE_4BYTE_ABGR);
         bottomSprit = new BufferedImage(300 , 300,BufferedImage.TYPE_4BYTE_ABGR);
 
@@ -151,6 +153,7 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
         fire = new MyButton("KnopfFeuerMetallic1.png","Fire Button",MyWindow.WIDTH/3,(int) (MyWindow.HEIGHT*0.3));
         fire.setMargin(new Insets(0,0,0,0));
         fire.addActionListener(this);
+        fire.setFocusable(false);
         this.add(fire);
 
         options = new JPanel();
@@ -165,15 +168,18 @@ public class GameUiView extends JPanel implements ActionListener, ChangeListener
 
         toSettings = new MyButton("KnopfEinstellungenMetallic1.png","Press to enter Settings");
         toSettings.addActionListener(this);
+        toSettings.setFocusable(false);
         options.add(toSettings,BorderLayout.CENTER);
 
         weaponChoosing = new MyButton("WeaponKnopfMetallic1.png","Press to change Weapons");
         weaponChoosing.addActionListener(this);
+        weaponChoosing.setFocusable(false);
         options.add(weaponChoosing,BorderLayout.NORTH);
 
 
         back = new MyButton("KnopfKampfVerlassenMetallic1.png","Leave the Match");
         back.addActionListener(this);
+        back.setFocusable(false);
         options.add(back,BorderLayout.SOUTH);
         this.add(options);
     }
