@@ -277,6 +277,7 @@ public class GameModel {
         if(currentWeapons.size() == 0) {
 
 
+
             if (!battleEnd()) {
                 for (Player player : currentPlayer) {
                     player.setOnTurn(false);
@@ -316,6 +317,7 @@ public class GameModel {
         //überprüft ob der Kampf vorbei ist
 
         if(players.size() == 0){
+            ended = true;
             return true;
         }
         int t = players.getFirst().getTeam();
@@ -367,6 +369,7 @@ public class GameModel {
             gameUiView.repaint();
             gameUiView.erzeugenOverlay_End();
             gameUiView.repaint();
+            updateUI();
             gameLoop.drawEndScreen(text,-1);
         }else{
             text = "TEAM " + players.getFirst().getTeam() + " WINS";
@@ -375,6 +378,7 @@ public class GameModel {
             gameUiView.repaint();
             gameUiView.erzeugenOverlay_End();
             gameUiView.repaint();
+            updateUI();
             gameLoop.drawEndScreen(text,players.getFirst().getTeam());
         }
     }
@@ -669,6 +673,7 @@ public class GameModel {
     }
 
     public void feuerButtonAction(){
+        gameLoop.setFocusable(true);
         for(Player player : currentPlayer) {
             if(player.equals(lastLocalHuman)) {
                 player.setLockedIn(true);

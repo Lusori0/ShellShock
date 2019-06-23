@@ -49,6 +49,7 @@ public class GameLoop extends JPanel implements MouseListener {
     public GameLoop(GameModel gameModel,Color background,Color foreground){
         this.gameModel = gameModel;
 
+        this.setFocusable(true);
 
         this.background = background;
 

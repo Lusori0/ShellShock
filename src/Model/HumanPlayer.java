@@ -24,7 +24,7 @@ public class HumanPlayer extends Player {
 
     @Override
     public void move(GameModel model,GameMap map) {
-        if(isOnTurn()) {
+        if(isOnTurn() && model.getLastLocalHuman().equals(this)) {
 
             if (MyKeys.right) {
 
